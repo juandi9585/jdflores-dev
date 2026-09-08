@@ -245,7 +245,7 @@ export const en: Content = {
     beyond: ['2nd Dan Black Belt — Karate (competitive)', 'Violin — advanced level', '“Lista del Rector” academic-excellence recognition'],
   },
   contact: {
-    title: 'Let’s build something that runs itself.',
+    title: 'Tell me what you need built.',
     lead: 'Open to freelance projects in AI, automation and full-stack engineering.',
     availability: 'Available for freelance',
     emailLabel: 'Email',
@@ -408,7 +408,7 @@ export const es: Content = {
     beyond: ['2º Dan Cinturón Negro — Karate (competitivo)', 'Violín — nivel avanzado', 'Reconocimiento «Lista del Rector» a la excelencia académica'],
   },
   contact: {
-    title: 'Construyamos algo que se ejecute solo.',
+    title: 'Cuéntame qué necesitas construir.',
     lead: 'Abierto a proyectos freelance en IA, automatización e ingeniería full-stack.',
     availability: 'Disponible para freelance',
     emailLabel: 'Email',
