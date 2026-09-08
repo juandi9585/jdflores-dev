@@ -1,0 +1,33 @@
+/* =========================================================
+   Scroll-reveal primitives (paired with useReveal)
+   ========================================================= */
+
+[data-reveal],
+[data-reveal-item] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-revealed,
+.is-revealed [data-reveal-item] {
+  opacity: 1;
+  transform: none;
+}
+
+/* staggered children */
+.is-revealed [data-reveal-item] {
+  transition-delay: calc(var(--reveal-i, 0) * 80ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-item] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

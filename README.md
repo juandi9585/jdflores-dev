@@ -1,0 +1,59 @@
+# Juan Diego Flores — Portfolio
+
+Personal portfolio / résumé site. Long-scroll, motion-driven, bilingual (EN/ES).
+
+**Stack:** Vite + React + TypeScript · GSAP · Three.js (Originkit particle sphere) · deploy on Vercel.
+
+## Develop
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # type-check + production build to /dist
+npm run preview  # preview the production build
+```
+
+## Design
+
+"Deployed Systems Console" — deep-ink editorial base with a single amber accent
+(`#FFB84D`); cyan (`#57E0D8`) is reserved for the generative canvas ("signal").
+Type: Archivo (variable, expanded for display) + IBM Plex Mono for data/labels.
+
+## Structure
+
+```
+src/
+  i18n/          content.ts (EN/ES copy) + I18nProvider
+  components/
+    sections/    Hero, About, Impact, Trajectory, Stack, AIFirst, Credentials, Contact
+    originkit/   ParticleSphere, ReactiveLines, KineticGrid (from Originkit MCP) + LazyViz wrapper
+    ui/          Counter, BrandIcon, Icon (drawn arrows)
+  data/          tools.ts (simple-icons brand marks)
+  hooks/         useReveal, useReducedMotion
+  styles/        tokens.css, base.css, motion.css, sections.css
+public/          résumé PDFs (EN/ES), favicon
+```
+
+## Pending
+
+- **Originkit components:** `particlesphere` (hero), `reactive-lines` (About) and
+  `kineticgrid` (Trajectory) are integrated (lazy, canvas-2D, CSS interim kept as the
+  reduced-motion fallback). `spinimage` and `sticker-peel` are **not integrated and are no
+  longer planned**: both need real image assets (project screenshots / a headshot) that do
+  not exist, because most of the work described on this site is under client
+  confidentiality. Raw source for all four stays staged in gitignored `_originkit-raw/` if
+  that ever changes. `framer-motion` is now an unused dependency and can be dropped.
+- **Proof of work:** the site still shows no artifact a visitor can open. GitHub is now
+  linked from the nav footer and the contact ledger; a confidentiality-safe case study
+  (problem / what was built / what it removed / stack, with no client visuals) is the
+  highest-value remaining addition.
+- **The "90%+" claim:** still stated across Hero, About, Impact (x2) and Trajectory (x2) with
+  no denominator, baseline or timeframe. Highest-credibility fix is to carry the exact figure
+  and a before/after in the Impact ledger's `note` field, and let the other mentions stay
+  qualitative. Needs real numbers from Juan.
+- **Deploy:** not done. Initial commit, push to GitHub, connect Vercel.
+
+## Accessibility & performance
+
+Responsive to mobile · keyboard focus states · `prefers-reduced-motion` respected ·
+the WebGL sphere is code-split and lazy-mounted (skipped under reduced motion).

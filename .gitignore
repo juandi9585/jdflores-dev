@@ -1,0 +1,45 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# build
+dist
+dist-ssr
+*.local
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# editor / os
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+
+# vercel
+.vercel
+
+# env
+.env
+.env.*
+!.env.example
+
+# local helper scripts (screenshots, Originkit component extraction)
+/_*.mjs
+
+# raw Originkit fetches (staging before extraction — protects the daily fetch limit)
+/_originkit-raw/
+
+# typescript incremental build info
+*.tsbuildinfo
+
+# local tooling state
+.claude/
+.impeccable/
