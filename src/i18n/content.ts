@@ -44,7 +44,6 @@ export type Content = {
     role: string
     name: string
     thesis: Segment[]
-    tagline: string
     location: string
     availability: string
     ctaPrimary: string
@@ -109,7 +108,6 @@ export const en: Content = {
       { t: '94%', accent: true },
       { t: '.' },
     ],
-    tagline: 'Freelance — building with modern AI dev tooling, primarily Claude Code.',
     location: 'Caracas, Venezuela',
     availability: 'Available for freelance',
     ctaPrimary: 'Start a project',
@@ -273,7 +271,6 @@ export const es: Content = {
       { t: '94%', accent: true },
       { t: '.' },
     ],
-    tagline: 'Freelance — desarrollo con las últimas herramientas de IA, principalmente Claude Code.',
     location: 'Caracas, Venezuela',
     availability: 'Disponible para freelance',
     ctaPrimary: 'Iniciar un proyecto',

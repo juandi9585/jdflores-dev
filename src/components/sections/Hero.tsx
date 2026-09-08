@@ -3,10 +3,16 @@ import gsap from 'gsap'
 import { useI18n } from '../../i18n/I18nProvider'
 import { LINKS } from '../../i18n/content'
 import { LazyViz } from '../originkit/LazyViz'
-import { ArrowRight } from '../ui/Icon'
+import { ArrowRight, ArrowDown } from '../ui/Icon'
 
 const ParticleSphere = lazy(() => import('../originkit/ParticleSphere'))
 
+/* Composition: masthead + status bar. There is no label above the name and no
+   small descriptor under it — the name and the thesis are set as one
+   typographic mass, and every piece of metadata (role, location, availability,
+   the scroll cue) moves into a single instrument strip pinned to the bottom of
+   the viewport. That strip is the "Deployed Systems Console" idea taken
+   literally, and it is the one mechanic no other section on the page uses. */
 export function Hero() {
   const { t, lang } = useI18n()
   const h = t.hero
@@ -51,51 +57,46 @@ export function Hero() {
         </LazyViz>
       </div>
 
-      <div className="hero__grid container container--wide" ref={gridRef}>
-        <p className="hero__role" data-hero="1">
-          <span className="hero__dot" aria-hidden="true" />
-          {h.role}
-        </p>
+      <div className="hero__inner" ref={gridRef}>
+        <div className="hero__grid container container--wide">
+          <h1 className="hero__name display" data-hero="1">
+            {h.name}
+          </h1>
 
-        <h1 className="hero__name display" data-hero="2">
-          {h.name}
-        </h1>
+          <p className="hero__thesis display" data-hero="2">
+            {h.thesis.map((seg, i) => (
+              <span key={i} className={seg.accent ? 'text-amber' : undefined}>
+                {seg.t}
+              </span>
+            ))}
+          </p>
 
-        <p className="hero__thesis display" data-hero="3">
-          {h.thesis.map((seg, i) => (
-            <span key={i} className={seg.accent ? 'text-amber' : undefined}>
-              {seg.t}
-            </span>
-          ))}
-        </p>
-
-        <p className="hero__tagline" data-hero="4">
-          {h.tagline}
-        </p>
-
-        <div className="hero__cta" data-hero="5">
-          <a href="#contact" className="btn btn--primary">
-            {h.ctaPrimary}
-            <ArrowRight className="btn__arrow" />
-          </a>
-          <a href={resumeHref} className="btn" download>
-            {h.ctaSecondary}
-          </a>
+          <div className="hero__cta" data-hero="3">
+            <a href="#contact" className="btn btn--primary">
+              {h.ctaPrimary}
+              <ArrowRight className="btn__arrow" />
+            </a>
+            <a href={resumeHref} className="btn" download>
+              {h.ctaSecondary}
+            </a>
+          </div>
         </div>
 
-        <div className="hero__meta mono" data-hero="6">
-          <span>{h.location}</span>
-          <span className="hero__meta-avail">
-            <span className="pulse" aria-hidden="true" />
-            {h.availability}
-          </span>
+        <div className="hero__status" data-hero="4">
+          <div className="container container--wide hero__status-row mono">
+            <span className="hero__stat">{h.role}</span>
+            <span className="hero__stat">{h.location}</span>
+            <span className="hero__stat hero__stat--live">
+              <span className="pulse" aria-hidden="true" />
+              {h.availability}
+            </span>
+            <a href="#about" className="hero__stat hero__stat--cue">
+              {h.scrollCue}
+              <ArrowDown className="hero__cue-icon" />
+            </a>
+          </div>
         </div>
       </div>
-
-      <a href="#about" className="hero__scroll mono" aria-label={h.scrollCue}>
-        <span>{h.scrollCue}</span>
-        <span className="hero__scroll-line" aria-hidden="true" />
-      </a>
     </section>
   )
 }

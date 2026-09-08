@@ -219,24 +219,32 @@
 }
 
 /* =====================================================================
-   HERO
+   HERO — masthead + status bar. No label above the name, no small
+   descriptor beneath it: name and thesis form one typographic mass, and
+   all metadata lives in the instrument strip at the bottom.
    ===================================================================== */
 .hero {
   position: relative;
   min-height: 100svh;
   display: flex;
-  align-items: center;
-  padding-block: 120px var(--space-2xl);
   overflow: hidden;
 }
 .hero__viz {
   position: absolute;
-  right: -6%;
-  top: 50%;
+  right: -8%;
+  top: 44%;
   transform: translateY(-50%);
-  width: min(68vw, 760px);
+  width: min(60vw, 720px);
   aspect-ratio: 1;
   z-index: 0;
+}
+/* The sphere stays interactive on touch, but the browser keeps the vertical
+   gesture so the page still scrolls. Paired with the removal of the upstream
+   preventDefault() in ParticleSphere: a swipe scrolls AND stirs the particles,
+   while a tap still triggers the scatter. */
+.hero__viz,
+.hero__viz canvas {
+  touch-action: pan-y;
 }
 .hero__sphere-fallback {
   position: absolute;
@@ -245,75 +253,106 @@
   background: radial-gradient(circle at 55% 42%, var(--cyan-soft), transparent 62%);
   border: 1px solid rgba(87, 224, 216, 0.12);
 }
-.hero__grid {
+.hero__inner {
   position: relative;
   z-index: 2;
-  display: grid;
-  gap: var(--space-m);
-  max-width: 1100px;
-  /* let the particle canvas behind receive cursor motion on the right,
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 108px;
+  /* let the particle canvas behind receive cursor motion,
      while keeping links & buttons clickable */
   pointer-events: none;
 }
-.hero__grid a,
-.hero__grid button {
+.hero__inner a,
+.hero__inner button {
   pointer-events: auto;
 }
-.hero__role {
-  font-size: var(--step-0);
-  color: var(--bone-dim);
-  letter-spacing: 0.01em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7em;
-}
-.hero__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--cyan);
+.hero__grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1100px;
 }
 .hero__name {
   font-size: var(--step-7);
   font-stretch: 125%;
-  margin-top: 0.1em;
 }
 .hero__thesis {
+  /* tight to the name so the two read as one block, never as
+     "huge title, then a smaller description" */
+  margin-top: 0.35em;
   font-size: var(--step-3);
   font-stretch: 100%;
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -0.01em;
-  max-width: 24ch;
+  max-width: 26ch;
   color: var(--bone-dim);
-  margin-top: var(--space-xs);
-}
-.hero__tagline {
-  font-size: var(--step-1);
-  color: var(--muted);
-  max-width: 46ch;
 }
 .hero__cta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-s);
-  margin-top: var(--space-s);
+  margin-top: var(--space-l);
 }
-.hero__meta {
+
+/* ---- instrument strip ---- */
+.hero__status {
+  border-top: 1px solid var(--line);
+  background: linear-gradient(to top, rgba(10, 12, 16, 0.92), transparent);
+  /* real inset under the rule: children must not sit flush against it */
+  padding-top: 0.5rem;
+}
+.hero__status-row {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-m);
-  margin-top: var(--space-m);
-  font-size: var(--step--1);
+  align-items: center;
+  font-size: var(--step--2);
+  /* tracking stays at the .mono default: 0.08em is for uppercase, and this
+     strip is lowercase now */
   color: var(--muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
-.hero__meta-avail {
+.hero__stat {
   display: inline-flex;
   align-items: center;
-  gap: 0.6em;
+  gap: 0.55em;
+  padding-block: 1.1em;
+  padding-right: var(--space-m);
+  margin-right: var(--space-m);
+  border-right: 1px solid var(--line-soft);
+}
+.hero__stat:last-child {
+  border-right: 0;
+  padding-right: 0;
+  margin-right: 0;
+}
+.hero__stat--live {
   color: var(--bone-dim);
+}
+.hero__stat--cue {
+  margin-left: auto;
+  color: var(--muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.hero__stat--cue:hover {
+  color: var(--bone);
+}
+.hero__cue-icon {
+  width: 1.05em;
+  height: 1.05em;
+  animation: cueNudge 2.4s var(--ease-in-out) infinite;
+}
+@keyframes cueNudge {
+  0%,
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+  85% {
+    transform: translateY(3px);
+  }
 }
 .pulse {
   width: 8px;
@@ -321,6 +360,7 @@
   border-radius: 50%;
   background: var(--ok);
   position: relative;
+  flex: 0 0 auto;
 }
 .pulse::after {
   content: '';
@@ -339,33 +379,6 @@
     transform: scale(1.8);
     opacity: 0;
   }
-}
-.hero__scroll {
-  position: absolute;
-  left: var(--gutter);
-  bottom: var(--space-l);
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8em;
-  font-size: var(--step--2);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.hero__scroll-line {
-  width: 46px;
-  height: 1px;
-  background: var(--line);
-  position: relative;
-  overflow: hidden;
-}
-.hero__scroll-line::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  width: 42%;
-  background: var(--bone-dim);
 }
 
 /* =====================================================================
@@ -1133,6 +1146,20 @@
   .nav__burger {
     display: block;
   }
+  /* the sphere sat directly behind the thesis on phones, which wrecked
+     legibility. The name is left-aligned and short-measured, so the empty
+     upper-right is the one region no copy occupies: park it there. */
+  .hero__viz {
+    top: 6%;
+    bottom: auto;
+    right: -34%;
+    transform: none;
+    width: min(82vw, 400px);
+    opacity: 0.5;
+  }
+  .hero__inner {
+    padding-top: 96px;
+  }
   .about__grid {
     max-width: none;
     margin-inline: 0;
@@ -1163,12 +1190,32 @@
 }
 
 @media (max-width: 640px) {
-  .hero {
-    padding-top: 100px;
-  }
   .hero__thesis {
     font-size: var(--step-2);
     max-width: 100%;
+  }
+  .hero__status-row {
+    font-size: 0.66rem;
+  }
+  /* vertical rules only read as rules while the strip is a single line;
+     once it wraps they look like debris, so the rows carry the hairline */
+  .hero__stat {
+    padding-block: 0.7em;
+    padding-right: 0;
+    margin-right: 0;
+    border-right: 0;
+  }
+  .hero__stat:first-child {
+    width: 100%;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  /* location is the least urgent datum here and it is carried in full by the
+     contact ledger; the strip keeps role, availability and the cue */
+  .hero__stat:nth-child(2) {
+    display: none;
+  }
+  .hero__stat--cue {
+    margin-left: auto;
   }
 
   /* the ledger stops being a table and becomes stacked records */
