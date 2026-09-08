@@ -51,7 +51,31 @@ public/          résumé PDFs (EN/ES), favicon
   no denominator, baseline or timeframe. Highest-credibility fix is to carry the exact figure
   and a before/after in the Impact ledger's `note` field, and let the other mentions stay
   qualitative. Needs real numbers from Juan.
-- **Deploy:** not done. Initial commit, push to GitHub, connect Vercel.
+
+## Deploy
+
+Live at **https://juandi9585.github.io/jdflores-dev/** (GitHub Pages, `gh-pages` branch).
+
+The repo is **public** because Pages is not available for private repos on the free plan.
+
+`vite.config.ts` sets `base: '/jdflores-dev/'` in production only, so dev stays at `/`.
+Absolute asset URLs in `index.html` are rewritten by Vite, but plain string literals are not
+which is why the resume links in `content.ts` are built from `import.meta.env.BASE_URL`.
+**If the repo is ever renamed, `base` must change to match** or every asset 404s.
+
+To publish an update:
+
+```bash
+npm run build
+cd dist && touch .nojekyll
+git init -b gh-pages && git add -A && git commit -m "Deploy"
+git push -f https://github.com/juandi9585/jdflores-dev.git gh-pages:gh-pages
+```
+
+This manual push is used because the local `gh` token lacks the `workflow` scope, so a
+`.github/workflows/` file cannot be pushed. To automate it instead, run
+`gh auth refresh -s workflow`, then add a Pages workflow and switch the Pages source to
+"GitHub Actions". `vercel.json` is still present if you'd rather deploy there.
 
 ## Accessibility & performance
 
