@@ -318,6 +318,9 @@
   flex-direction: column;
   justify-content: center;
   max-width: 1100px;
+  /* never let the last CTA touch the instrument strip below it: at 360x640
+     the two were sitting at exactly 0px apart */
+  padding-bottom: var(--space-l);
 }
 .hero__name {
   font-size: var(--step-7);
@@ -869,8 +872,46 @@
 .disclosure__toggle:hover .disclosure__icon {
   color: var(--bone);
 }
+/* Easing to a content-derived height: 0fr -> 1fr is the only way to do it
+   without measuring, so the panel stays in the DOM and `inert` handles the
+   accessibility side instead of `hidden`. */
+.disclosure__wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  /* symmetric curve: ease-out front-loads a collapse so hard that the panel
+     was 99% shut in the first third of the duration and the rest was invisible */
+  transition: grid-template-rows 0.34s var(--ease-in-out);
+}
+.disclosure__wrap[data-open='true'] {
+  grid-template-rows: 1fr;
+}
 .disclosure__panel {
+  overflow: hidden;
+  min-height: 0;
+}
+.disclosure__inner {
   padding-top: var(--space-2xs);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.26s var(--ease-out),
+    transform 0.3s var(--ease-out);
+}
+.disclosure__wrap[data-open='true'] .disclosure__inner {
+  opacity: 1;
+  transform: none;
+}
+
+/* the plus retracts its upright stroke into a minus */
+.plusminus__bar {
+  transform-origin: 8px 8px;
+  transition:
+    transform var(--dur) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+.disclosure__icon[data-open] .plusminus__bar {
+  transform: scaleY(0) rotate(90deg);
+  opacity: 0;
 }
 
 /* =====================================================================
@@ -1259,8 +1300,12 @@
     transform: none;
     width: min(92vw, 440px);
     /* it is the one thing on this page a finger can play with: let it be
-       present and reachable, not a ghost parked off the corner */
-    opacity: 0.9;
+       present and reachable, not a ghost parked off the corner. The gradient
+       thins it out over the text column on the left while it stays solid on
+       the right, so the thesis keeps its contrast without dimming the sphere. */
+    opacity: 0.85;
+    -webkit-mask-image: linear-gradient(to right, transparent 2%, rgba(0, 0, 0, 0.4) 32%, #000 72%);
+    mask-image: linear-gradient(to right, transparent 2%, rgba(0, 0, 0, 0.4) 32%, #000 72%);
   }
   .hero__inner {
     padding-top: 96px;
@@ -1301,9 +1346,27 @@
 }
 
 @media (max-width: 640px) {
+  /* the display sizes were tuned on a 844px-tall emulator; on a real phone
+     with browser chrome they crowded the viewport. One step down each. */
+  .hero__name {
+    font-size: var(--step-6);
+  }
   .hero__thesis {
-    font-size: var(--step-2);
+    font-size: var(--step-1);
     max-width: 100%;
+  }
+  .about__lead-in {
+    font-size: var(--step-1);
+  }
+  .about__runin,
+  .about__p {
+    font-size: var(--step-0);
+  }
+  .about__signature {
+    font-size: var(--step-0);
+  }
+  .aifirst__claim {
+    font-size: var(--step-1);
   }
   .hero__status-row {
     /* was 0.66rem = 10.56px, shrunk purely to protect a desktop silhouette */

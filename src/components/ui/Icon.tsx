@@ -34,12 +34,13 @@ export function ArrowDown({ className }: IconProps) {
   )
 }
 
-/** Disclosure marker: a plus that becomes a minus when its panel is open. */
+/** Disclosure marker: a plus whose upright stroke retracts into a minus.
+    Both strokes always render so the change can be eased rather than swapped. */
 export function PlusMinus({ className, open }: IconProps & { open?: boolean }) {
   return (
-    <svg {...base} className={className}>
+    <svg {...base} className={className} data-open={open || undefined}>
       <path d="M3 8h10" />
-      {!open && <path d="M8 3v10" />}
+      <path d="M8 3v10" className="plusminus__bar" />
     </svg>
   )
 }
