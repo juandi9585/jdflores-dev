@@ -1,4 +1,4 @@
-import { useId, useState, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { useWideViewport } from '../../hooks/useMediaQuery'
 import { PlusMinus } from './Icon'
 
@@ -25,11 +25,24 @@ type Props = {
  *
  * Uses the canonical heading > button accordion shape, so the control is a
  * real heading for assistive tech and the whole row is a comfortable target.
+ *
+ * The panel animates open on a `grid-template-rows: 0fr → 1fr` transition,
+ * which is the one way to ease to a content-derived height without measuring
+ * it. That rules out the `hidden` attribute, so the closed panel is taken out
+ * of the tab order and the accessibility tree with `inert` instead.
  */
 export function Disclosure({ heading, headingClassName, meta, children, className, revealItem }: Props) {
   const wide = useWideViewport()
   const [open, setOpen] = useState(false)
+  const panelRef = useRef<HTMLDivElement>(null)
   const id = useId()
+
+  useEffect(() => {
+    const el = panelRef.current
+    if (!el) return
+    if (open) el.removeAttribute('inert')
+    else el.setAttribute('inert', '')
+  }, [open, wide])
 
   if (wide) {
     return (
@@ -56,8 +69,10 @@ export function Disclosure({ heading, headingClassName, meta, children, classNam
         </button>
       </h3>
       {meta}
-      <div id={id} className="disclosure__panel" hidden={!open}>
-        {children}
+      <div className="disclosure__wrap" data-open={open}>
+        <div id={id} className="disclosure__panel" ref={panelRef}>
+          <div className="disclosure__inner">{children}</div>
+        </div>
       </div>
     </div>
   )
