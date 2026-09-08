@@ -25,7 +25,7 @@
 | Responsive + accesibilidad + reduced-motion | ✅ Completo |
 | Build de producción | ✅ Verde |
 | Config Vercel | ✅ Lista |
-| Deploy (GitHub + Vercel) | ⏳ No hecho |
+| Deploy | ✅ **En vivo** — GitHub Pages, rama `gh-pages` |
 | URL de LinkedIn real | ✅ Completo |
 
 **Preview local:** `npm run dev` → http://localhost:5173
@@ -173,7 +173,7 @@ El crudo de los 4 ya está staged, así que **no hace falta el MCP**. Para cada 
    años de estudios (2020–2024), habría que ajustar también el extremo del raíl.
 3. **El claim "90%+" sigue sin denominador.** Aparece en Hero, About, Impact ×2 y Trajectory ×2,
    sin línea base ni marco temporal. Una sola frase con dos números reales haría más trabajo.
-4. **Deploy** — commit inicial, subir a GitHub, conectar Vercel. (Sigue sin hacer.)
+4. ~~Deploy~~ **✅ HECHO (2026-09-08)** — ver §12.
 5. **Desinstalar `framer-motion`** (ya no se usa; ver §5.3).
 6. **Opcional:** GSAP ScrollTrigger para parallax / pin del timeline.
 
@@ -314,3 +314,53 @@ Detector en navegador: **12 hallazgos primarios → 1**, y ese único restante e
 ### 11.5 Verificación
 `npm run build` verde · `npx tsc -b` limpio · consola sin errores · sin scroll horizontal a 390 px
 en **ES** e **EN** · página 18 % más corta en móvil (13.058 → ~11.200 px).
+
+---
+
+## 12. Deploy — GitHub Pages (2026-09-08)
+
+**En vivo:** https://juandi9585.github.io/jdflores-dev/
+
+### 12.1 Por qué el repo es público
+GitHub Pages **no funciona en repos privados con el plan gratuito** (la API devuelve
+`422 Your current plan does not support GitHub Pages for this repository`). Juan optó por
+**hacer el repo público** en vez de pagar Pro o mudarse a Vercel. Consecuencia: el código
+fuente, el historial de git y los datos de contacto en `content.ts` son públicos.
+
+### 12.2 Base path — el detalle que rompe todo si se olvida
+Es un *project site*, así que se sirve desde `/jdflores-dev/`, no desde la raíz.
+
+- `vite.config.ts` define `base: '/jdflores-dev/'` **solo en modo producción**; en dev sigue
+  siendo `/`, así que las URLs locales no cambian. `vite preview` corre en modo producción, por
+  lo que refleja el deploy real.
+- Vite reescribe las URLs absolutas dentro de `index.html` (favicon, JS, CSS), **pero no los
+  literales de string en JS**. Por eso los PDFs del CV en `LINKS` se construyen con
+  `import.meta.env.BASE_URL`. Requiere `src/vite-env.d.ts` para que TS conozca `import.meta.env`.
+- **Si alguna vez se renombra el repo, hay que cambiar `base`** o todos los assets dan 404.
+
+### 12.3 Procedimiento de publicación
+El token local de `gh` **no tiene el scope `workflow`**, así que no se puede hacer push de un
+archivo en `.github/workflows/`. Por eso el deploy es un push manual de `dist/` a `gh-pages`:
+
+```bash
+npm run build
+cd dist && touch .nojekyll
+git init -b gh-pages && git add -A && git commit -m "Deploy"
+git push -f https://github.com/juandi9585/jdflores-dev.git gh-pages:gh-pages
+```
+
+`dist/` está gitignoreado en el repo principal, así que el `.git` anidado no molesta.
+Para automatizarlo: `gh auth refresh -s workflow`, añadir un workflow de Pages y cambiar la
+fuente de Pages a "GitHub Actions".
+
+### 12.4 Nota de cuentas
+La máquina tiene **dos cuentas de `gh`**: `ENA-demo` (era la activa) y `juandi9585` (dueño del
+repo). Hubo que hacer `gh auth switch --user juandi9585` para el push y la API; **la activa se
+restauró a `ENA-demo`** al terminar. Ninguna de las dos tiene scope `workflow`.
+
+### 12.5 Verificado en producción
+`/`, JS, CSS, favicon y ambos PDFs devuelven **200** con el content-type correcto. En el sitio
+real: 94% en la tesis del hero y en el ledger, enlace de CV correcto por idioma
+(`/jdflores-dev/Juan-Diego-Flores-CV-ES.pdf`), GitHub enlazado, **0 elementos del patrón
+prohibido**, 7 `h2`, y a 390 px en español el titular cierra en **368,7 px** sin scroll
+horizontal.
