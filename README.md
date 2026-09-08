@@ -79,13 +79,18 @@ This manual push is used because the local `gh` token lacks the `workflow` scope
 
 ## Mobile
 
-Mobile is treated as the primary case, not an adaptation. No canvas mounts on a coarse
-pointer, so a phone never downloads three.js — the hand-built CSS analogues stand in and
-mobile ships ~66KB of JS instead of ~214KB. `useMediaQuery` resolves synchronously in a
-`useState` initialiser on purpose: reading it in an effect let the dynamic import fire before
-the answer arrived. Trajectory and Credentials collapse behind taps on the phone only
-(`ui/Disclosure.tsx`); a wide viewport renders them expanded with no control at all. A
-persistent action bar carries résumé, WhatsApp and email in the thumb zone.
+Mobile is treated as the primary case, and **adaptation never means removing a feature**.
+All three generative canvases ship on every device, the hero sphere included, and it stays
+interactive under a thumb. Their cost is handled where it is created: capped pixel ratios, a
+timeline backdrop bounded to `min(100%, 130svh)` instead of the whole section, and a sphere
+tuned (not withheld) on touch. `ReactiveLines` carries a local modification adding touch
+handlers — upstream only started on `mousemove`, so it froze on phones.
+
+`useMediaQuery` resolves synchronously in a `useState` initialiser on purpose: reading it in
+an effect let a dynamic import fire before the answer arrived. Trajectory and Credentials
+collapse behind taps on the phone only (`ui/Disclosure.tsx`); a wide viewport renders them
+expanded with no control at all. A persistent action bar carries résumé, WhatsApp and email
+in the thumb zone.
 
 Regenerate the share card with `npm run og` after changing the hero copy.
 
