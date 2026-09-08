@@ -13,6 +13,9 @@ export function Footer() {
           <a className="footer__link" href={`mailto:${LINKS.email}`}>
             {c.emailLabel}
           </a>
+          <a className="footer__link" href={LINKS.whatsapp} target="_blank" rel="noreferrer">
+            {c.whatsappLabel}
+          </a>
           <a className="footer__link" href={LINKS.github} target="_blank" rel="noreferrer">
             {c.githubLabel}
           </a>

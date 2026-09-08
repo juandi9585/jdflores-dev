@@ -84,7 +84,10 @@ export default function KineticGrid(props: KineticGridProps) {
             const r = host.getBoundingClientRect()
             W = Math.max(1, Math.floor(mw ?? r.width))
             H = Math.max(1, Math.floor(mh ?? r.height))
-            const dpr = window.devicePixelRatio || 1
+            // LOCAL MODIFICATION: upstream used the raw devicePixelRatio, which on a
+            // DPR-3 screen sized this canvas to ~9.9 megapixels because it spans the
+            // whole section height. Capped, as ParticleSphere already does.
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
             canvas.width = Math.floor(W * dpr)
             canvas.height = Math.floor(H * dpr)
             canvas.style.width = W + "px"

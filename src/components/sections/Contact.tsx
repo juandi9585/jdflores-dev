@@ -46,6 +46,20 @@ export function Contact() {
               </dd>
             </div>
             <div className="contact__row">
+              <dt className="mono">{c.whatsappLabel}</dt>
+              <dd>
+                <a
+                  href={LINKS.whatsapp}
+                  className="contact__link contact__link--ext tnum"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {LINKS.phone}
+                  <ArrowUpRight className="contact__ext" />
+                </a>
+              </dd>
+            </div>
+            <div className="contact__row">
               <dt className="mono">{c.phoneLabel}</dt>
               <dd>
                 <a href={`tel:${LINKS.phoneHref}`} className="contact__link tnum">

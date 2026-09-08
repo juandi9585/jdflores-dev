@@ -1,5 +1,6 @@
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
+import { MobileActionBar } from './components/MobileActionBar'
 import { Hero } from './components/sections/Hero'
 import { About } from './components/sections/About'
 import { Impact } from './components/sections/Impact'
@@ -27,6 +28,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <MobileActionBar />
     </>
   )
 }

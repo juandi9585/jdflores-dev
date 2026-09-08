@@ -33,6 +33,20 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = lang
     window.localStorage.setItem(STORAGE_KEY, lang)
+
+    // The share card is a real screen of this design: the site travels as a
+    // link pasted into WhatsApp. Without this a Spanish reader gets an English
+    // preview, because the title and description were baked into index.html.
+    const { title, description } = dict[lang].meta
+    document.title = title
+    for (const sel of ['meta[name="description"]', 'meta[property="og:description"]']) {
+      document.querySelector(sel)?.setAttribute('content', description)
+    }
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', title)
+    document.querySelector('meta[property="og:locale"]')?.setAttribute(
+      'content',
+      lang === 'es' ? 'es_VE' : 'en_US',
+    )
   }, [lang])
 
   const setLang = useCallback((l: Lang) => setLangState(l), [])

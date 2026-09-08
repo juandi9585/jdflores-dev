@@ -31,3 +31,32 @@
     transition: none !important;
   }
 }
+
+/* ---- hero entrance ----
+   Was a GSAP timeline; GSAP rode in the main bundle for this alone, which is
+   real weight on a mobile connection. Four elements, four delays, no library. */
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+[data-hero] {
+  animation: heroIn 0.9s var(--ease-out) both;
+}
+[data-hero='1'] {
+  animation-delay: 0.1s;
+}
+[data-hero='2'] {
+  animation-delay: 0.2s;
+}
+[data-hero='3'] {
+  animation-delay: 0.3s;
+}
+[data-hero='4'] {
+  animation-delay: 0.4s;
+}

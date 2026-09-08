@@ -54,6 +54,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6em;
+  min-height: 44px;
 }
 .nav__mark {
   width: 22px;
@@ -122,7 +123,10 @@
 .lang__btn {
   color: var(--muted);
   letter-spacing: 0.1em;
-  padding: 0.2em 0.1em;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-grid;
+  place-items: center;
   transition: color var(--dur-fast) var(--ease-out);
 }
 .lang__btn[data-active='true'] {
@@ -138,8 +142,8 @@
 /* burger + mobile menu */
 .nav__burger {
   display: none;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   position: relative;
@@ -175,6 +179,25 @@
 .nav__burger span[data-open='true']::after {
   transform: translateX(-50%) translateY(-5px) rotate(-45deg);
 }
+.nav__mobile .btn {
+  justify-content: center;
+  min-height: 52px;
+}
+.nav__close {
+  margin-top: var(--space-s);
+  padding: 0.95em 1em;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  min-height: 48px;
+  width: 100%;
+}
+.nav__close:hover {
+  color: var(--bone);
+}
+
 .nav__scrim {
   position: fixed;
   inset: 0;
@@ -189,16 +212,22 @@
 }
 .nav__mobile {
   position: fixed;
-  inset: 68px 0 auto 0;
+  /* a phone menu belongs under the thumb, not dropped from the top: this used
+     to occupy the upper 64% of the display with every link out of reach */
+  inset: auto 0 0 0;
+  max-height: 88svh;
+  overflow-y: auto;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding-bottom: max(var(--space-l), env(safe-area-inset-bottom));
   background: rgba(10, 12, 16, 0.97);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--line);
-  padding: var(--space-l) var(--gutter) var(--space-xl);
+  border-top: 1px solid var(--line);
+  padding: var(--space-l) var(--gutter);
   display: flex;
   flex-direction: column;
-  gap: var(--space-s);
-  transform: translateY(-12px);
+  gap: var(--space-2xs);
+  transform: translateY(14px);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
@@ -212,7 +241,19 @@
   font-size: var(--step-3);
   font-stretch: 110%;
   color: var(--bone);
-  padding: 0.2em 0;
+  padding: 0.42em 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+}
+.nav__mobile-link[aria-current]::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex: 0 0 auto;
 }
 .nav__mobile-link:hover {
   color: var(--amber);
@@ -250,8 +291,11 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 55% 42%, var(--cyan-soft), transparent 62%);
-  border: 1px solid rgba(87, 224, 216, 0.12);
+  /* dots only: the volume comes from the mask, not from a glow layer */
+  background-image: radial-gradient(circle, rgba(87, 224, 216, 0.6) 0.9px, transparent 1.7px);
+  background-size: 9px 9px;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 54%, rgba(0, 0, 0, 0.35) 70%, transparent 77%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 54%, rgba(0, 0, 0, 0.35) 70%, transparent 77%);
 }
 .hero__inner {
   position: relative;
@@ -569,6 +613,7 @@
   font-stretch: 112%;
   font-weight: 800;
   font-size: var(--step-1);
+  text-wrap: balance;
   letter-spacing: -0.01em;
   color: var(--bone);
 }
@@ -791,6 +836,36 @@
   background: var(--line);
 }
 
+/* ---------- progressive disclosure (phone only) ---------- */
+.disclosure__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  width: 100%;
+  min-height: 48px;
+  padding-block: 0.35em;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+.disclosure__label {
+  flex: 1 1 auto;
+}
+.disclosure__icon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  color: var(--muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.disclosure__toggle:hover .disclosure__icon {
+  color: var(--bone);
+}
+.disclosure__panel {
+  padding-top: var(--space-2xs);
+}
+
 /* =====================================================================
    STACK — specification sheet. The heading occupies the first row of the
    same two-column grid as the data; tools are prose, not pills.
@@ -962,8 +1037,25 @@
 .cred__row {
   display: flex;
   justify-content: space-between;
-  gap: var(--space-m);
+  gap: var(--space-s);
   align-items: baseline;
+}
+/* a hairline leader so a row still reads as one pair when the two ends are
+   far apart on a wide measure */
+.cred__row::before {
+  content: '';
+  order: 1;
+  flex: 1 1 auto;
+  min-width: 1rem;
+  height: 1px;
+  align-self: center;
+  background: var(--line-soft);
+}
+.cred__meta {
+  order: 2;
+}
+.cred__main {
+  flex: 0 1 auto;
 }
 .cred__main {
   display: flex;
@@ -1062,9 +1154,10 @@
   font-size: var(--step-0);
 }
 .contact__link {
+  display: inline-block;
   color: var(--bone);
   border-bottom: 1px solid var(--line);
-  padding-bottom: 2px;
+  padding-block: 13px 6px;
   transition: color var(--dur-fast), border-color var(--dur-fast);
 }
 .contact__link:hover {
@@ -1109,9 +1202,12 @@
   gap: var(--space-m);
 }
 .footer__link {
+  display: inline-block;
+  min-width: 44px;
+  text-align: center;
   color: var(--muted);
   border-bottom: 1px solid transparent;
-  padding-bottom: 2px;
+  padding-block: 14px 8px;
   transition: color var(--dur-fast), border-color var(--dur-fast);
 }
 .footer__link:hover {
@@ -1182,7 +1278,13 @@
   }
   .cred__group {
     grid-template-columns: 1fr;
-    gap: var(--space-s);
+    gap: var(--space-2xs);
+    /* collapsed, the desktop padding leaves each row floating in dead air;
+       the toggle already carries its own 48px target */
+    padding-block: var(--space-2xs);
+  }
+  .cred__group[data-open='true'] {
+    padding-bottom: var(--space-m);
   }
   .cred__k {
     padding-top: 0;
@@ -1195,7 +1297,8 @@
     max-width: 100%;
   }
   .hero__status-row {
-    font-size: 0.66rem;
+    /* was 0.66rem = 10.56px, shrunk purely to protect a desktop silhouette */
+    font-size: var(--step--2);
   }
   /* vertical rules only read as rules while the strip is a single line;
      once it wraps they look like debris, so the rows carry the hairline */
@@ -1209,13 +1312,15 @@
     width: 100%;
     border-bottom: 1px solid var(--line-soft);
   }
-  /* location is the least urgent datum here and it is carried in full by the
-     contact ledger; the strip keeps role, availability and the cue */
+  /* location stays: for the local market this is a trust asset, and hiding it
+     on the device that market actually uses was the wrong cut */
   .hero__stat:nth-child(2) {
-    display: none;
+    width: 100%;
+    border-bottom: 1px solid var(--line-soft);
   }
   .hero__stat--cue {
     margin-left: auto;
+    min-height: 44px;
   }
 
   /* the ledger stops being a table and becomes stacked records */
@@ -1258,6 +1363,13 @@
     grid-template-columns: 1fr;
     gap: var(--space-xs);
     padding-left: 24px;
+    /* the entries collapse on the phone, so the generous desktop gap between
+       them turns into dead air; tighten it so the list reads as a list */
+    padding-bottom: var(--space-l);
+  }
+  .tl[data-open='true'],
+  .tl:has([data-open='true']) {
+    padding-bottom: var(--space-xl);
   }
   .tl__period {
     flex-direction: row;
@@ -1282,5 +1394,110 @@
   .orbit__core-icon {
     width: 34px;
     height: 34px;
+  }
+}
+
+/* =====================================================================
+   MOBILE ACTION BAR — phone only, appears once the hero is behind you.
+   The résumé used to exist on screen 1 and nowhere else, and the email
+   was a 20px link on screen 11; both now sit in the thumb's own region.
+   ===================================================================== */
+.actionbar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .actionbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: var(--z-nav);
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 1px;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    padding-bottom: env(safe-area-inset-bottom);
+    transform: translateY(101%);
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .actionbar[data-shown='true'] {
+    transform: none;
+  }
+  .actionbar__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    min-height: 52px;
+    padding-inline: var(--space-m);
+    background: rgba(10, 12, 16, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+  }
+  .actionbar__item--primary {
+    background: var(--amber);
+    color: var(--amber-ink);
+    font-weight: 600;
+  }
+  .actionbar__icon {
+    width: 15px;
+    height: 15px;
+  }
+  /* keep the last section and the footer clear of the bar */
+  .footer {
+    padding-bottom: calc(var(--space-l) + 52px + env(safe-area-inset-bottom));
+  }
+  /* the brand marks repeat, as text, the six spec rows directly above them */
+  .stack__marks {
+    display: none;
+  }
+}
+
+/* =====================================================================
+   TOUCH: :hover states stick after a tap on phones, so neutralise the
+   ones that would leave an element visibly stuck in its hover colour.
+   ===================================================================== */
+@media (hover: none) {
+  .btn:hover {
+    transform: none;
+    border-color: var(--btn-bd);
+  }
+  .nav__mobile-link:hover,
+  .nav__close:hover {
+    color: var(--bone);
+  }
+  .contact__link:hover {
+    color: var(--bone);
+    border-color: var(--line);
+  }
+  .footer__link:hover {
+    color: var(--muted);
+    border-color: transparent;
+  }
+  .stack__marks:hover .stack__mark,
+  .stack__mark:hover {
+    color: var(--muted-2);
+  }
+  .disclosure__toggle:hover .disclosure__icon {
+    color: var(--muted);
+  }
+  .metric:hover,
+  .logo:hover {
+    background: inherit;
+  }
+}
+
+/* On a touch screen the generative backdrops are static and sit directly
+   behind body copy, which costs legibility outdoors and returns nothing —
+   the canvases they stand in for do not mount here either. */
+@media (pointer: coarse) {
+  .about__bg,
+  .trajectory__bg {
+    display: none;
   }
 }
