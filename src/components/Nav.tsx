@@ -9,6 +9,7 @@ export function Nav() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<string>('')
   const drawerRef = useRef<HTMLDivElement>(null)
+  const burgerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -26,7 +27,9 @@ export function Nav() {
     { href: '#contact', label: t.nav.contact },
   ]
 
-  // Scroll-spy: report where the reader actually is across a very long page.
+  // Scroll-spy. The desktop nav links are hidden below 900px, so the drawer
+  // carries the same aria-current — otherwise the phone gets no position
+  // feedback at all across a very long page.
   useEffect(() => {
     const ids = links.map((l) => l.href.slice(1))
     const sections = ids
@@ -48,27 +51,41 @@ export function Nav() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang])
 
-  // Drawer: escape to close, and lock the page behind it.
+  // Escape to close, and a scroll lock that also works on iOS Safari, where
+  // body{overflow:hidden} alone is ignored. Pinning the body at a negative
+  // offset is the technique that holds; the offset is restored on close so the
+  // reader lands exactly where they left.
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false)
     }
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    const y = window.scrollY
+    const { style } = document.body
+    const prev = { position: style.position, top: style.top, width: style.width }
+    style.position = 'fixed'
+    style.top = `-${y}px`
+    style.width = '100%'
     document.addEventListener('keydown', onKey)
     return () => {
-      document.body.style.overflow = prev
+      style.position = prev.position
+      style.top = prev.top
+      style.width = prev.width
+      window.scrollTo(0, y)
       document.removeEventListener('keydown', onKey)
     }
   }, [open])
 
-  // Keep the closed drawer out of the tab order entirely.
+  // Keep the closed drawer out of the tab order, and move focus in and back.
   useEffect(() => {
     const el = drawerRef.current
     if (!el) return
-    if (open) el.removeAttribute('inert')
-    else el.setAttribute('inert', '')
+    if (open) {
+      el.removeAttribute('inert')
+      el.querySelector<HTMLElement>('a, button')?.focus()
+    } else {
+      el.setAttribute('inert', '')
+    }
   }, [open])
 
   const resumeHref = lang === 'es' ? LINKS.resumeEs : LINKS.resumeEn
@@ -100,6 +117,7 @@ export function Nav() {
             {t.nav.resume}
           </a>
           <button
+            ref={burgerRef}
             type="button"
             className="nav__burger"
             aria-expanded={open}
@@ -119,12 +137,21 @@ export function Nav() {
         onClick={() => setOpen(false)}
       />
 
-      <div className="nav__mobile" id="nav-drawer" data-open={open} ref={drawerRef}>
+      <div
+        className="nav__mobile"
+        id="nav-drawer"
+        data-open={open}
+        ref={drawerRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={t.nav.contact}
+      >
         {links.map((l) => (
           <a
             key={l.href}
             href={l.href}
             className="nav__mobile-link display"
+            aria-current={active === l.href ? 'true' : undefined}
             onClick={() => setOpen(false)}
           >
             {l.label}
@@ -133,6 +160,16 @@ export function Nav() {
         <a href={resumeHref} className="btn btn--primary" download onClick={() => setOpen(false)}>
           {t.nav.resume}
         </a>
+        <button
+          type="button"
+          className="nav__close"
+          onClick={() => {
+            setOpen(false)
+            burgerRef.current?.focus()
+          }}
+        >
+          {t.nav.close}
+        </button>
       </div>
     </header>
   )

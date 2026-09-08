@@ -1,5 +1,4 @@
-import { lazy, Suspense, useLayoutEffect, useRef } from 'react'
-import gsap from 'gsap'
+import { lazy, Suspense } from 'react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { LINKS } from '../../i18n/content'
 import { LazyViz } from '../originkit/LazyViz'
@@ -8,31 +7,18 @@ import { ArrowRight, ArrowDown } from '../ui/Icon'
 const ParticleSphere = lazy(() => import('../originkit/ParticleSphere'))
 
 /* Composition: masthead + status bar. There is no label above the name and no
-   small descriptor under it — the name and the thesis are set as one
+   small descriptor beneath it — the name and the thesis are set as one
    typographic mass, and every piece of metadata (role, location, availability,
-   the scroll cue) moves into a single instrument strip pinned to the bottom of
+   the scroll cue) lives in a single instrument strip pinned to the bottom of
    the viewport. That strip is the "Deployed Systems Console" idea taken
-   literally, and it is the one mechanic no other section on the page uses. */
+   literally, and it is the one mechanic no other section on the page uses.
+
+   The entrance is CSS, not GSAP: the library was riding in the main bundle for
+   this one stagger, which is real weight on a mobile connection. */
 export function Hero() {
   const { t, lang } = useI18n()
   const h = t.hero
   const resumeHref = lang === 'es' ? LINKS.resumeEs : LINKS.resumeEn
-  const gridRef = useRef<HTMLDivElement>(null)
-
-  useLayoutEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const ctx = gsap.context(() => {
-      gsap.from('[data-hero]', {
-        y: 26,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        stagger: 0.1,
-        delay: 0.1,
-      })
-    }, gridRef)
-    return () => ctx.revert()
-  }, [])
 
   return (
     <section className="hero" id="top">
@@ -57,7 +43,7 @@ export function Hero() {
         </LazyViz>
       </div>
 
-      <div className="hero__inner" ref={gridRef}>
+      <div className="hero__inner">
         <div className="hero__grid container container--wide">
           <h1 className="hero__name display" data-hero="1">
             {h.name}

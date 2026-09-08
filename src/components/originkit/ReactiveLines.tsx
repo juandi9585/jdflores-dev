@@ -95,7 +95,8 @@ function useCanvasAnimation({
         const st = stateRef.current
 
         const setup = () => {
-            const dpr = window.devicePixelRatio || 1
+            // LOCAL MODIFICATION: cap the backing store (see KineticGrid).
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
             const rect = container.getBoundingClientRect()
             st.width = rect.width
             st.height = rect.height

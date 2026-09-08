@@ -119,6 +119,22 @@ a {
   text-decoration-thickness: 1px;
 }
 
+/* Android paints its own blue flash over every tap, overriding the amber
+   system; take the highlight back and express it through :active instead. */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: none) {
+  a:active,
+  button:active {
+    opacity: 0.65;
+  }
+}
+
 /* ---- typography primitives ---- */
 .display {
   font-family: var(--font-display);

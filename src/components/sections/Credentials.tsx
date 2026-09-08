@@ -1,5 +1,6 @@
 import { useI18n } from '../../i18n/I18nProvider'
 import { useReveal } from '../../hooks/useReveal'
+import { Disclosure } from '../ui/Disclosure'
 
 /* Composition: hanging indent. The heading sits in the left margin, baseline
    aligned beside the first row, never stacked above it. Every credential group
@@ -18,8 +19,12 @@ export function Credentials() {
         </h2>
 
         <div className="cred__table">
-          <div className="cred__group" data-reveal-item>
-            <h3 className="cred__k mono">{c.eduLabel}</h3>
+          <Disclosure
+            className="cred__group"
+            headingClassName="cred__k mono"
+            heading={c.eduLabel}
+            revealItem
+          >
             <div className="cred__rows">
               {c.education.map((e, i) => (
                 <div className="cred__row" key={i}>
@@ -34,10 +39,14 @@ export function Credentials() {
                 </div>
               ))}
             </div>
-          </div>
+          </Disclosure>
 
-          <div className="cred__group" data-reveal-item>
-            <h3 className="cred__k mono">{c.certLabel}</h3>
+          <Disclosure
+            className="cred__group"
+            headingClassName="cred__k mono"
+            heading={c.certLabel}
+            revealItem
+          >
             <div className="cred__rows">
               {c.certs.map((cert, i) => (
                 <div className="cred__row" key={i}>
@@ -49,10 +58,14 @@ export function Credentials() {
                 </div>
               ))}
             </div>
-          </div>
+          </Disclosure>
 
-          <div className="cred__group" data-reveal-item>
-            <h3 className="cred__k mono">{c.langLabel}</h3>
+          <Disclosure
+            className="cred__group"
+            headingClassName="cred__k mono"
+            heading={c.langLabel}
+            revealItem
+          >
             <div className="cred__rows">
               {c.languages.map((l, i) => (
                 <div className="cred__row" key={i}>
@@ -63,10 +76,14 @@ export function Credentials() {
                 </div>
               ))}
             </div>
-          </div>
+          </Disclosure>
 
-          <div className="cred__group" data-reveal-item>
-            <h3 className="cred__k mono">{c.beyondLabel}</h3>
+          <Disclosure
+            className="cred__group"
+            headingClassName="cred__k mono"
+            heading={c.beyondLabel}
+            revealItem
+          >
             <div className="cred__rows">
               {c.beyond.map((b, i) => (
                 <div className="cred__row" key={i}>
@@ -76,7 +93,7 @@ export function Credentials() {
                 </div>
               ))}
             </div>
-          </div>
+          </Disclosure>
         </div>
       </div>
     </section>

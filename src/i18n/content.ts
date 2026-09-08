@@ -39,7 +39,7 @@ export type EduItem = {
 export type CertItem = { name: string; issuer: string; year?: string }
 
 export type Content = {
-  nav: { about: string; impact: string; work: string; stack: string; method: string; contact: string; resume: string }
+  nav: { about: string; impact: string; work: string; stack: string; method: string; contact: string; resume: string; close: string }
   hero: {
     role: string
     name: string
@@ -74,10 +74,12 @@ export type Content = {
     phoneLabel: string
     linkedinLabel: string
     githubLabel: string
+    whatsappLabel: string
     locationLabel: string
     location: string
     cta: string
   }
+  meta: { title: string; description: string }
   footer: { rights: string }
 }
 
@@ -89,6 +91,7 @@ export const LINKS = {
   linkedin: 'https://www.linkedin.com/in/juan-diego-flores-686334268/',
   linkedinHandle: '/juan-diego-flores',
   github: 'https://github.com/juandi9585',
+  whatsapp: 'https://wa.me/584149257525',
   githubHandle: '@juandi9585',
   // BASE_URL keeps these correct under the GitHub Pages sub-path. They are plain
   // string literals, so unlike asset URLs in index.html Vite does not rewrite them.
@@ -97,7 +100,7 @@ export const LINKS = {
 }
 
 export const en: Content = {
-  nav: { about: 'About', impact: 'Impact', work: 'Trajectory', stack: 'Stack', method: 'AI-first', contact: 'Contact', resume: 'Résumé' },
+  nav: { about: 'About', impact: 'Impact', work: 'Trajectory', stack: 'Stack', method: 'AI-first', contact: 'Contact', resume: 'Résumé', close: 'Close menu' },
   hero: {
     role: 'Systems Engineer · AI Specialist',
     name: 'Juan Diego Flores',
@@ -252,15 +255,21 @@ export const en: Content = {
     phoneLabel: 'Phone',
     linkedinLabel: 'LinkedIn',
     githubLabel: 'GitHub',
+    whatsappLabel: 'WhatsApp',
     locationLabel: 'Based in',
     location: 'Caracas, Venezuela',
     cta: 'Email me',
+  },
+  meta: {
+    title: 'Juan Diego Flores — Systems Engineer & AI Specialist',
+    description:
+      'Freelance systems engineer building autonomous agents and full-stack systems. Cut banking operating costs by 94%.',
   },
   footer: { rights: 'All rights reserved.' },
 }
 
 export const es: Content = {
-  nav: { about: 'Perfil', impact: 'Impacto', work: 'Trayectoria', stack: 'Stack', method: 'AI-first', contact: 'Contacto', resume: 'CV' },
+  nav: { about: 'Perfil', impact: 'Impacto', work: 'Trayectoria', stack: 'Stack', method: 'AI-first', contact: 'Contacto', resume: 'CV', close: 'Cerrar menú' },
   hero: {
     role: 'Ingeniero de Sistemas · Especialista en IA',
     name: 'Juan Diego Flores',
@@ -415,9 +424,15 @@ export const es: Content = {
     phoneLabel: 'Teléfono',
     linkedinLabel: 'LinkedIn',
     githubLabel: 'GitHub',
+    whatsappLabel: 'WhatsApp',
     locationLabel: 'Ubicado en',
     location: 'Caracas, Venezuela',
     cta: 'Escríbeme',
+  },
+  meta: {
+    title: 'Juan Diego Flores — Ingeniero de Sistemas y Especialista en IA',
+    description:
+      'Ingeniero de sistemas freelance. Construyo agentes autónomos y sistemas full-stack que redujeron los costos operativos de la banca en un 94%.',
   },
   footer: { rights: 'Todos los derechos reservados.' },
 }

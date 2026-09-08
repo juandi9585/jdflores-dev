@@ -13,7 +13,7 @@ type Options = {
  * Respects prefers-reduced-motion by revealing immediately.
  */
 export function useReveal<T extends HTMLElement = HTMLDivElement>(options: Options = {}) {
-  const { stagger = false, threshold = 0.18, once = true } = options
+  const { stagger = false, threshold = 0.02, once = true } = options
   const ref = useRef<T>(null)
 
   useEffect(() => {
@@ -42,7 +42,10 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(options: Optio
           }
         })
       },
-      { threshold, rootMargin: '0px 0px -8% 0px' },
+      // A momentum flick on a phone outruns a late reveal: content used to stay
+      // invisible until roughly half a screen past its own top, so you landed in
+      // blank regions and waited. Fire early instead.
+      { threshold, rootMargin: '0px 0px 12% 0px' },
     )
 
     io.observe(el)

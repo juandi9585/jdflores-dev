@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { useReveal } from '../../hooks/useReveal'
 import { LazyViz } from '../originkit/LazyViz'
+import { Disclosure } from '../ui/Disclosure'
 
 const KineticGrid = lazy(() => import('../originkit/KineticGrid'))
 
@@ -60,17 +61,22 @@ export function Trajectory() {
                 {i === 0 && <span className="tl__now">{tr.nowLabel}</span>}
                 {r.period}
               </div>
-              <div className="tl__body">
-                <h3 className="tl__title">{r.title}</h3>
-                <p className="tl__company">
-                  {r.company} <span className="tl__loc">{r.location}</span>
-                </p>
+              <Disclosure
+                className="tl__body"
+                heading={r.title}
+                headingClassName="tl__title"
+                meta={
+                  <p className="tl__company">
+                    {r.company} <span className="tl__loc">{r.location}</span>
+                  </p>
+                }
+              >
                 <ul className="tl__points">
                   {r.points.map((p, j) => (
                     <li key={j}>{p}</li>
                   ))}
                 </ul>
-              </div>
+              </Disclosure>
             </li>
           ))}
         </ol>

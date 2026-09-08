@@ -34,7 +34,10 @@
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   /* fluid modular scale (min 320px → max 1440px) */
-  --step--2: clamp(0.69rem, 0.66rem + 0.16vw, 0.79rem);
+  /* floor raised to 12px: this step carries every data label on the site
+     (ledger notes, spec keys, credential years, contact keys) and 11px does
+     not survive a phone screen outdoors */
+  --step--2: clamp(0.75rem, 0.72rem + 0.14vw, 0.82rem);
   --step--1: clamp(0.83rem, 0.79rem + 0.22vw, 0.95rem);
   --step-0: clamp(1rem, 0.95rem + 0.24vw, 1.15rem);
   --step-1: clamp(1.2rem, 1.11rem + 0.44vw, 1.5rem);
