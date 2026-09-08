@@ -356,12 +356,42 @@ export default function InteractiveLines(props: any) {
                 }))
         }
 
+        // LOCAL MODIFICATION — touch support.
+        // Upstream deferred the rAF loop until the first `mousemove`, which a
+        // phone never fires: the field stayed frozen on exactly the devices
+        // most people use. A finger now drives the same target the cursor
+        // does, and scrolling past the section is enough to bring it to life
+        // even before anything is touched.
+        const start = () => {
+            if (started) return
+            started = true
+            ;(canvasRef.current as any)?.__canvasStart?.()
+        }
+
+        const onTouch = (ev: TouchEvent) => {
+            if (!stateRef.current.isVisible) return
+            const touch = ev.touches[0]
+            if (!touch) return
+            mouseRef.current.targetX = touch.clientX - t.left
+            mouseRef.current.targetY = touch.clientY - t.top
+            start()
+        }
+
+        const onScroll = () => {
+            i()
+            if (stateRef.current.isVisible) start()
+        }
+
         document.addEventListener("mousemove", r, { passive: true })
-        window.addEventListener("scroll", i, { passive: true })
+        document.addEventListener("touchstart", onTouch, { passive: true })
+        document.addEventListener("touchmove", onTouch, { passive: true })
+        window.addEventListener("scroll", onScroll, { passive: true })
 
         return () => {
             document.removeEventListener("mousemove", r)
-            window.removeEventListener("scroll", i)
+            document.removeEventListener("touchstart", onTouch)
+            document.removeEventListener("touchmove", onTouch)
+            window.removeEventListener("scroll", onScroll)
             n && cancelAnimationFrame(n)
         }
     }, [containerRef, stateRef, canvasRef])
