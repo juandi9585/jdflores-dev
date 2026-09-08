@@ -423,3 +423,68 @@ derivado (`letter-spacing: 0.08em` sobre texto en minúsculas, que es tracking d
 La franja quedó en minúsculas con el tracking por defecto de `.mono` y padding real bajo la
 regla. **Saldo neto: 0 hallazgos nuevos**; siguen solo los 3 ya clasificados como no-defectos
 en §11.4.
+
+---
+
+## 14. Pasada mobile-first (2026-09-08)
+
+Segunda crítica `/impeccable`, esta vez tratando el **móvil como caso principal**.
+Puntuó **16/32** con lente móvil (no comparable con el 21/36 anterior: otro conjunto de
+heurísticas y otra pregunta). Snapshot en
+`.impeccable/critique/2026-09-08T21-35-12Z__src-app-tsx.md`.
+
+### 14.1 El diagnóstico
+La hoja de estilos tenía **tres media queries, todas `max-width`**: cada regla de teléfono era
+una *resta* de una composición de escritorio. Consecuencia directa: **cinco de las ocho
+mecánicas de §11 no existían a 390px** (Credentials, Contact y Stack colapsaban a `1fr`;
+`.tj__rule` quedaba en un guion de 32px; la marginalia de AI-First en una línea gris suelta).
+La página cuya premisa era "ninguna primitiva de cabecera compartida" llegaba al teléfono con
+una primitiva de facto: **título en negrita + lista**.
+
+### 14.2 Peso — lo que más cambió
+- **`LazyViz` ahora aborta en punteros gruesos.** Ninguno de los tres canvas monta en teléfono
+  y **three.js nunca se descarga**. Los análogos CSS ocupan su lugar.
+- **El fallback del hero se rediseñó como esfera de puntos** (`radial-gradient` de 0,9px +
+  máscara), para que el teléfono reciba un objeto diseñado y no una ausencia.
+- **GSAP eliminado** (viajaba en el bundle principal por *una* animación, ahora `@keyframes`)
+  junto con `framer-motion`, que ya estaba muerto.
+- **`KineticGrid` y `ReactiveLines` capan el `devicePixelRatio`** a 1.5, como ya hacía
+  `ParticleSphere`. Sin tope, el canvas del timeline se dimensionaba a ~9,9 megapíxeles.
+- **Resultado medido en producción: JS móvil de ~214 KB a 66 KB transferidos.**
+
+> ⚠️ **Trampa que costó encontrar:** el import dinámico **se disparaba igual** aunque el canvas
+> no montara. `useMediaQuery` resolvía en un `useEffect`, así que en el primer render
+> `coarse` era `false`, `LazyViz` montaba el hijo una vez, y eso bastaba para bajar el chunk.
+> Se arregló evaluando la media query **de forma síncrona** en el inicializador de `useState`.
+> Verificado contra el build de producción, no contra el dev server (donde Vite pre-empaqueta
+> `three` y el resultado engaña).
+
+### 14.3 Alcance
+- **Barra de acción fija en móvil** (`MobileActionBar.tsx`) con CV · WhatsApp · Escríbeme. El CV
+  existía en la pantalla 1 y en ningún otro sitio; el email era un enlace de 20px en la 11.
+- **Drawer rehecho como hoja inferior**: `role="dialog"`, `aria-modal`, foco gestionado, barra
+  de cierre alcanzable, y **lock con `position: fixed`** (el de `overflow` no funciona en iOS
+  Safari). 5 de 7 enlaces quedan en la zona del pulgar; antes 0.
+- **Objetivos táctiles: de 18 incumplimientos a 0.** El suelo tipográfico `--step--2` subió a
+  12px, lo que arregla de raíz los avisos de `tiny-text`.
+
+### 14.4 Extensión
+`Disclosure` (`ui/Disclosure.tsx`) colapsa Trajectory y Credentials **solo en el teléfono**; en
+viewport ancho renderiza todo expandido y **sin ningún control**, así que el desktop queda
+intacto. Usa el patrón canónico `heading > button`.
+**Español móvil: 13,07 → 10,26 pantallas** (Trajectory −45%, Credentials −68%).
+
+### 14.5 Mercado
+`og:image` generado con `npm run og` (`scripts/make-og.mjs`, compone la tarjeta en vez de
+capturar el sitio, porque el WebGL sale negro en headless), `canonical`, `og:locale`, y
+**título y descripción que cambian con el idioma** desde `I18nProvider`. Enlace `wa.me`,
+"Caracas" de vuelta en la franja del hero, y un `<noscript>` con los datos de contacto.
+
+### 14.6 Detector — falsos positivos a no perseguir
+La corrida final deja 6 hallazgos y **ninguno es accionable**:
+- `hero__sphere-fallback` / `lineflow` marcados como "Cyan gradient background": el primero es
+  un **patrón de puntos** de 0,9px (no un degradado) y el segundo está en `display: none` en
+  móvil — **el detector inspecciona elementos que no se renderizan**.
+- `dark-glow (#ffba00)`: el overlay del propio detector (el proyecto no tiene ni una sombra).
+- `clipped-overflow-container` en `#top`: el recorte intencional del canvas (§7).
+- `em-dash-overuse`: texto del CV.
