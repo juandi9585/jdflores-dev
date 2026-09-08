@@ -261,6 +261,7 @@ Cada sección abre con su propia mecánica, en su propio namespace, y **ninguna 
 
 | Sección | Mecánica | Clases |
 |---|---|---|
+| **Hero** | **Masthead + barra de instrumentos**: nombre y tesis como una sola masa tipográfica; todo el metadato baja a una franja anclada al fondo | `.hero__grid` / `.hero__status` |
 | About | Run-in: el h2 va inline y el párrafo sigue en el mismo flujo | `.about__runin` / `.about__lead-in` |
 | Impact | Ledger con reglas; las cifras llevan el display, el h2 baja a `<caption>` | `.ledger*` |
 | Trajectory | Espina + regla; los extremos del raíl (Now → 2023) llevan el display | `.tj__spine` / `.tj__bracket` |
@@ -269,8 +270,8 @@ Cada sección abre con su propia mecánica, en su propio namespace, y **ninguna 
 | Credentials | Sangría francesa; "beyond" promovido a filas pares | `.cred__hang` / `.cred__group` |
 | Contact | Par alineado por línea base, 50/50 | `.contact__pair` |
 
-Los 7 h2 siguen existiendo y en orden de DOM (accesibilidad), pero con tamaños de 16 a 34 px:
-ninguno es un título apilado.
+Los 7 h2 de sección siguen existiendo y en orden de DOM (accesibilidad), con tamaños de 16 a
+34 px: ninguno es un título apilado. El `h1` del hero es el nombre.
 
 ### 11.3 Bugs corregidos
 - **P0 — titular ES cortado en móvil.** A 390 px, `.contact__title` medía **424,8 px** con borde
@@ -364,3 +365,61 @@ real: 94% en la tesis del hero y en el ledger, enlace de CV correcto por idioma
 (`/jdflores-dev/Juan-Diego-Flores-CV-ES.pdf`), GitHub enlazado, **0 elementos del patrón
 prohibido**, 7 `h2`, y a 390 px en español el titular cierra en **368,7 px** sin scroll
 horizontal.
+
+---
+
+## 13. Segunda pasada: el hero (2026-09-08)
+
+**El hero se había quedado fuera de §11** porque la crítica lo había marcado como "la parte
+autorada" de la página. Juan lo detectó al entrar al sitio ya desplegado: era **exactamente el
+patrón prohibido** — etiqueta pequeña con punto cian → nombre enorme → tesis → texto gris
+pequeño → fila de metadatos. El patrón completo, incluido el "otro tag pequeño" del final.
+
+### 13.1 Composición nueva: masthead + barra de instrumentos
+- **Nada etiqueta al nombre por arriba y nada lo describe por abajo.** `hero__role`,
+  `hero__dot`, `hero__tagline`, `hero__meta` y `hero__scroll` fueron eliminados.
+- El **nombre y la tesis** se leen como un solo bloque tipográfico (`margin-top: 0.35em` entre
+  ambos), no como "título grande + descripción".
+- Todo el metadato (rol, ubicación, disponibilidad, señal de scroll) baja a una **franja de
+  estado anclada al fondo del viewport**, con hairline superior y separadores verticales. Es el
+  concepto "Deployed Systems Console" tomado literalmente, y es la **octava mecánica**: ninguna
+  otra sección la usa.
+- El campo `hero.tagline` quedó sin uso y **se eliminó del tipo y de ambos idiomas** (el mismo
+  punto de freelance/Claude Code ya lo hacen About y AI-First).
+
+### 13.2 ⚠️ Modificación local a `ParticleSphere.tsx` (componente vendorizado)
+La esfera **impedía scrollear en móvil**. La causa estaba en el componente de Originkit:
+`handleTouchMove` llamaba `event.preventDefault()` con el comentario literal
+`// Prevent scrolling`, y ambos listeners estaban registrados con `passive: false`. Es decir,
+la esfera se tragaba cada gesto vertical sobre el canvas.
+
+**Bloquear la esfera no era la solución** (Juan quiere conservar la interacción). El arreglo:
+
+1. Quitados los `preventDefault()` de `handleTouchMove` y `handleTouchStart`.
+2. Ambos listeners pasan a `passive: true`.
+3. El canvas declara **`touch-action: pan-y`** (`.hero__viz, .hero__viz canvas`).
+
+Resultado: el navegador se queda con el gesto vertical (la página scrollea) mientras el
+componente **sigue recibiendo las coordenadas táctiles**, así que un swipe scrollea *y* agita
+las partículas a la vez, y un tap sigue disparando el scatter.
+
+> **Las tres modificaciones están marcadas con `LOCAL MODIFICATION` en el archivo.** Si alguna
+> vez se re-extrae el componente desde `_originkit-raw/`, **hay que volver a aplicarlas** o el
+> scroll móvil se rompe otra vez sin aviso.
+
+Verificado despachando un `touchmove` cancelable sobre el canvas: `defaultPrevented === false`
+en producción, con `touch-action: pan-y` computado.
+
+### 13.3 La esfera ya no tapa el texto
+En móvil la esfera se renderizaba **justo detrás de la tesis**, destrozando la legibilidad
+(visible en la captura que envió Juan). Como el nombre está alineado a la izquierda y con medida
+corta, el **cuadrante superior derecho es la única región sin copy**: ahí se ancló
+(`top: 6%; right: -34%; width: min(82vw, 400px); opacity: .5`).
+
+### 13.4 Detector
+El hero nuevo introdujo 2 hallazgos que se corrigieron en el momento — `all-caps-body` (41
+caracteres en mayúsculas en la franja) y "children flush against border-top" — más un tercero
+derivado (`letter-spacing: 0.08em` sobre texto en minúsculas, que es tracking de versalitas).
+La franja quedó en minúsculas con el tracking por defecto de `.mono` y padding real bajo la
+regla. **Saldo neto: 0 hallazgos nuevos**; siguen solo los 3 ya clasificados como no-defectos
+en §11.4.
