@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
-import { useCoarsePointer } from '../../hooks/useMediaQuery'
 
 type Props = {
   children: ReactNode
@@ -14,26 +13,24 @@ type Props = {
 
 /**
  * Mounts a heavy generative component only when it scrolls near the viewport,
- * and never when the user prefers reduced motion or is on a touch device.
- * Pairs with React.lazy so the component's WebGL / animation code is
- * code-split out of the main bundle.
+ * and never when the user prefers reduced motion. Pairs with React.lazy so the
+ * component's WebGL / animation code is code-split out of the main bundle.
  *
- * The coarse-pointer bail is the important one on mobile. All three of these
- * effects are cursor-driven: on a touch screen they paint one static frame and
- * then react to nothing, while still allocating their full canvas backing
- * store (the timeline grid alone sized to ~9.9 megapixels at DPR 3) and, for
- * the hero, fetching three.js over an expensive mobile connection. Phones get
- * the hand-built CSS analogue in `reducedFallback` instead, which is the same
- * picture for none of the cost.
+ * These canvases are the site's signature and they ship on every device,
+ * phones included. An earlier pass skipped them on touch to save weight; that
+ * removed the most distinctive thing on the page to fix a cost that belonged
+ * to the components themselves. The cost is handled where it is created
+ * instead — capped pixel ratios, bounded canvas heights, and real touch
+ * handlers so the effects actually run under a thumb. `reducedFallback` is now
+ * only what its name says: the reduced-motion path.
  */
 export function LazyViz({ children, className, eager = false, rootMargin = '300px', reducedFallback = null }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const reduced = useReducedMotion()
-  const coarse = useCoarsePointer()
   const [mount, setMount] = useState(false)
 
   useEffect(() => {
-    if (reduced || coarse) {
+    if (reduced) {
       setMount(false)
       return
     }
@@ -54,7 +51,7 @@ export function LazyViz({ children, className, eager = false, rootMargin = '300p
     )
     io.observe(el)
     return () => io.disconnect()
-  }, [reduced, coarse, eager, rootMargin])
+  }, [reduced, eager, rootMargin])
 
   return (
     <div ref={ref} className={className} style={{ width: '100%', height: '100%' }} aria-hidden="true">
