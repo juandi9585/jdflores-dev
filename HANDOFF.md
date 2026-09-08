@@ -442,8 +442,8 @@ La página cuya premisa era "ninguna primitiva de cabecera compartida" llegaba a
 una primitiva de facto: **título en negrita + lista**.
 
 ### 14.2 Peso — lo que más cambió
-- **`LazyViz` ahora aborta en punteros gruesos.** Ninguno de los tres canvas monta en teléfono
-  y **three.js nunca se descarga**. Los análogos CSS ocupan su lugar.
+- ~~`LazyViz` aborta en punteros gruesos~~ **❌ REVERTIDO — ver §15.** Fue un error: eliminó los
+  tres canvas en móvil, que son lo más distintivo del sitio.
 - **El fallback del hero se rediseñó como esfera de puntos** (`radial-gradient` de 0,9px +
   máscara), para que el teléfono reciba un objeto diseñado y no una ausencia.
 - **GSAP eliminado** (viajaba en el bundle principal por *una* animación, ahora `@keyframes`)
@@ -488,3 +488,39 @@ La corrida final deja 6 hallazgos y **ninguno es accionable**:
 - `dark-glow (#ffba00)`: el overlay del propio detector (el proyecto no tiene ni una sombra).
 - `clipped-overflow-container` en `#top`: el recorte intencional del canvas (§7).
 - `em-dash-overuse`: texto del CV.
+
+---
+
+## 15. Corrección: los canvas vuelven al móvil (2026-09-08)
+
+**Qué salió mal.** En §14 interpreté "rediseño móvil radical" como *quitar peso* y desactivé
+los tres canvas de Originkit en `(pointer: coarse)`. Juan lo rechazó: son los elementos más
+distintivos del sitio, y además dejó la esfera del hero **sin interacción en móvil**, lo que
+contradecía una instrucción suya anterior y explícita ("me gusta que se pueda interactuar con
+la esfera, bloquearla no es la solución").
+
+El propio reference de `adapt` lo dice sin ambigüedad: **"NEVER hide core functionality on
+mobile — if it matters, make it work"** y *"the trap is treating adaptation as scaling"*. Yo lo
+traté como eliminación, que es peor.
+
+**Regla para el futuro: el costo se resuelve donde se origina, nunca quitando la función.**
+
+### 15.1 Los tres vuelven, adaptados
+| Componente | Problema real | Adaptación |
+|---|---|---|
+| `ParticleSphere` | 121 KB gzip; aparcada fuera del alcance del pulgar | Se mantiene e **interactúa al tacto**; en `coarse` usa 4200 partículas en vez de 8000, mayor `particleScale` y `cursorRadiusUI` 92. Reubicada para tener presencia real |
+| `ReactiveLines` | **Congelada**: arrancaba el rAF solo con `mousemove`, sin ningún listener táctil | `touchstart`/`touchmove` en `document` + arranque al hacer scroll estando visible. Marcado `LOCAL MODIFICATION` |
+| `KineticGrid` | Se dimensionaba a los ~2800px de la sección → 9,91 MP (~37,8 MB) | `.trajectory__bg` capado a `min(100%, 130svh)` con máscara inferior: **3,7 MB**. Ya tenía listeners táctiles; nunca estuvo roto, solo inactivo sin input |
+
+**Memoria total de canvas: ~59 MB → ~10 MB, sin quitar nada.**
+
+### 15.2 Trampa de verificación
+Al comprobar si un canvas anima, **muestrea el canvas completo y corre antes un control con
+`mousemove`**. Muestrear una esquina pequeña da "estático" aunque el efecto esté corriendo:
+así diagnostiqué mal a `KineticGrid` la primera vez. La prueba buena compara
+`mouseDrivesIt` contra `touchDrivesIt` sobre todo el buffer.
+
+### 15.3 Lo de §14 que SÍ se mantiene
+Divulgación progresiva en Trajectory/Credentials (solo teléfono), barra de acción fija, drawer
+como hoja inferior con lock `position: fixed`, objetivos táctiles ≥44×44, suelo tipográfico de
+12px, GSAP y framer-motion fuera, `og:image` y meta por idioma, WhatsApp y "Caracas".
