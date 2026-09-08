@@ -77,6 +77,18 @@ This manual push is used because the local `gh` token lacks the `workflow` scope
 `gh auth refresh -s workflow`, then add a Pages workflow and switch the Pages source to
 "GitHub Actions". `vercel.json` is still present if you'd rather deploy there.
 
+## Mobile
+
+Mobile is treated as the primary case, not an adaptation. No canvas mounts on a coarse
+pointer, so a phone never downloads three.js — the hand-built CSS analogues stand in and
+mobile ships ~66KB of JS instead of ~214KB. `useMediaQuery` resolves synchronously in a
+`useState` initialiser on purpose: reading it in an effect let the dynamic import fire before
+the answer arrived. Trajectory and Credentials collapse behind taps on the phone only
+(`ui/Disclosure.tsx`); a wide viewport renders them expanded with no control at all. A
+persistent action bar carries résumé, WhatsApp and email in the thumb zone.
+
+Regenerate the share card with `npm run og` after changing the hero copy.
+
 ## Accessibility & performance
 
 Responsive to mobile · keyboard focus states · `prefers-reduced-motion` respected ·
