@@ -928,7 +928,12 @@ export default function ParticleSphereRefactor({
 
         // Track touch position for particle repulsion
         const handleTouchMove = (event: TouchEvent) => {
-            event.preventDefault() // Prevent scrolling
+            // LOCAL MODIFICATION (see HANDOFF): upstream called
+            // event.preventDefault() here, which made the sphere swallow every
+            // vertical swipe and left the hero unscrollable on touch devices.
+            // The listener is passive now and the canvas sets touch-action:
+            // pan-y, so the browser owns vertical panning while the sphere
+            // still receives the coordinates it needs to react.
             const containerRect = container.getBoundingClientRect()
             const touch = event.touches[0]
             if (touch) {
@@ -1080,7 +1085,8 @@ export default function ParticleSphereRefactor({
         const handleTouchStart = (event: TouchEvent) => {
             if (!cursorConfig.enabled || !cursorConfig.clickForce) return
 
-            event.preventDefault()
+            // LOCAL MODIFICATION: no preventDefault, or the scatter tap would
+            // also cancel the scroll gesture before it starts.
 
             // Update matrix to ensure it's current
             particlesGroup.updateMatrixWorld(true)
@@ -1205,10 +1211,10 @@ export default function ParticleSphereRefactor({
             canvas.addEventListener("mouseleave", handleMouseLeaveCursor)
             canvas.addEventListener("click", handleClick)
             canvas.addEventListener("touchmove", handleTouchMove, {
-                passive: false,
+                passive: true,
             })
             canvas.addEventListener("touchstart", handleTouchStart, {
-                passive: false,
+                passive: true,
             })
             canvas.addEventListener("touchend", handleTouchEnd)
             canvas.addEventListener("touchcancel", handleTouchEnd)
