@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-08T00:00:00Z",
+  "title": "Design System: Juan Diego Flores — Deployed Systems Console",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Console Ink", "canonical": "#0a0c10", "tonalRamp": ["#040507", "#0a0c10", "#0d1017", "#111520", "#191e29", "#222836", "#3a4252", "#5f6675"] },
+      "line": { "role": "neutral", "displayName": "Hairline", "canonical": "#222836", "tonalRamp": ["#0d1017", "#141926", "#191e29", "#222836", "#333c4e", "#4a5468", "#6d7789", "#a4acbb"] },
+      "bone": { "role": "neutral", "displayName": "Bone", "canonical": "#eceef3", "tonalRamp": ["#2c3038", "#454b56", "#5f6675", "#8b93a4", "#a9b0bd", "#c3c8d4", "#eceef3", "#fafbfd"] },
+      "muted": { "role": "neutral", "displayName": "Ash", "canonical": "#8b93a4", "tonalRamp": ["#22262e", "#343a45", "#474e5c", "#5f6675", "#767e8e", "#8b93a4", "#aeb4c0", "#d3d7de"] },
+      "amber": { "role": "primary", "displayName": "Signal Amber", "canonical": "#ffb84d", "tonalRamp": ["#3a2a0e", "#5c4213", "#835d19", "#ab7920", "#d2952a", "#ffb84d", "#ffcf82", "#ffe7c2"] },
+      "cyan-signal": { "role": "tertiary", "displayName": "Signal Cyan", "canonical": "#57e0d8", "tonalRamp": ["#0d2b29", "#134441", "#1a5d59", "#227a75", "#2f9d96", "#3fc0b8", "#57e0d8", "#a9f2ee"] },
+      "aero-water": { "role": "primary", "displayName": "Deep Water", "canonical": "#0079bf", "tonalRamp": ["#02202f", "#03344c", "#044a6d", "#005f96", "#0079bf", "#0093e0", "#34c3ff", "#a9dcfb"] },
+      "aero-sky": { "role": "secondary", "displayName": "Bright Sky", "canonical": "#00b2ff", "tonalRamp": ["#00263a", "#003c5c", "#00557f", "#0071a8", "#008fd1", "#00b2ff", "#6dcdff", "#c2e9ff"] },
+      "aero-grass": { "role": "tertiary", "displayName": "Leaf Grass", "canonical": "#6bcb3c", "tonalRamp": ["#152d0a", "#224a11", "#2f6618", "#35800f", "#4ea82a", "#6bcb3c", "#98e074", "#c9f0b3"] },
+      "aero-glass": { "role": "neutral", "displayName": "Sea Glass", "canonical": "#d9e3f0", "tonalRamp": ["#1d2833", "#2e3f50", "#40586e", "#5c7994", "#8aa3bd", "#b6c8dc", "#d9e3f0", "#f1f6fb"] },
+      "aero-bone": { "role": "neutral", "displayName": "Deep Water Ink", "canonical": "#06344f", "tonalRamp": ["#021824", "#06344f", "#073c5c", "#0d4a6e", "#163d54", "#21506b", "#3d789c", "#8fb6cd"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Masthead", "purpose": "The hero name only, at Archivo's 125% width. One per page." },
+      "headline": { "displayName": "Figure", "purpose": "Ledger figures and timeline rail endpoints — numbers, not titles." },
+      "title": { "displayName": "Section-owned head", "purpose": "Heads set inside a section's own mechanic; never a standalone stacked title." },
+      "body": { "displayName": "Body", "purpose": "All prose, measures capped at 46–66ch." },
+      "label": { "displayName": "Instrument label", "purpose": "Mono uppercase keys: nav, spec keys, credential keys, contact keys. Floor is 12px." }
+    },
+    "shadows": [
+      { "name": "dark-none", "value": "none", "purpose": "The dark theme casts no shadows at all; depth is tonal bands plus hairlines." },
+      { "name": "plate-lift", "value": "inset 0 1px 0 rgba(255,255,255,0.98), inset 0 -1px 0 rgba(255,255,255,0.6), 0 6px 16px rgba(0,74,117,0.1)", "purpose": "Light theme: the default raised glass plate." },
+      { "name": "plate-lift-deep", "value": "inset 0 1px 0 rgba(255,255,255,0.98), inset 0 -1px 0 rgba(255,255,255,0.6), 0 18px 40px rgba(0,74,117,0.18)", "purpose": "The closing contact panel — widest and most lifted object on the page." },
+      { "name": "plate-recessed", "value": "inset 0 2px 6px rgba(0,74,117,0.16), inset 0 -1px 0 rgba(255,255,255,0.9)", "purpose": "Credentials, cut into the surface. Casts no reflection." },
+      { "name": "control-gloss", "value": "inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(0,56,90,0.35), 0 3px 12px rgba(0,106,168,0.4)", "purpose": "The aqua lozenge control in the light theme." },
+      { "name": "nav-glass", "value": "inset 0 1px 0 rgba(255,255,255,0.95), 0 6px 22px rgba(0,74,117,0.13)", "purpose": "Light-theme fixed nav panel once scrolled." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.2, 0.8, 0.2, 1)", "purpose": "Default easing for entrances, hovers and reveals." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.65, 0, 0.35, 1)", "purpose": "Symmetric curve for disclosures, so a collapse is not front-loaded." },
+      { "name": "dur-fast", "value": "0.2s", "purpose": "Colour, border and transform state changes on controls." },
+      { "name": "dur", "value": "0.4s", "purpose": "Panels, scrims, nav fade, underline sweeps, theme toggle knob." },
+      { "name": "dur-slow", "value": "0.8s", "purpose": "Long ambient transitions." },
+      { "name": "reveal", "value": "opacity 0.7s / transform 0.7s from translateY(22px), children staggered 80ms", "purpose": "Scroll reveal for sections and their children." },
+      { "name": "hero-in", "value": "heroIn 0.9s ease-out both, delays 0.1/0.2/0.3/0.4s", "purpose": "Four-element hero entrance, no animation library." },
+      { "name": "reduced-motion", "value": "animation-duration: 0.001ms; transition-duration: 0.001ms; reveals forced visible", "purpose": "Global reduced-motion contract; canvases are not mounted at all." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "640px" },
+      { "name": "mobile-nav", "value": "900px" },
+      { "name": "tablet", "value": "1024px" },
+      { "name": "container", "value": "1200px" },
+      { "name": "container-wide", "value": "1400px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (dark world)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The site's main CTA: amber lozenge-free slab, mono uppercase, with a trailing arrow that steps right on hover.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Download CV<svg class=\"ds-btn-arrow\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.5 8h11\"/><path d=\"M9 3.5 13.5 8 9 12.5\"/></svg></button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; gap: 0.6em; padding: 0.85em 1.4em; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 4px; border: 1px solid #222836; background: transparent; color: #eceef3; cursor: pointer; transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), background 0.2s, border-color 0.2s, color 0.2s; } .ds-btn-primary { background: #ffb84d; color: #3a2a0e; border-color: #ffb84d; font-weight: 600; } .ds-btn-primary:hover { background: #ffcf82; border-color: #ffcf82; transform: translateY(-2px); } .ds-btn-primary:focus-visible { outline: 2px solid #ffb84d; outline-offset: 3px; } .ds-btn-arrow { width: 1.05em; height: 1.05em; transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1); } .ds-btn:hover .ds-btn-arrow { transform: translateX(3px); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action: hairline border on the page ground, bone type, accent border on hover.",
+      "html": "<button class=\"ds-btn-ghost\">See the work</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 0.6em; padding: 0.85em 1.4em; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #eceef3; background: transparent; border: 1px solid #222836; border-radius: 4px; cursor: pointer; transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s, color 0.2s; } .ds-btn-ghost:hover { transform: translateY(-2px); border-color: rgba(255,184,77,0.32); } .ds-btn-ghost:focus-visible { outline: 2px solid #ffb84d; outline-offset: 3px; } .ds-btn-ghost:active { opacity: 0.65; }"
+    },
+    {
+      "name": "Aqua Button (light world)",
+      "kind": "button",
+      "refersTo": "button-primary-aero",
+      "description": "The Frutiger control: rounded lozenge, water gradient, specular highlight pooling on the top half and stopping at the midline.",
+      "html": "<button class=\"ds-btn-aqua\">Contact me</button>",
+      "css": ".ds-btn-aqua { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 0.6em; padding: 0.85em 1.4em; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 1px rgba(0,56,90,0.45); background: linear-gradient(180deg, #34c3ff 0%, #0093e0 48%, #0079bf 100%); border: 1px solid #0068a6; border-radius: 999px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(0,56,90,0.35), 0 3px 12px rgba(0,106,168,0.4); transition: background 0.2s cubic-bezier(0.2,0.8,0.2,1), transform 0.2s; } .ds-btn-aqua::before { content: ''; position: absolute; inset: 1px 1px auto 1px; height: 46%; border-radius: 999px 999px 40% 40% / 999px 999px 22px 22px; background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.16)); pointer-events: none; } .ds-btn-aqua:hover { background: linear-gradient(180deg, #4fcdff 0%, #00a1f2 48%, #0086cf 100%); transform: translateY(-2px); } .ds-btn-aqua:focus-visible { outline: 2px solid #0079bf; outline-offset: 3px; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Mono uppercase link with an accent underline that scales in from the left; the current section keeps it drawn.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#about\">About</a><a class=\"ds-nav-link\" href=\"#impact\" aria-current=\"true\">Impact</a><a class=\"ds-nav-link\" href=\"#contact\">Contact</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 2rem; } .ds-nav-link { position: relative; padding: 0.4em 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: #8b93a4; text-decoration: none; transition: color 0.2s cubic-bezier(0.2,0.8,0.2,1); } .ds-nav-link::after { content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: #ffb84d; transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1); } .ds-nav-link:hover, .ds-nav-link[aria-current] { color: #eceef3; } .ds-nav-link:hover::after, .ds-nav-link[aria-current]::after { transform: scaleX(1); } .ds-nav-link:focus-visible { outline: 2px solid #ffb84d; outline-offset: 3px; }"
+    },
+    {
+      "name": "Glass Plate (light world container)",
+      "kind": "card",
+      "refersTo": "plate-aero",
+      "description": "The light theme's only container: raised wet glass with a specular edge and a wet reflection pooling below its lower edge.",
+      "html": "<div class=\"ds-plate\"><p class=\"ds-plate-body\">Autonomous agents and full-stack systems, shipped into production banking environments.</p></div>",
+      "css": ".ds-plate { position: relative; padding: clamp(1.25rem, 2.4vw, 2.25rem); color: #06344f; background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.66)); border: 1px solid rgba(255,255,255,0.92); border-radius: 20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.98), inset 0 -1px 0 rgba(255,255,255,0.6), 0 6px 16px rgba(0,74,117,0.1); backdrop-filter: blur(8px) saturate(1.15); -webkit-backdrop-filter: blur(8px) saturate(1.15); } .ds-plate::after { content: ''; position: absolute; left: 4%; right: 4%; top: 100%; height: 34px; background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(226,244,255,0.55) 38%, rgba(255,255,255,0) 100%); mix-blend-mode: screen; filter: blur(3px); border-radius: 0 0 46% 46% / 0 0 100% 100%; pointer-events: none; } .ds-plate-body { margin: 0; font-family: Archivo, system-ui, sans-serif; font-size: 1.05rem; line-height: 1.6; }"
+    },
+    {
+      "name": "Ledger Row",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The Impact mechanic: a ruled table row where the figure carries the display type and the source note is mono. The first row is the only accent figure in the section.",
+      "html": "<table class=\"ds-ledger\"><tr class=\"ds-ledger-row ds-ledger-row-lead\"><td class=\"ds-ledger-figure\">94%</td><td class=\"ds-ledger-what\">operating-cost reduction</td><td class=\"ds-ledger-where\">Autonomous support solution, production banking</td></tr><tr class=\"ds-ledger-row\"><td class=\"ds-ledger-figure\">90%+</td><td class=\"ds-ledger-what\">man-hours removed</td><td class=\"ds-ledger-where\">Payments migration workflow</td></tr></table>",
+      "css": ".ds-ledger { width: 100%; border-collapse: collapse; text-align: left; color: #eceef3; font-family: Archivo, system-ui, sans-serif; } .ds-ledger-row { border-bottom: 1px solid #191e29; } .ds-ledger-row > * { padding: 2.5rem 1.5rem 2.5rem 0; vertical-align: baseline; font-weight: 400; } .ds-ledger-figure { font-stretch: 120%; font-weight: 800; font-size: 3rem; line-height: 0.95; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; width: 26%; white-space: nowrap; } .ds-ledger-row-lead .ds-ledger-figure { color: #ffb84d; } .ds-ledger-what { font-size: 1.3rem; font-weight: 500; width: 30%; } .ds-ledger-where { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.8rem; color: #8b93a4; line-height: 1.55; }"
+    },
+    {
+      "name": "Availability Pulse",
+      "kind": "chip",
+      "refersTo": null,
+      "description": "The live-status dot used in the hero strip and the contact panel: a solid dot with a ring expanding out of it. Green in both worlds; the light theme's one green object.",
+      "html": "<span class=\"ds-status\"><span class=\"ds-pulse\"></span>Available for new work</span>",
+      "css": ".ds-status { display: inline-flex; align-items: center; gap: 0.6em; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: #c3c8d4; } .ds-pulse { position: relative; width: 8px; height: 8px; border-radius: 50%; background: #7fd88f; flex: 0 0 auto; } .ds-pulse::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid #7fd88f; animation: dsPulse 2.4s cubic-bezier(0.2,0.8,0.2,1) infinite; } @keyframes dsPulse { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.8); opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-pulse::after { animation: none; } }"
+    },
+    {
+      "name": "Spec Sheet Row",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The Stack mechanic: a two-column key/value grid where the section head occupies the first row of the same grid as the data.",
+      "html": "<div class=\"ds-spec\"><div class=\"ds-spec-row ds-spec-head\"><h2 class=\"ds-spec-title\">What I build with</h2><p class=\"ds-spec-summary\">Tools chosen for what they ship, not for what they signal.</p></div><div class=\"ds-spec-row\"><dt class=\"ds-spec-k\">Backend</dt><dd class=\"ds-spec-v\">Java, Spring Boot, Oracle Service Bus, IBM AS/400 integration.</dd></div></div>",
+      "css": ".ds-spec { border-top: 1px solid #222836; color: #eceef3; font-family: Archivo, system-ui, sans-serif; } .ds-spec-row { display: grid; grid-template-columns: minmax(150px, 24%) 1fr; gap: clamp(1rem, 3vw, 3rem); padding: 1.5rem 0; border-bottom: 1px solid #191e29; align-items: baseline; } .ds-spec-head { padding-block: 2.5rem; } .ds-spec-title { margin: 0; font-stretch: 115%; font-weight: 800; font-size: 2.2rem; line-height: 1.04; letter-spacing: -0.02em; text-wrap: balance; } .ds-spec-summary { margin: 0; color: #8b93a4; font-size: 1.05rem; max-width: 48ch; } .ds-spec-k { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: #8b93a4; } .ds-spec-v { margin: 0; font-size: 1.05rem; color: #c3c8d4; line-height: 1.65; max-width: 62ch; }"
+    },
+    {
+      "name": "Theme Toggle",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "A capsule whose knob slides between the two worlds it names; in the light theme the track becomes aqua and the knob a sky pearl.",
+      "html": "<button class=\"ds-themetoggle\" role=\"switch\" aria-checked=\"true\" aria-label=\"Switch theme\"><span class=\"ds-themetoggle-track\"><span class=\"ds-themetoggle-knob\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.25\" stroke-linecap=\"round\" aria-hidden=\"true\" width=\"12\" height=\"12\"><circle cx=\"8\" cy=\"8\" r=\"3.2\"/><path d=\"M8 1.4v1.6M8 13v1.6M1.4 8h1.6M13 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1\"/></svg></span></span></button>",
+      "css": ".ds-themetoggle { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0; background: none; border: none; cursor: pointer; } .ds-themetoggle-track { position: relative; display: block; width: 46px; height: 25px; border-radius: 999px; background: linear-gradient(180deg, #9fe0ff, #4fc4ff); border: 1px solid rgba(0,121,191,0.45); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 2px rgba(0,74,117,0.25); transition: background 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.4s; } .ds-themetoggle-knob { position: absolute; top: 50%; left: 2px; width: 19px; height: 19px; border-radius: 50%; display: grid; place-items: center; color: #0079bf; background: radial-gradient(circle at 34% 28%, #ffffff, #e8f6ff 44%, #a9dcfb 100%); border: 1px solid rgba(0,121,191,0.45); box-shadow: 0 1px 3px rgba(0,74,117,0.3); transform: translateY(-50%); transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1); } .ds-themetoggle[aria-checked='true'] .ds-themetoggle-knob { transform: translate(21px, -50%); } .ds-themetoggle:focus-visible { outline: 2px solid #0079bf; outline-offset: 3px; border-radius: 999px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Console and the Aquarium Window",
+    "overview": "One instrument, seen in two weathers. The dark world is a deployed-systems console: near-black ink, hairline rules, bone type, a single amber accent that appears once per section and never twice, and cyan held back for generative signal only. Nothing is decorated; everything is ruled, tabulated or bracketed, the way a system that is actually running reports itself.\n\nThe light world is a committed Frutiger Aero aquarium window. A fixed sky layer with a low horizon sits behind the whole page, bubbles drift up through it, and the content rides on raised glass plates that each end in a wet reflection. It is not the dark layout inverted: it is the same content read through glass, with its own material logic, its own rounded geometry and its own accent role.\n\nThe two are held together by one rule of construction: every semantic token keeps its name across themes and only its value changes, so a single scoped stylesheet re-skins the entire surface without touching a component. Both themes are first-class; neither is the default, and the first visit follows the operating system.",
+    "keyCharacteristics": [
+      "One accent per theme, spent sparingly: amber in the dark world, water blue in the light one.",
+      "Eight sections, eight distinct opening mechanics; no shared section head exists to regenerate a template from.",
+      "Fluid modular type ramp (ten steps) driven by Archivo's variable width axis, with IBM Plex Mono carrying all data and labels.",
+      "Dark world: flat, hairline-ruled, no shadows. Light world: layered glass plates, specular edges, wet sheens.",
+      "Browser surfaces (scrollbar, caret, selection, tap highlight) are themed as part of the design, not left to the platform.",
+      "AA contrast holds in both themes; tap targets meet 44×44; reduced motion is honoured everywhere including the canvases."
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Each theme has exactly one accent token, and it is spent once per section. Two accent objects in one screen region means one of them is decoration.", "section": "colors" },
+      { "name": "The Signal Reservation Rule", "body": "Cyan belongs to the generative canvases and to nothing else. If a border, label or button reaches for it, the answer is the accent or a neutral.", "section": "colors" },
+      { "name": "The Four Jobs Rule", "body": "The light world is sky (ground), water (ink, depth, accent), grass (life) and glass (surfaces). There is no fifth colour and no warm colour anywhere in it.", "section": "colors" },
+      { "name": "The Same Name, New Value Rule", "body": "A theme changes values, never token names. A new component styles against the semantic token (--bone, --line, --amber) and is themed for free; a component that hardcodes a hex breaks the second world.", "section": "colors" },
+      { "name": "The No Shared Head Rule", "body": "The stack \"small tag → huge title → small description\" is banned outright, and there is deliberately no shared section-head class in the stylesheet to regenerate it from. A new section invents its own opening mechanic or it does not ship.", "section": "typography" },
+      { "name": "The 12px Floor Rule", "body": "--step--2 bottoms out at 12px. It carries every data label on the site, and smaller does not survive a phone screen outdoors. Nothing is shrunk below it to protect a desktop silhouette.", "section": "typography" },
+      { "name": "The Instrument Numerals Rule", "body": "Anything read as data or compared down a column carries tabular figures (.tnum); anything that is a key rather than a sentence is set in mono, uppercase and tracked.", "section": "typography" },
+      { "name": "The Adapt-Never-Delete Rule", "body": "When something costs too much on a phone, the cost is fixed where it is created — capped pixel ratios, bounded canvas heights, one type step down. Features are not withheld from small screens; the three generative canvases ship on every device, gated only on reduced motion.", "section": "layout" },
+      { "name": "The Reachable Region Rule", "body": "On phones, primary actions live at the bottom: the menu is a bottom sheet under the thumb, and the action bar rises into view once the hero is behind you.", "section": "layout" },
+      { "name": "The Gloss Pools Rule", "body": "Gloss collects where a surface ends — the top edge of a plate, the upper half of a control, the reflection under a panel — and stops there. It never coats a whole element or the page.", "section": "elevation" },
+      { "name": "The Differentiated Plate Rule", "body": "Plates answer to the mechanic they hold, not to each other: the run-in gets a waterline along its top edge, the spec sheet is squared at the head and lifted only at the foot, the claims are a shallow slip of glass, credentials are recessed, the closing panel is the widest and most lifted. Uniform plates would turn eight mechanics back into one container.", "section": "elevation" },
+      { "name": "The Hairline Structure Rule", "body": "In the dark world, structure is drawn with 1px rules and tonal bands. If a dark surface needs a shadow to be legible, its tonal placement is wrong.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do style every new component against semantic tokens (--bone, --line, --amber, --ink-2) so the light stylesheet themes it without a new rule.",
+      "Do give a new section its own opening mechanic, in its own class namespace.",
+      "Do spend the accent once per section: one accent figure, one accent node, one primary button.",
+      "Do set keys, years, counts and any column of compared numbers in mono with tabular figures.",
+      "Do keep prose measures capped (66ch body, 46–48ch leads) and drive display type through Archivo's font-stretch axis.",
+      "Do draw icons as SVG paths on the shared 16-unit grid at 1.25 stroke; Unicode arrows are not an icon system.",
+      "Do theme the browser's own surfaces — scrollbar, caret, selection, tap highlight, theme-color — as part of any new world.",
+      "Do validate at phone width and on touch before calling a change done, and neutralise any :hover that would stick after a tap."
+    ],
+    "donts": [
+      "Don't build an eyebrow → huge title → small lead stack, and don't add a shared section-head class that would make one easy.",
+      "Don't put cyan on type, borders or controls; it belongs to the generative canvases.",
+      "Don't introduce a fifth colour or any warm colour into the light world.",
+      "Don't cast a shadow in the dark theme; separate surfaces with a hairline or a tonal step.",
+      "Don't coat a light-theme surface in gloss — pool it at the edge where the surface stops.",
+      "Don't give every light-theme plate the same radius and lift; the plate answers to its mechanic.",
+      "Don't set any label below 12px, or shrink type to protect a desktop composition.",
+      "Don't drop a feature to make it cheap on a phone; fix the cost where it is created.",
+      "Don't hardcode a hex in a component when a semantic token exists."
+    ]
+  }
+}

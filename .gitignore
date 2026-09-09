@@ -42,7 +42,13 @@ Thumbs.db
 
 # local tooling state
 .claude/
-.impeccable/
+.impeccable/critique/
+.impeccable/live/
+.impeccable/surfaces/
+.impeccable/review/
 
 # impeccable review captures (regenerated per run)
-.impeccable/review/
+.impeccable/critique/
+.impeccable/live/
+.impeccable/surfaces/
+.impeccable/review/review/
