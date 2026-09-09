@@ -24,9 +24,9 @@
 
   /* ---- ink on glass ---- */
   --bone: #06344f; /* deep water — primary text */
-  --bone-dim: #0a4a72;
-  --muted: #33627f;
-  --muted-2: #4c7794;
+  --bone-dim: #073c5c;
+  --muted: #163d54; /* clears 4.5:1 against the deepest water band */
+  --muted-2: #21506b;
 
   /* ---- the accent role: water, not amber ---- */
   --amber: #0079bf;
@@ -61,7 +61,15 @@
   background-image:
     radial-gradient(120% 70% at 50% 108%, rgba(107, 203, 60, 0.32), transparent 62%),
     radial-gradient(90% 55% at 78% 4%, rgba(255, 255, 255, 0.95), transparent 60%),
-    linear-gradient(180deg, #7fd4ff 0%, #b9e6ff 26%, #e2f1fc 58%, #eef7fd 100%);
+    linear-gradient(
+      180deg,
+      #8ad9ff 0%,
+      #b7e6fd 18%,
+      #9ad6f4 42%,
+      #8fcdec 66%,
+      #7cc2e8 86%,
+      #6db8e2 100%
+    );
 }
 
 /* the vignette layer from the dark world becomes sun and water light */
@@ -87,14 +95,20 @@
   pointer-events: none;
   overflow: hidden;
 }
+/* Fill and rim raised until a bubble actually reads as a bubble: at the old
+   0.16 alpha over a pale ground the motif was invisible in every capture. */
 .bubble {
   position: absolute;
   bottom: -18vh;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 30% 26%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.18) 38%, transparent 52%),
-    radial-gradient(circle at 50% 50%, rgba(0, 178, 255, 0.16), rgba(0, 121, 191, 0.1));
-  border: 1px solid rgba(255, 255, 255, 0.7);
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.42) 30%, transparent 46%),
+    radial-gradient(circle at 68% 76%, rgba(255, 255, 255, 0.55), transparent 34%),
+    radial-gradient(circle at 50% 50%, rgba(0, 178, 255, 0.34), rgba(0, 121, 191, 0.3) 78%);
+  border: 1.5px solid rgba(255, 255, 255, 0.92);
+  box-shadow:
+    inset 0 -3px 8px rgba(0, 121, 191, 0.28),
+    0 2px 10px rgba(0, 74, 117, 0.16);
   animation: bubbleRise linear infinite;
 }
 @keyframes bubbleRise {
@@ -343,10 +357,13 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     inset 0 -1px 2px rgba(0, 74, 117, 0.25);
 }
+/* The sun was rendered in gold — a fifth and sixth colour, and the only warm
+   object anywhere on the page, sitting in the masthead. It is a sky pearl now,
+   on the model of the brand mark; the drawn glyph carries sun-versus-moon. */
 :root[data-theme='light'] .themetoggle__knob {
-  color: #b8760a;
-  background: radial-gradient(circle at 34% 28%, #ffffff, #ffe9a8 46%, #ffc93f 100%);
-  border-color: rgba(180, 120, 10, 0.5);
+  color: #0079bf;
+  background: radial-gradient(circle at 34% 28%, #ffffff, #e8f6ff 44%, #a9dcfb 100%);
+  border-color: rgba(0, 121, 191, 0.45);
   box-shadow: 0 1px 3px rgba(0, 74, 117, 0.3);
 }
 
@@ -357,5 +374,127 @@
   }
   .themetoggle[aria-checked='true'] .themetoggle__knob {
     transform: translate(19px, -50%);
+  }
+}
+
+/* =========================================================
+   The world past the first viewport.
+
+   The finish review scored this correctly: below the hero the
+   light theme was the dark layout inverted, which is exactly
+   what the THESIS refuses. Content now sits on raised glass
+   plates with the specular edge already built for .impact, and
+   each plate ends in a wet reflection — gloss pools where a
+   surface stops, it never coats the page.
+   ========================================================= */
+
+:root[data-theme='light'] {
+  --plate: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.66));
+  --plate-edge: 1px solid rgba(255, 255, 255, 0.92);
+  --plate-lift:
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.6),
+    0 10px 30px rgba(0, 74, 117, 0.14);
+}
+
+:root[data-theme='light'] .about__grid,
+:root[data-theme='light'] .aifirst__claims,
+:root[data-theme='light'] .timeline,
+:root[data-theme='light'] .specsheet,
+:root[data-theme='light'] .cred__table,
+:root[data-theme='light'] .contact__ledger,
+:root[data-theme='light'] .aifirst__strip {
+  position: relative;
+  background: var(--plate);
+  border: var(--plate-edge);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--plate-lift);
+  backdrop-filter: blur(8px) saturate(1.15);
+  -webkit-backdrop-filter: blur(8px) saturate(1.15);
+  padding: clamp(1.25rem, 2.4vw, 2.25rem);
+}
+
+/* the wet reflection: it lives under the plate's own edge and fades out */
+:root[data-theme='light'] .about__grid::after,
+:root[data-theme='light'] .timeline::after,
+:root[data-theme='light'] .specsheet::after,
+:root[data-theme='light'] .cred__table::after,
+:root[data-theme='light'] .contact__ledger::after,
+:root[data-theme='light'] .hero__status::after {
+  content: '';
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 100%;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+  filter: blur(6px);
+  pointer-events: none;
+}
+:root[data-theme='light'] .hero__status {
+  position: relative;
+}
+
+/* the plates already carry the band, so the section tint would double it */
+:root[data-theme='light'] .aifirst {
+  background: none;
+  box-shadow: none;
+  border-block-color: rgba(255, 255, 255, 0.7);
+}
+
+/* rules inside a plate sit on white, so they need less weight */
+:root[data-theme='light'] .specsheet,
+:root[data-theme='light'] .cred__table {
+  border-top-color: rgba(255, 255, 255, 0.92);
+}
+
+/* the footer is the deepest water on the page: it gets its own plate */
+:root[data-theme='light'] .footer {
+  border-top: var(--plate-edge);
+  background: var(--plate);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* FIX 5: grass carries "life", so it belongs on the page's own headline
+   claim. Full-strength #6BCB3C cannot hold 3:1 against the sky, so this is
+   the same hue driven down to a leaf value that does. */
+:root[data-theme='light'] .hero__thesis .text-amber {
+  color: #35800f;
+}
+
+/* FIX 7: on the phone the menu control sat as a flat white square beside the
+   glossy toggle. Same material, same row. */
+:root[data-theme='light'] .nav__burger {
+  border-radius: 999px;
+  border-color: rgba(0, 121, 191, 0.4);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(214, 238, 253, 0.85));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 8px rgba(0, 74, 117, 0.16);
+}
+:root[data-theme='light'] .nav__burger span,
+:root[data-theme='light'] .nav__burger span::before,
+:root[data-theme='light'] .nav__burger span::after {
+  background: #0079bf;
+}
+:root[data-theme='light'] .nav__burger span[data-open='true'] {
+  background: transparent;
+}
+
+/* deep water at the foot of the page needs the drawer and bar to read as glass */
+:root[data-theme='light'] .actionbar {
+  background: rgba(0, 121, 191, 0.35);
+  border-top-color: rgba(255, 255, 255, 0.7);
+}
+
+/* About keeps its offset-right composition, but the plate made an old
+   misalignment visible: the block was pushed to the section edge rather than
+   the container edge, so its right side sat ~160px past every other plate. */
+@media (min-width: 901px) {
+  :root[data-theme='light'] .about__grid {
+    margin-inline: auto max(var(--gutter), calc(50vw - var(--container) / 2 + var(--gutter)));
   }
 }
