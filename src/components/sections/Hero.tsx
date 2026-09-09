@@ -3,6 +3,7 @@ import { useI18n } from '../../i18n/I18nProvider'
 import { LINKS } from '../../i18n/content'
 import { LazyViz } from '../originkit/LazyViz'
 import { useCoarsePointer } from '../../hooks/useMediaQuery'
+import { useTheme } from '../../theme/ThemeProvider'
 import { ArrowRight, ArrowDown } from '../ui/Icon'
 
 const ParticleSphere = lazy(() => import('../originkit/ParticleSphere'))
@@ -24,6 +25,7 @@ export function Hero() {
   // slightly larger particles keep the silhouette and the touch response while
   // cutting the per-frame work a phone GPU has to do.
   const coarse = useCoarsePointer()
+  const { theme } = useTheme()
 
   return (
     <section className="hero" id="top">
@@ -31,6 +33,7 @@ export function Hero() {
         <LazyViz eager reducedFallback={<div className="hero__sphere-fallback" />}>
           <Suspense fallback={null}>
             <ParticleSphere
+              key={theme}
               particlesCount={coarse ? 4200 : 8000}
               particleScale={coarse ? 4.1 : 3.4}
               speed={13}
@@ -41,7 +44,7 @@ export function Hero() {
               cursorRadiusUI={coarse ? 92 : 70}
               cursorStrengthUI={9}
               clickForce={6}
-              sphereColor="#57E0D8"
+              sphereColor={theme === 'light' ? '#00B2FF' : '#57E0D8'}
               style={{ width: '100%', height: '100%' }}
             />
           </Suspense>

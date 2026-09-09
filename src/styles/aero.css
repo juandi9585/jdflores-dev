@@ -1,0 +1,361 @@
+/* =========================================================
+   LIGHT THEME — "Aquarium Window"
+   Frutiger Aero, committed. Sky, water, grass and glass:
+   four colours, four jobs, no fifth. Gloss pools where a
+   surface ends and stops there; it never coats everything.
+
+   Everything here is scoped to [data-theme='light'] so the
+   dark world is untouched by any of it.
+   ========================================================= */
+
+:root[data-theme='light'] {
+  /* ---- the four ---- */
+  --sky: #00b2ff;
+  --grass: #6bcb3c;
+  --glass: #d9e3f0;
+  --water: #0079bf;
+
+  /* ---- grounds ---- */
+  --ink: #e9f3fc; /* the page ground under the gradient */
+  --ink-2: #ffffff; /* raised glass panels */
+  --ink-3: #d9e3f0; /* recessed bands: the glass shelf */
+  --line: rgba(0, 121, 191, 0.24);
+  --line-soft: rgba(0, 121, 191, 0.13);
+
+  /* ---- ink on glass ---- */
+  --bone: #06344f; /* deep water — primary text */
+  --bone-dim: #0a4a72;
+  --muted: #33627f;
+  --muted-2: #4c7794;
+
+  /* ---- the accent role: water, not amber ---- */
+  --amber: #0079bf;
+  --amber-bright: #00b2ff;
+  --amber-ink: #ffffff; /* text on the accent */
+  --amber-glow: rgba(0, 178, 255, 0.28);
+  --amber-line: rgba(0, 121, 191, 0.5);
+
+  /* ---- signal ---- */
+  --cyan: #00b2ff; /* generative canvases */
+  --cyan-soft: rgba(0, 178, 255, 0.16);
+  --ok: #6bcb3c; /* life: the availability pulse */
+
+  /* Frutiger Aero is a rounded world. */
+  --radius: 10px;
+  --radius-lg: 20px;
+
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------
+   The sky itself. A horizon sits low in the viewport and the
+   whole page is read as looking out through glass at it.
+   --------------------------------------------------------- */
+:root[data-theme='light'] body {
+  background-color: var(--ink);
+}
+/* The sky rides on its own fixed layer rather than on background-attachment,
+   which iOS Safari does not honour and which paints only the first viewport
+   in a full-page capture. Same effect, no platform caveat. */
+:root[data-theme='light'] .bubbles {
+  background-image:
+    radial-gradient(120% 70% at 50% 108%, rgba(107, 203, 60, 0.32), transparent 62%),
+    radial-gradient(90% 55% at 78% 4%, rgba(255, 255, 255, 0.95), transparent 60%),
+    linear-gradient(180deg, #7fd4ff 0%, #b9e6ff 26%, #e2f1fc 58%, #eef7fd 100%);
+}
+
+/* the vignette layer from the dark world becomes sun and water light */
+:root[data-theme='light'] body::before {
+  background:
+    radial-gradient(60% 40% at 82% 2%, rgba(255, 255, 255, 0.85), transparent 64%),
+    radial-gradient(90% 50% at 50% 100%, rgba(0, 121, 191, 0.12), transparent 70%);
+}
+
+/* ---------------------------------------------------------
+   Bubbles. The one decorative motif, fixed behind everything,
+   drifting up through the water. Purely ornamental, so it is
+   hidden from assistive tech and stops under reduced motion.
+   --------------------------------------------------------- */
+.bubbles {
+  display: none;
+}
+:root[data-theme='light'] .bubbles {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.bubble {
+  position: absolute;
+  bottom: -18vh;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.18) 38%, transparent 52%),
+    radial-gradient(circle at 50% 50%, rgba(0, 178, 255, 0.16), rgba(0, 121, 191, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  animation: bubbleRise linear infinite;
+}
+@keyframes bubbleRise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.85);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  88% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(var(--drift, 20px), -125vh, 0) scale(1.12);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    animation: none;
+    opacity: 0.5;
+    bottom: auto;
+    top: var(--rest, 40%);
+  }
+}
+
+/* ---------------------------------------------------------
+   Glass. Panels are wet white with an inner top highlight —
+   the Aero specular edge — and a real offset shadow beneath.
+   --------------------------------------------------------- */
+:root[data-theme='light'] .nav::after {
+  background: rgba(255, 255, 255, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 6px 22px rgba(0, 74, 117, 0.13);
+}
+
+:root[data-theme='light'] .hero__status {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.78));
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px) saturate(1.3);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+}
+
+:root[data-theme='light'] .impact,
+:root[data-theme='light'] .aifirst {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(217, 227, 240, 0.62));
+  border-block: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+:root[data-theme='light'] .nav__mobile,
+:root[data-theme='light'] .actionbar__item {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+:root[data-theme='light'] .nav__mobile {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 -10px 34px rgba(0, 74, 117, 0.18);
+}
+:root[data-theme='light'] .nav__scrim {
+  background: rgba(0, 74, 117, 0.34);
+}
+
+/* ---------------------------------------------------------
+   Aqua buttons. The signature Frutiger control: a rounded
+   lozenge, saturated below, with a glossy highlight sitting
+   on the upper half and stopping at the midline.
+   --------------------------------------------------------- */
+:root[data-theme='light'] .btn {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(0, 121, 191, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 8px rgba(0, 74, 117, 0.12);
+}
+:root[data-theme='light'] .btn--primary {
+  background: linear-gradient(180deg, #34c3ff 0%, #0093e0 48%, #0079bf 100%);
+  border-color: #0068a6;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 56, 90, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(0, 56, 90, 0.35),
+    0 3px 12px rgba(0, 106, 168, 0.4);
+}
+/* the specular sweep: it pools on the top half and stops */
+:root[data-theme='light'] .btn--primary::before {
+  content: '';
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 46%;
+  border-radius: 999px 999px 40% 40% / 999px 999px 22px 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.16));
+  pointer-events: none;
+}
+:root[data-theme='light'] .btn--primary:hover {
+  background: linear-gradient(180deg, #4fcdff 0%, #00a1f2 48%, #0086cf 100%);
+}
+:root[data-theme='light'] .actionbar__item--primary {
+  background: linear-gradient(180deg, #34c3ff 0%, #0093e0 48%, #0079bf 100%);
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 56, 90, 0.45);
+}
+
+/* ---------------------------------------------------------
+   Type on water. The masthead gets the wet reflection this
+   world is built on; everything else stays plain and legible.
+   --------------------------------------------------------- */
+/* Glass type. A mirrored reflection cannot align under a headline that wraps,
+   so the wet look lives in the letters themselves: a depth gradient poured
+   through the glyphs with a bevel of light along the bottom edge. */
+:root[data-theme='light'] .hero__name {
+  /* A gradient poured through the glyphs washed the name out against the sky.
+     Solid water ink with a bevel of light under it keeps the Aero engraving
+     and holds ~9:1 against the ground. */
+  color: #04384f;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.75),
+    0 3px 16px rgba(0, 88, 138, 0.18);
+}
+
+/* the amber-on-ink figure becomes water on glass */
+:root[data-theme='light'] .ledger__row:first-child .ledger__figure {
+  color: var(--water);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* the brand mark stops being a dark-world bead and becomes a water pearl */
+:root[data-theme='light'] .nav__mark {
+  background: radial-gradient(circle at 34% 28%, #ffffff, #4fcdff 42%, #0079bf 100%);
+  box-shadow: inset 0 -1px 2px rgba(0, 74, 117, 0.5);
+}
+
+/* the live signal is the one green thing on the page */
+:root[data-theme='light'] .pulse {
+  background: var(--grass);
+  box-shadow: inset 0 -1px 1px rgba(40, 96, 20, 0.4);
+}
+:root[data-theme='light'] .pulse::after {
+  border-color: var(--grass);
+}
+
+/* ---------------------------------------------------------
+   Rails, rules and small parts
+   --------------------------------------------------------- */
+:root[data-theme='light'] .tl:first-child .tl__node {
+  background: var(--grass);
+  border-color: #4ea82a;
+  box-shadow: inset 0 -1px 1px rgba(40, 96, 20, 0.45);
+}
+:root[data-theme='light'] .hero__sphere-fallback {
+  background-image: radial-gradient(circle, rgba(0, 121, 191, 0.5) 0.9px, transparent 1.7px);
+}
+:root[data-theme='light'] .stack__mark {
+  color: #6f93ab;
+}
+:root[data-theme='light'] .stack__marks:hover .stack__mark {
+  color: var(--water);
+}
+:root[data-theme='light'] .lineflow {
+  background-image:
+    repeating-linear-gradient(114deg, transparent 0 23px, rgba(0, 121, 191, 0.07) 23px 24px),
+    repeating-linear-gradient(66deg, transparent 0 40px, rgba(107, 203, 60, 0.06) 40px 41px);
+}
+:root[data-theme='light'] .dotgrid {
+  background-image: radial-gradient(circle, rgba(0, 121, 191, 0.16) 1px, transparent 1.5px);
+}
+
+/* browser surfaces follow the world */
+:root[data-theme='light'] {
+  scrollbar-color: rgba(0, 121, 191, 0.4) transparent;
+}
+:root[data-theme='light'] ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.5);
+}
+:root[data-theme='light'] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4fcdff, #0079bf);
+  border-color: transparent;
+}
+:root[data-theme='light'] ::selection {
+  background: var(--sky);
+  color: #fff;
+}
+
+/* ---------------------------------------------------------
+   The theme switch itself: an aqua capsule whose knob slides
+   between the two worlds it names.
+   --------------------------------------------------------- */
+.themetoggle {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+}
+.themetoggle__track {
+  position: relative;
+  display: block;
+  width: 46px;
+  height: 25px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--line);
+  transition:
+    background var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+.themetoggle__knob {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--bone);
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  transform: translateY(-50%);
+  transition: transform var(--dur) var(--ease-out);
+}
+.themetoggle__icon {
+  width: 12px;
+  height: 12px;
+}
+.themetoggle[aria-checked='true'] .themetoggle__knob {
+  transform: translate(21px, -50%);
+}
+:root[data-theme='light'] .themetoggle__track {
+  background: linear-gradient(180deg, #9fe0ff, #4fc4ff);
+  border-color: rgba(0, 121, 191, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 74, 117, 0.25);
+}
+:root[data-theme='light'] .themetoggle__knob {
+  color: #b8760a;
+  background: radial-gradient(circle at 34% 28%, #ffffff, #ffe9a8 46%, #ffc93f 100%);
+  border-color: rgba(180, 120, 10, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 74, 117, 0.3);
+}
+
+@media (max-width: 900px) {
+  .themetoggle__track {
+    width: 42px;
+    height: 23px;
+  }
+  .themetoggle[aria-checked='true'] .themetoggle__knob {
+    transform: translate(19px, -50%);
+  }
+}

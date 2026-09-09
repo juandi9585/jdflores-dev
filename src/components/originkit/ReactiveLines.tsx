@@ -7,6 +7,15 @@
 //   overrides={{}}
 //   __curationVersion={1}
 import { useEffect, useRef } from "react"
+
+/* LOCAL MODIFICATION: a ground of `transparent`, or any zero-alpha colour,
+   means "let what is behind show through" rather than "paint this colour". */
+function isTransparentColor(c: unknown): boolean {
+    if (typeof c !== "string") return false
+    const v = c.trim()
+    return v === "transparent" || /rgba?\([^)]*,\s*0(\.0+)?\s*\)$/i.test(v)
+}
+
 // ─── Vector utils (exact port of module i/73384) ─────────────────────────────
 type Vec = { x: number; y: number }
 const vec = (x: number, y: number): Vec => ({ x, y })
@@ -60,10 +69,14 @@ interface CanvasState {
 
 function useCanvasAnimation({
     deferStart = false,
+    // LOCAL MODIFICATION: the context owner needs to know whether the ground is
+    // meant to be see-through, because alpha is fixed at creation time.
+    transparent = false,
     onSetup,
     onDraw,
 }: {
     deferStart?: boolean
+    transparent?: boolean
     onSetup?: (ctx: CanvasRenderingContext2D, state: CanvasState) => void
     onDraw: (ctx: CanvasRenderingContext2D, state: CanvasState) => void
 }) {
@@ -89,7 +102,9 @@ function useCanvasAnimation({
         const canvas = canvasRef.current
         if (!container || !canvas) return
 
-        const ctx = canvas.getContext("2d", { alpha: false })
+        // LOCAL MODIFICATION: alpha:false makes a transparent ground impossible
+        // — clearRect then paints opaque black over whatever is behind.
+        const ctx = canvas.getContext("2d", { alpha: transparent })
         if (!ctx) return
 
         const st = stateRef.current
@@ -199,6 +214,7 @@ export default function InteractiveLines(props: any) {
 
     const { containerRef, canvasRef, stateRef } = useCanvasAnimation({
         deferStart: true, // exact source: deferStart: true
+        transparent: isTransparentColor(backgroundColor),
 
         onSetup: (e, t) => {
             // Exact source lines 1285-1288
@@ -218,9 +234,16 @@ export default function InteractiveLines(props: any) {
             a.x = a.x + (a.targetX - a.x) * 0.05
             a.y = a.y + (a.targetY - a.y) * 0.1
 
-            // clearCanvas equivalent
-            e.fillStyle = backgroundColor
-            e.fillRect(0, 0, r, n)
+            // LOCAL MODIFICATION (see HANDOFF): upstream always filled the
+            // canvas opaquely, so asking for a transparent ground painted the
+            // dark theme's ink over the light theme's sky. A transparent
+            // request now clears instead of filling.
+            if (isTransparentBg) {
+                e.clearRect(0, 0, r, n)
+            } else {
+                e.fillStyle = backgroundColor
+                e.fillRect(0, 0, r, n)
+            }
 
             e.save()
             e.translate(r / 2, n / 2)
@@ -290,7 +313,9 @@ export default function InteractiveLines(props: any) {
             // sets how far in it reaches AND how strong it gets. At 1 it's a
             // subtle touch on the corners; it never goes fully opaque (stays
             // light). The radial gradient makes the corners fade first.
-            if (fade) {
+            // the fade dissolves toward the ground colour, which is meaningless
+            // when the ground is whatever is behind the canvas
+            if (fade && !isTransparentBg) {
                 const bg = toRGB(backgroundColor)
                 const rgba = (alpha: number) =>
                     `rgba(${bg.r}, ${bg.g}, ${bg.b}, ${alpha})`
@@ -325,6 +350,8 @@ export default function InteractiveLines(props: any) {
             }
         },
     })
+
+    const isTransparentBg = isTransparentColor(backgroundColor)
 
     // Exact source: mousemove + scroll handlers (lines 1373-1401)
     useEffect(() => {

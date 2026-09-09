@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { useReveal } from '../../hooks/useReveal'
 import { LazyViz } from '../originkit/LazyViz'
+import { useTheme } from '../../theme/ThemeProvider'
 
 const ReactiveLines = lazy(() => import('../originkit/ReactiveLines'))
 
@@ -12,6 +13,8 @@ export function About() {
   const { t } = useI18n()
   const a = t.about
   const ref = useReveal<HTMLDivElement>({ stagger: true })
+  const { theme } = useTheme()
+  const light = theme === 'light'
   const [first, ...rest] = a.body
 
   return (
@@ -20,8 +23,9 @@ export function About() {
         <LazyViz reducedFallback={<div className="lineflow" style={{ position: 'absolute', inset: 0 }} />}>
           <Suspense fallback={null}>
             <ReactiveLines
-              backgroundColor="#0A0C10"
-              lineColor="rgba(87, 224, 216, 0.6)"
+              key={theme}
+              backgroundColor={light ? 'transparent' : '#0A0C10'}
+              lineColor={light ? 'rgba(0, 121, 191, 0.42)' : 'rgba(87, 224, 216, 0.6)'}
               lineWidth={1}
               minLines={6}
               maxLines={30}
