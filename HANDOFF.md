@@ -162,6 +162,41 @@ El crudo de los 4 ya está staged, así que **no hace falta el MCP**. Para cada 
 
 ## 6. Pendiente / TODO (priorizado)
 
+0. **🐛 Overflow del título en Stack (tema claro) — diagnosticado, sin arreglar.**
+   Reportado por Juan el 2026-09-08 con captura. En `.specsheet__row--head` el título se sale
+   de su columna y sus glifos se pintan encima del texto del resumen.
+   **No es una colisión de cajas** — medido a 1203px, la caja del título termina en 323,9 y el
+   resumen empieza en 360, o sea 36px de separación. Lo que desborda es **la palabra**:
+   `.specsheet__row` usa `grid-template-columns: minmax(150px, 24%) 1fr`, el 24% resuelve a
+   **251,6px**, y la palabra más ancha del título mide **281,7px en ES** ("herramientas") y
+   **259,4px en EN** ("orchestrate."), ambas a `--step-3` = 38px. Desborda en los dos idiomas
+   (ES +30,1px, EN +7,8px), solo que en español se nota mucho más.
+   **Por qué la rejilla no lo corrige sola:** el mínimo del `minmax()` es un `150px` fijo, así
+   que el dimensionado automático de CSS Grid (que ensancharía la pista hasta el `min-content`
+   del contenido) nunca entra.
+   **Vías de arreglo, sin elegir una todavía:** `minmax(min-content, 24%)` en la pista;
+   `overflow-wrap: anywhere` + `hyphens: auto` en `.specsheet__title`; o bajar el título un paso
+   tipográfico en el rango de anchos donde la columna queda por debajo de la palabra.
+   Verificar **en español** y a varios anchos, no solo a 1440.
+
+1. **💧 Un ornamento equivalente a las burbujas para el tema oscuro.** Petición de Juan
+   el 2026-09-08: le gustan las burbujas del mundo claro y quiere "un efecto similar" en el
+   oscuro. Hoy el tema oscuro no tiene capa de ornamento: `.bubbles` solo se renderiza en claro
+   (`Bubbles.tsx` devuelve `null` fuera de él) y el mundo oscuro es deliberadamente plano, sin
+   sombras, solo hairlines.
+   **Restricciones que ya están en DESIGN.md y que el ornamento tiene que respetar:**
+   *The Signal Reservation Rule* — el cian está reservado a lo generativo, así que un ornamento
+   en cian es coherente; *The One Accent Rule* — hacerlo ámbar rompería el sistema, porque el
+   ámbar se gasta una vez por sección; y *The Hairline Structure Rule* — el mundo oscuro no
+   proyecta sombras, así que el ornamento no puede traer resplandores de offset cero (además el
+   detector los marca).
+   No es un simple recolor de `.bubble`: una burbuja se lee como agua y el mundo oscuro no tiene
+   agua. Vale la pena decidir primero **qué es** en ese mundo (motas de señal a la deriva,
+   partículas de datos, brasas frías) antes de escribir CSS.
+   La infraestructura ya sirve: la capa es fija, `aria-hidden`, sin `pointer-events` y respeta
+   `prefers-reduced-motion`; se reusa cambiando el guard de tema en `Bubbles.tsx`.
+
+
 1. **Prueba verificable (lo más importante).** El sitio sigue sin mostrar nada que un cliente
    pueda abrir. GitHub ya está enlazado (nav footer + ledger de contacto). Falta **un caso de
    estudio compatible con confidencialidad**: problema / qué construí / qué eliminó / stack,
