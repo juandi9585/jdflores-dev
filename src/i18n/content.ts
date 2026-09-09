@@ -119,12 +119,12 @@ export const en: Content = {
     scrollCue: 'Scroll',
   },
   about: {
-    title: 'An engineer who ships systems that think for themselves.',
+    title: 'An engineer who ships autonomous agents into production.',
     body: [
       'Systems Engineer from UNIMET with a final degree project awarded with honors, specializing in Artificial Intelligence. I have a proven track record building full-stack architectures and autonomous agents that have driven major operational cost reductions in the banking sector.',
-      'I work as a freelance engineer using the latest AI development tooling — primarily Claude Code — to design, orchestrate and ship production software faster than traditional teams. My core is n8n workflow orchestration, the Google Cloud ecosystem, and scalable software.',
+      'I work as a freelance engineer using the latest AI development tooling (primarily Claude Code) to design, orchestrate and ship production software faster than traditional teams. My core is n8n workflow orchestration, the Google Cloud ecosystem, and scalable software.',
     ],
-    signature: 'From front-end to autonomous AI agents — one architect, end to end.',
+    signature: 'From front-end to autonomous AI agents: one architect, end to end.',
   },
   impact: {
     title: 'Outcomes, not output.',
@@ -132,7 +132,7 @@ export const en: Content = {
     metrics: [
       { kind: 'count', value: 94, suffix: '%', label: 'Operating cost reduction', note: 'Autonomous agentic support solution · banking sector' },
       { kind: 'count', value: 90, suffix: '%+', label: 'Man-hours saved', note: 'AI-powered credit-analysis application' },
-      { kind: 'text', text: 'End-to-end', label: 'Delivery ownership', note: 'Front-end, back-end, AI agents & automation — solo architect' },
+      { kind: 'text', text: 'End-to-end', label: 'Delivery ownership', note: 'Front-end, back-end, AI agents & automation · solo architect' },
       { kind: 'text', text: 'Core', label: 'Payments migration', note: 'Release & versioning lead · IBM AS/400 · banking' },
     ],
   },
@@ -142,7 +142,7 @@ export const en: Content = {
     nowLabel: 'Now',
     roles: [
       {
-        period: '09/2025 — Present',
+        period: '09/2025–Present',
         company: 'PadTech Solution, C.A.',
         location: 'Contractor at Banesco, Banco Universal · Venezuela',
         title: 'AI Developer',
@@ -150,20 +150,20 @@ export const en: Content = {
           'Full-stack development of an AI-powered credit-analysis application, resulting in 90%+ man-hour savings.',
           'Led the design and implementation of an autonomous agentic support chatbot that reduced operating costs by 94%.',
           'Built AI-driven document-management tools that optimized productivity and drastically reduced man-hours.',
-          'Designed end-to-end full-stack & AI architecture on GCP + n8n — from front/back-end to AI agent orchestration.',
+          'Designed end-to-end full-stack & AI architecture on GCP + n8n, from front/back-end to AI agent orchestration.',
         ],
       },
       {
-        period: '03/2025 — 05/2025',
+        period: '03/2025–05/2025',
         company: 'Ministry of Natural Resources & Environment',
         location: 'Honduras · Remote',
-        title: 'Intern — Automation Architect',
+        title: 'Automation Architect Intern',
         points: [
           'Automated the processing of controlled-substance import permits with Power Automate and the Microsoft 365 suite, removing manual bottlenecks and ensuring strict regulatory compliance.',
         ],
       },
       {
-        period: '01/2025 — 09/2025',
+        period: '01/2025–09/2025',
         company: 'Inversiones Galiang, C.A.',
         location: 'Contractor at Banesco, Banco Universal · Venezuela',
         title: 'Full-Stack Specialist Architect',
@@ -174,34 +174,34 @@ export const en: Content = {
         ],
       },
       {
-        period: '01/2024 — 12/2024',
+        period: '01/2024–12/2024',
         company: 'Banesco, Banco Universal',
         location: 'Venezuela',
-        title: 'Intern — Developer',
+        title: 'Developer Intern',
         points: [
           'Developed Oracle Service Bus (OSB) integration services; web and API development.',
           'Assisted in a major banking-software technological migration project.',
         ],
       },
       {
-        period: '09/2023 — 07/2024',
+        period: '09/2023–07/2024',
         company: 'Universidad Metropolitana de Caracas',
         location: 'Venezuela',
-        title: 'Teaching Assistant — Introductory Mathematics',
+        title: 'Teaching Assistant, Introductory Mathematics',
         points: ['Ran supplemental practical lessons for undergraduate students.'],
       },
       {
-        period: '04/2023 — 08/2023',
+        period: '04/2023–08/2023',
         company: 'Banesco, Banco Universal',
         location: 'Venezuela',
-        title: 'Intern — Data Modeling & Integration',
+        title: 'Data Modeling & Integration Intern',
         points: ['Designed and developed data tables; built Oracle Service Bus (OSB) integration services.'],
       },
     ],
   },
   stack: {
     title: 'The tools I orchestrate.',
-    lead: 'From AI agents to core banking integrations — a full-stack toolkit.',
+    lead: 'From AI agents to core banking integrations: a full-stack toolkit.',
     groups: [
       { label: 'AI & Automation', items: ['Claude Code', 'n8n', 'AI agent orchestration', 'Prompt design'] },
       { label: 'Cloud', items: ['Google Cloud Platform', 'Vertex AI'] },
@@ -212,9 +212,9 @@ export const en: Content = {
     ],
   },
   aiFirst: {
-    title: 'AI-first, by default.',
+    title: 'AI-first.',
     body: [
-      'I build as a freelance engineer with an agentic workflow at the center. Modern AI dev tooling — primarily Claude Code — lets me move from spec to shipped software at a pace traditional teams can’t match, without giving up rigor.',
+      'I build as a freelance engineer with an agentic workflow at the center. Modern AI dev tooling (primarily Claude Code) lets me move from spec to shipped software at a pace traditional teams can’t match, without giving up rigor.',
       'Agents draft, I direct and verify. The result is production software delivered faster, with the same banking-grade discipline I bring to every core system.',
     ],
     points: [
@@ -231,9 +231,9 @@ export const en: Content = {
     langLabel: 'Languages',
     beyondLabel: 'Beyond the screen',
     education: [
-      { school: 'CEUPE European Business School', place: 'Madrid, Spain', degree: 'Master in Artificial Intelligence', period: '2026 — 2027', note: 'In progress' },
-      { school: 'Universidad Metropolitana de Caracas', place: 'Caracas, Venezuela', degree: 'Systems Engineering', period: '2020 — 2024', note: 'Academic index 17/20 · Full academic-excellence scholarship · Honorable mention, final degree project' },
-      { school: 'Universidad Metropolitana de Caracas', place: 'Caracas, Venezuela', degree: 'Minor — Software Development', period: '2024' },
+      { school: 'CEUPE European Business School', place: 'Madrid, Spain', degree: 'Master in Artificial Intelligence', period: '2026–2027', note: 'In progress' },
+      { school: 'Universidad Metropolitana de Caracas', place: 'Caracas, Venezuela', degree: 'Systems Engineering', period: '2020–2024', note: 'Academic index 17/20 · Full academic-excellence scholarship · Honorable mention, final degree project' },
+      { school: 'Universidad Metropolitana de Caracas', place: 'Caracas, Venezuela', degree: 'Minor in Software Development', period: '2024' },
     ],
     certs: [
       { name: 'Deep Learning Specialization', issuer: 'DeepLearning.AI · Andrew Ng', year: '2024' },
@@ -246,7 +246,7 @@ export const en: Content = {
       { lang: 'English', level: 'Full professional · IELTS 7.5/9' },
       { lang: 'Japanese', level: 'Basic · JLPT N4' },
     ],
-    beyond: ['2nd Dan Black Belt — Karate (competitive)', 'Violin — advanced level', '“Lista del Rector” academic-excellence recognition'],
+    beyond: ['2nd Dan Black Belt in Karate (competitive)', 'Violin (advanced level)', '“Lista del Rector” academic-excellence recognition'],
   },
   contact: {
     title: 'Tell me what you need built.',
@@ -263,7 +263,7 @@ export const en: Content = {
   },
   theme: { label: 'Theme', toLight: 'Switch to light', toDark: 'Switch to dark' },
   meta: {
-    title: 'Juan Diego Flores — Systems Engineer & AI Specialist',
+    title: 'Juan Diego Flores · Systems Engineer & AI Specialist',
     description:
       'Freelance systems engineer building autonomous agents and full-stack systems. Cut banking operating costs by 94%.',
   },
@@ -289,12 +289,12 @@ export const es: Content = {
     scrollCue: 'Desliza',
   },
   about: {
-    title: 'Un ingeniero que despliega sistemas que piensan solos.',
+    title: 'Un ingeniero que despliega agentes autónomos en producción.',
     body: [
       'Ingeniero de Sistemas de la UNIMET con Trabajo Final de Grado con mención honorífica, especialista en Inteligencia Artificial. Tengo experiencia comprobada desarrollando arquitecturas full-stack y agentes autónomos que han generado reducciones sustanciales de costos operativos en el sector bancario.',
-      'Trabajo como ingeniero freelance usando las últimas herramientas de desarrollo con IA — principalmente Claude Code — para diseñar, orquestar y entregar software en producción más rápido que los equipos tradicionales. Mi base es la orquestación de flujos con n8n, el ecosistema de Google Cloud y el software escalable.',
+      'Trabajo como ingeniero freelance usando las últimas herramientas de desarrollo con IA (principalmente Claude Code) para diseñar, orquestar y entregar software en producción más rápido que los equipos tradicionales. Mi base es la orquestación de flujos con n8n, el ecosistema de Google Cloud y el software escalable.',
     ],
-    signature: 'Del front-end a los agentes de IA autónomos — un solo arquitecto, de punta a punta.',
+    signature: 'Del front-end a los agentes de IA autónomos: un solo arquitecto, de punta a punta.',
   },
   impact: {
     title: 'Resultados, no entregables.',
@@ -302,7 +302,7 @@ export const es: Content = {
     metrics: [
       { kind: 'count', value: 94, suffix: '%', label: 'Reducción de costos operativos', note: 'Solución de soporte agéntico autónomo · sector bancario' },
       { kind: 'count', value: 90, suffix: '%+', label: 'Horas-hombre ahorradas', note: 'Aplicativo de análisis de crédito con IA' },
-      { kind: 'text', text: 'End-to-end', label: 'Entrega integral', note: 'Front-end, back-end, agentes de IA y automatización — solo arquitecto' },
+      { kind: 'text', text: 'End-to-end', label: 'Entrega integral', note: 'Front-end, back-end, agentes de IA y automatización · un solo arquitecto' },
       { kind: 'text', text: 'Core', label: 'Migración de pagos', note: 'Líder de versionado y liberaciones · IBM AS/400 · banca' },
     ],
   },
@@ -312,7 +312,7 @@ export const es: Content = {
     nowLabel: 'Ahora',
     roles: [
       {
-        period: '09/2025 — Presente',
+        period: '09/2025–Presente',
         company: 'PadTech Solution, C.A.',
         location: 'Contratista en Banesco, Banco Universal · Venezuela',
         title: 'Desarrollador de IA',
@@ -320,20 +320,20 @@ export const es: Content = {
           'Desarrollo full-stack de un aplicativo de análisis de crédito con IA, con un ahorro de horas-hombre superior al 90%.',
           'Lideré el diseño e implementación de un chatbot de soporte agéntico autónomo que redujo los costos operativos en un 94%.',
           'Desarrollé herramientas de gestión documental con IA que optimizaron la productividad y redujeron drásticamente las horas-hombre.',
-          'Diseñé arquitectura full-stack e IA de punta a punta en GCP + n8n — del front/back-end a la orquestación de agentes.',
+          'Diseñé arquitectura full-stack e IA de punta a punta en GCP + n8n, del front/back-end a la orquestación de agentes.',
         ],
       },
       {
-        period: '03/2025 — 05/2025',
+        period: '03/2025–05/2025',
         company: 'Secretaría de Recursos Naturales y Ambiente',
         location: 'Honduras · Remoto',
-        title: 'Becario — Arquitecto de Automatización',
+        title: 'Becario de Arquitectura de Automatización',
         points: [
           'Automaticé la gestión de permisos de importación de sustancias controladas con Power Automate y el ecosistema Microsoft 365, eliminando cuellos de botella manuales y asegurando el cumplimiento normativo.',
         ],
       },
       {
-        period: '01/2025 — 09/2025',
+        period: '01/2025–09/2025',
         company: 'Inversiones Galiang, C.A.',
         location: 'Contratista en Banesco, Banco Universal · Venezuela',
         title: 'Arquitecto Especialista Full-Stack',
@@ -344,34 +344,34 @@ export const es: Content = {
         ],
       },
       {
-        period: '01/2024 — 12/2024',
+        period: '01/2024–12/2024',
         company: 'Banesco, Banco Universal',
         location: 'Venezuela',
-        title: 'Pasante — Desarrollador',
+        title: 'Pasante de Desarrollo',
         points: [
           'Desarrollo de servicios de integración Oracle Service Bus (OSB); desarrollo web y de APIs.',
           'Apoyo en un proyecto de migración tecnológica de software bancario.',
         ],
       },
       {
-        period: '09/2023 — 07/2024',
+        period: '09/2023–07/2024',
         company: 'Universidad Metropolitana de Caracas',
         location: 'Venezuela',
-        title: 'Preparador — Matemática Inicial',
+        title: 'Preparador de Matemática Inicial',
         points: ['Impartí lecciones prácticas suplementarias para estudiantes de pregrado.'],
       },
       {
-        period: '04/2023 — 08/2023',
+        period: '04/2023–08/2023',
         company: 'Banesco, Banco Universal',
         location: 'Venezuela',
-        title: 'Pasante — Modelado e Integración de Datos',
+        title: 'Pasante de Modelado e Integración de Datos',
         points: ['Diseñé y desarrollé tablas de datos; construí servicios de integración Oracle Service Bus (OSB).'],
       },
     ],
   },
   stack: {
     title: 'Las herramientas que orquesto.',
-    lead: 'De agentes de IA a integraciones bancarias core — un toolkit full-stack.',
+    lead: 'De agentes de IA a integraciones bancarias core: un toolkit full-stack.',
     groups: [
       { label: 'IA & Automatización', items: ['Claude Code', 'n8n', 'Orquestación de agentes', 'Diseño de prompts'] },
       { label: 'Cloud', items: ['Google Cloud Platform', 'Vertex AI'] },
@@ -382,9 +382,9 @@ export const es: Content = {
     ],
   },
   aiFirst: {
-    title: 'AI-first, por defecto.',
+    title: 'AI-first.',
     body: [
-      'Construyo como ingeniero freelance con un flujo agéntico en el centro. Las herramientas modernas de desarrollo con IA — principalmente Claude Code — me permiten ir de la especificación al software entregado a un ritmo que los equipos tradicionales no alcanzan, sin renunciar al rigor.',
+      'Construyo como ingeniero freelance con un flujo agéntico en el centro. Las herramientas modernas de desarrollo con IA (principalmente Claude Code) me permiten ir de la especificación al software entregado a un ritmo que los equipos tradicionales no alcanzan, sin renunciar al rigor.',
       'Los agentes redactan; yo dirijo y verifico. El resultado es software en producción entregado más rápido, con la misma disciplina de grado bancario que aplico a cada sistema core.',
     ],
     points: [
@@ -401,9 +401,9 @@ export const es: Content = {
     langLabel: 'Idiomas',
     beyondLabel: 'Más allá de la pantalla',
     education: [
-      { school: 'CEUPE European Business School', place: 'Madrid, España', degree: 'Máster en Inteligencia Artificial', period: '2026 — 2027', note: 'En curso' },
-      { school: 'Universidad Metropolitana de Caracas', place: 'Caracas, Venezuela', degree: 'Ingeniería de Sistemas', period: '2020 — 2024', note: 'Índice académico 17/20 · Beca de excelencia académica (100%) · Mención honorífica en el Trabajo Final de Grado' },
-      { school: 'Universidad Metropolitana de Caracas', place: 'Caracas, Venezuela', degree: 'Minor — Desarrollo de Software', period: '2024' },
+      { school: 'CEUPE European Business School', place: 'Madrid, España', degree: 'Máster en Inteligencia Artificial', period: '2026–2027', note: 'En curso' },
+      { school: 'Universidad Metropolitana de Caracas', place: 'Caracas, Venezuela', degree: 'Ingeniería de Sistemas', period: '2020–2024', note: 'Índice académico 17/20 · Beca de excelencia académica (100%) · Mención honorífica en el Trabajo Final de Grado' },
+      { school: 'Universidad Metropolitana de Caracas', place: 'Caracas, Venezuela', degree: 'Minor en Desarrollo de Software', period: '2024' },
     ],
     certs: [
       { name: 'Especialización en Deep Learning', issuer: 'DeepLearning.AI · Andrew Ng', year: '2024' },
@@ -416,7 +416,7 @@ export const es: Content = {
       { lang: 'Inglés', level: 'Profesional pleno · IELTS 7.5/9' },
       { lang: 'Japonés', level: 'Básico · JLPT N4' },
     ],
-    beyond: ['2º Dan Cinturón Negro — Karate (competitivo)', 'Violín — nivel avanzado', 'Reconocimiento «Lista del Rector» a la excelencia académica'],
+    beyond: ['2º Dan Cinturón Negro en Karate (competitivo)', 'Violín (nivel avanzado)', 'Reconocimiento «Lista del Rector» a la excelencia académica'],
   },
   contact: {
     title: 'Cuéntame qué necesitas construir.',
@@ -433,7 +433,7 @@ export const es: Content = {
   },
   theme: { label: 'Tema', toLight: 'Cambiar a claro', toDark: 'Cambiar a oscuro' },
   meta: {
-    title: 'Juan Diego Flores — Ingeniero de Sistemas y Especialista en IA',
+    title: 'Juan Diego Flores · Ingeniero de Sistemas y Especialista en IA',
     description:
       'Ingeniero de sistemas freelance. Construyo agentes autónomos y sistemas full-stack que redujeron los costos operativos de la banca en un 94%.',
   },
