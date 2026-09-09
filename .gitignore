@@ -43,3 +43,6 @@ Thumbs.db
 # local tooling state
 .claude/
 .impeccable/
+
+# impeccable review captures (regenerated per run)
+.impeccable/review/

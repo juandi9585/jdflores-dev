@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useI18n } from '../i18n/I18nProvider'
 import { LINKS } from '../i18n/content'
 import { LangToggle } from './LangToggle'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Nav() {
   const { t, lang } = useI18n()
@@ -113,6 +114,7 @@ export function Nav() {
 
         <div className="nav__actions">
           <LangToggle className="nav__lang" />
+          <ThemeToggle className="nav__theme" />
           <a href={resumeHref} className="btn nav__cta" download>
             {t.nav.resume}
           </a>

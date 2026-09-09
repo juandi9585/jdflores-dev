@@ -1,4 +1,5 @@
 import { Nav } from './components/Nav'
+import { Bubbles } from './components/Bubbles'
 import { Footer } from './components/Footer'
 import { MobileActionBar } from './components/MobileActionBar'
 import { Hero } from './components/sections/Hero'
@@ -16,6 +17,7 @@ export default function App() {
       <a href="#about" className="skip-link">
         Skip to content
       </a>
+      <Bubbles />
       <Nav />
       <main>
         <Hero />

@@ -79,6 +79,7 @@ export type Content = {
     location: string
     cta: string
   }
+  theme: { label: string; toLight: string; toDark: string }
   meta: { title: string; description: string }
   footer: { rights: string }
 }
@@ -260,6 +261,7 @@ export const en: Content = {
     location: 'Caracas, Venezuela',
     cta: 'Email me',
   },
+  theme: { label: 'Theme', toLight: 'Switch to light', toDark: 'Switch to dark' },
   meta: {
     title: 'Juan Diego Flores — Systems Engineer & AI Specialist',
     description:
@@ -429,6 +431,7 @@ export const es: Content = {
     location: 'Caracas, Venezuela',
     cta: 'Escríbeme',
   },
+  theme: { label: 'Tema', toLight: 'Cambiar a claro', toDark: 'Cambiar a oscuro' },
   meta: {
     title: 'Juan Diego Flores — Ingeniero de Sistemas y Especialista en IA',
     description:

@@ -3,6 +3,7 @@ import { useI18n } from '../../i18n/I18nProvider'
 import { useReveal } from '../../hooks/useReveal'
 import { LazyViz } from '../originkit/LazyViz'
 import { Disclosure } from '../ui/Disclosure'
+import { useTheme } from '../../theme/ThemeProvider'
 
 const KineticGrid = lazy(() => import('../originkit/KineticGrid'))
 
@@ -14,6 +15,8 @@ export function Trajectory() {
   const { t } = useI18n()
   const tr = t.trajectory
   const ref = useReveal<HTMLDivElement>({ stagger: true })
+  const { theme } = useTheme()
+  const light = theme === 'light'
 
   const years = tr.roles.flatMap((r) => (r.period.match(/\d{4}/g) ?? []).map(Number))
   const firstYear = years.length ? Math.min(...years) : null
@@ -24,10 +27,11 @@ export function Trajectory() {
         <LazyViz reducedFallback={<div className="dotgrid" style={{ position: 'absolute', inset: 0 }} />}>
           <Suspense fallback={null}>
             <KineticGrid
+              key={theme}
               background="transparent"
-              dotColor="#ECEEF3"
-              lineColor="#57E0D8"
-              trailColor="#57E0D8"
+              dotColor={light ? '#0079BF' : '#ECEEF3'}
+              lineColor={light ? '#00B2FF' : '#57E0D8'}
+              trailColor={light ? '#6BCB3C' : '#57E0D8'}
               spacing={48}
               radius={220}
               strength={4}
