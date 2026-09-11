@@ -1,5 +1,6 @@
 import { Nav } from './components/Nav'
 import { Bubbles } from './components/Bubbles'
+import { CodeRain } from './components/CodeRain'
 import { Footer } from './components/Footer'
 import { MobileActionBar } from './components/MobileActionBar'
 import { Hero } from './components/sections/Hero'
@@ -18,6 +19,7 @@ export default function App() {
         Skip to content
       </a>
       <Bubbles />
+      <CodeRain />
       <Nav />
       <main>
         <Hero />

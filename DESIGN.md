@@ -149,7 +149,7 @@ components:
 
 **Creative North Star: "The Console and the Aquarium Window"**
 
-One instrument, seen in two weathers. The dark world is a deployed-systems console: near-black ink, hairline rules, bone type, a single amber accent that appears once per section and never twice, and cyan held back for generative signal only. Nothing is decorated; everything is ruled, tabulated or bracketed, the way a system that is actually running reports itself.
+One instrument, seen in two weathers. The dark world is a deployed-systems console: near-black ink, hairline rules, bone type, a single amber accent that appears once per section and never twice, and cyan held back for generative signal only. Nothing is decorated; everything is ruled, tabulated or bracketed, the way a system that is actually running reports itself. The one exception answers the aquarium's bubbles: once the hero is behind you, Matrix-style columns of code fall behind the page.
 
 The light world is a committed Frutiger Aero aquarium window. A fixed sky layer with a low horizon sits behind the whole page, bubbles drift up through it, and the content rides on raised glass plates that each end in a wet reflection. It is not the dark layout inverted: it is the same content read through glass, with its own material logic, its own rounded geometry and its own accent role.
 
@@ -159,7 +159,7 @@ The two are held together by one rule of construction: every semantic token keep
 - One accent per theme, spent sparingly: amber in the dark world, water blue in the light one.
 - Eight sections, eight distinct opening mechanics; no shared section head exists to regenerate a template from.
 - Fluid modular type ramp (ten steps) with a type system per world: Michroma and Saira in the console; on glass, Neuropol for single words and figures, Unbounded 300 for sentence heads and Source Sans 3 for text. No monospace anywhere.
-- Dark world: flat, hairline-ruled, no shadows. Light world: layered glass plates, specular edges, wet sheens.
+- Dark world: flat, hairline-ruled, no shadows, one ornament (code rain). Light world: layered glass plates, specular edges, wet sheens, one ornament (bubbles).
 - Browser surfaces (scrollbar, caret, selection, tap highlight) are themed as part of the design, not left to the platform.
 - AA contrast holds in both themes; tap targets meet 44×44; reduced motion is honoured everywhere including the canvases.
 
@@ -176,7 +176,7 @@ Two palettes on one skeleton: a near-monochrome ink field with a single warm acc
 - **Amber Bright** (`{colors.amber-bright}`): the hover state of the dark world's accent, and nothing else.
 
 ### Tertiary
-- **Signal Cyan** (`{colors.cyan-signal}`): reserved strictly for generative canvases and their hand-built CSS fallbacks. It never appears on type, borders or controls.
+- **Signal Cyan** (`{colors.cyan-signal}`): reserved strictly for generative canvases (the code rain is one of them) and their hand-built CSS fallbacks. It never appears on type, borders or controls.
 - **Leaf Grass** (`{colors.aero-grass}`): "life" in the light world — the availability pulse and the current timeline node. Where it must sit on type it runs down to a darker leaf value (`{colors.aero-leaf}`) that clears contrast against the sky.
 
 ### Neutral
@@ -244,7 +244,7 @@ Three breakpoints do the work. At **1024px** the credentials hang and the contac
 
 ## Elevation & Depth
 
-The two worlds resolve depth in opposite ways, and both are deliberate. **The dark world has no shadows at all.** Depth is tonal and linear: three ink values (recessed band, base, raised panel), hairlines at two weights, and a fixed grain/vignette layer over the whole page. A dark surface is separated from its neighbour by a 1px rule or a one-step tonal shift, never by a cast shadow.
+The two worlds resolve depth in opposite ways, and both are deliberate. **The dark world has no shadows at all.** Depth is tonal and linear: three ink values (recessed band, base, raised panel), hairlines at two weights, and a fixed grain/vignette layer over the whole page. The code rain has its own fixed layer beneath every section, so the recessed bands cover it the way panels would. A dark surface is separated from its neighbour by a 1px rule or a one-step tonal shift, never by a cast shadow.
 
 The light world is the opposite: it is built entirely out of lift. Content sits on raised glass plates (`--plate`, `--plate-edge`, `--plate-lift`) combining an inner top highlight, an inner bottom highlight and a soft, low-opacity drop shadow in deep water blue, over an 8px backdrop blur at 1.15 saturation. Each plate ends in a wet reflection below its lower edge — a screen-blended, blurred, elliptically-clipped sheen that is lighter than what it falls on. Elevation is per-mechanic, not uniform.
 
@@ -290,6 +290,10 @@ Each section opens with a mechanic no other section uses, and this is the system
 ### Signature: generative canvases
 Three canvases (particle sphere in the hero, reactive lines behind About, kinetic grid behind Trajectory) are recoloured per theme from CSS tokens and ship on every device including phones. They mount lazily on scroll proximity and are skipped only under `prefers-reduced-motion`, where hand-built CSS analogues (masked dot fields, ruled line fields) take their place. They are decorative: `aria-hidden`, non-interactive except the hero sphere, which keeps vertical panning so a swipe both scrolls and stirs.
 
+**Code rain** is the dark world's one ornament and the counterpart of the bubbles: a bubble reads as water and the console has none, so what falls is code, the way The Matrix drew it. Columns of mirrored half-width katakana and numerals fall on a fixed 2D canvas at `z-index: -1` (above the ink ground, beneath every section): every character in Signal Cyan, the lead one lifted toward white, a few changing as they fall. 7 columns on a phone and 16 on a wide screen, in two planes that differ in brightness, length and speed. No glow and no shadow. The characters are drawn on the canvas, never set as type, so the page still has no monospace; a system with no Japanese face gets numerals instead of empty boxes. It mounts only in the dark theme and draws one still frame under reduced motion.
+
+**The No Shared Screen Rule.** The code rain and the hero sphere are never on screen together. The hero counts as present a quarter of a screen before any of it shows, so on the way back up the rain is already fading when the hero's edge appears. The rain never switches: it gathers over 1.6s and thins out over 1.1s on one symmetric curve, and keeps falling until its fade-out has finished.
+
 ### Disclosure
 A phone-only progressive-disclosure control used on the timeline and credentials. The panel animates between `grid-template-rows: 0fr` and `1fr` on a symmetric ease so a collapse is not front-loaded, stays in the DOM under `inert`, and its plus icon retracts its upright stroke into a minus. Above 900px both sections render fully expanded with no control present at all.
 
@@ -315,3 +319,4 @@ A phone-only progressive-disclosure control used on the timeline and credentials
 - **Don't** set any label below 12px, or shrink type to protect a desktop composition.
 - **Don't** drop a feature to make it cheap on a phone; fix the cost where it is created.
 - **Don't** hardcode a hex in a component when a semantic token exists.
+- **Don't** let the code rain share a screen with the hero sphere, or switch it on or off without a fade.
