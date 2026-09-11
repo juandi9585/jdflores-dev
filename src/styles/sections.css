@@ -303,7 +303,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-top: 108px;
+  /* clear of the 68px nav, and less air above the name on a short laptop */
+  padding-top: clamp(88px, 15vh, 108px);
   /* let the particle canvas behind receive cursor motion,
      while keeping links & buttons clickable */
   pointer-events: none;
@@ -332,11 +333,14 @@
      "huge title, then a smaller description" */
   margin-top: 0.35em;
   font-family: var(--font-body);
-  font-size: var(--step-3);
+  /* A step under what it was, on a wider measure. At step-3 in 26ch the
+     thesis ran four heavy lines, and with the name above it the first
+     screen of a laptop had no room left for the buttons. Three lines now. */
+  font-size: var(--step-2);
   font-stretch: 100%;
   font-weight: var(--lead-weight);
   line-height: 1.28;
-  max-width: 26ch;
+  max-width: 36ch;
   color: var(--bone-dim);
   text-wrap: balance;
 }
@@ -564,22 +568,26 @@
   max-width: 66ch;
   margin-inline: auto 0;
 }
+/* The prose is body text at every width, and the head runs one step above it.
+   The desktop used to set all four paragraphs a step up, at 24px, the size of
+   a lead, so the column read as enormous on a laptop. The phone already had
+   these sizes. */
 .about__runin {
-  font-size: var(--step-1);
-  line-height: 1.5;
+  font-size: var(--step-0);
+  line-height: 1.6;
   color: var(--bone-dim);
 }
 .about__lead-in {
   display: inline;
   font-family: var(--font-head);
   font-weight: 400;
-  font-size: var(--step-2);
+  font-size: var(--step-1);
   letter-spacing: -0.01em;
   color: var(--bone);
   margin-right: 0.4em;
 }
 .about__p {
-  font-size: var(--step-1);
+  font-size: var(--step-0);
   color: var(--bone-dim);
 }
 .about__signature {
@@ -587,7 +595,7 @@
   padding-top: var(--space-m);
   border-top: 1px solid var(--line);
   color: var(--bone);
-  font-size: var(--step-1);
+  font-size: var(--step-0);
   font-weight: 500;
   max-width: 52ch;
 }
@@ -813,8 +821,10 @@
 .tl__body {
   padding-top: 0;
 }
+/* one step under the spine title it hangs from: on the same step the six role
+   titles tied with the section's own head */
 .tl__title {
-  font-size: var(--step-2);
+  font-size: var(--step-1);
   font-weight: 600;
   line-height: 1.15;
   overflow-wrap: break-word;
@@ -1017,11 +1027,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-m);
+  /* The claims set the size here and the measure is counted in it. They used
+     to run a step higher inside a 48ch body measure: about twenty characters
+     a line, in a column taller than a laptop screen. */
+  font-size: var(--step-1);
   max-width: 48ch;
 }
 .aifirst__claim {
-  font-size: var(--step-2);
-  line-height: 1.4;
+  line-height: 1.45;
   color: var(--bone);
 }
 .aifirst__strip {
@@ -1158,11 +1171,15 @@
 }
 .contact__title {
   font-family: var(--font-head);
-  font-size: var(--step-5);
+  /* One step at every width. At step-5 the close filled its half of the pair
+     so tightly that hyphenation cut "necesi-tas" on a laptop, and the console
+     split "Cuéntame" at 1920px. */
+  font-size: var(--step-4);
   line-height: 1.06;
   letter-spacing: -0.01em;
-  overflow-wrap: anywhere;
-  hyphens: auto;
+  /* break-word, never anywhere: the column still floors at the longest word,
+     and a word breaks only when it is wider than a zoomed screen */
+  overflow-wrap: break-word;
 }
 .contact__cta {
   margin-top: var(--space-l);
@@ -1369,19 +1386,6 @@
     font-size: var(--step-1);
     max-width: 100%;
   }
-  .about__lead-in {
-    font-size: var(--step-1);
-  }
-  .about__runin,
-  .about__p {
-    font-size: var(--step-0);
-  }
-  .about__signature {
-    font-size: var(--step-0);
-  }
-  .aifirst__claim {
-    font-size: var(--step-1);
-  }
   .hero__status-row {
     /* was 0.66rem = 10.56px, shrunk purely to protect a desktop silhouette */
     font-size: var(--step--2);
@@ -1438,11 +1442,6 @@
     margin-left: 0;
   }
 
-  /* the Spanish headline is the longest string on the page: keep it inside
-     the viewport at every narrow width, not just in English */
-  .contact__title {
-    font-size: var(--step-4);
-  }
   .contact__row {
     grid-template-columns: 1fr;
     gap: 0.3em;
@@ -1483,6 +1482,18 @@
   .orbit__core-icon {
     width: 34px;
     height: 34px;
+  }
+}
+
+/* A phone on its side is short, not narrow, so none of the width rules above
+   fire and the masthead filled the whole 390px screen. It takes the phone
+   masthead instead. */
+@media (max-height: 480px) and (orientation: landscape) {
+  .hero__name {
+    font-size: calc(var(--step-6) * var(--masthead-scale));
+  }
+  .hero__thesis {
+    font-size: var(--step-1);
   }
 }
 

@@ -31,59 +31,59 @@ colors:
 typography:
   display:
     fontFamily: "Console Display, Michroma, system-ui, sans-serif"
-    fontSize: "calc(clamp(3.58rem, 2.11rem + 7.36vw, 9.5rem) * 0.72)"
+    fontSize: "calc(clamp(3.58rem, 2.11rem + 7.36 * min(1vw, 1.6vh), 9.5rem) * 0.72)"
     fontWeight: 400
     lineHeight: 1.04
     letterSpacing: "-0.01em"
   headline:
     fontFamily: "Console Display, Michroma, system-ui, sans-serif"
-    fontSize: "clamp(2.07rem, 1.7rem + 1.84vw, 3.75rem)"
+    fontSize: "clamp(2.07rem, 1.7rem + 1.84 * min(1vw, 1.6vh), 3.75rem)"
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "-0.01em"
   title:
     fontFamily: "Console Display, Michroma, system-ui, sans-serif"
-    fontSize: "clamp(1.44rem, 1.29rem + 0.74vw, 2rem)"
+    fontSize: "clamp(1.44rem, 1.29rem + 0.74 * min(1vw, 1.6vh), 2rem)"
     fontWeight: 400
     lineHeight: 1.08
     letterSpacing: "-0.01em"
   body:
     fontFamily: "Saira, system-ui, sans-serif"
-    fontSize: "clamp(1rem, 0.95rem + 0.24vw, 1.15rem)"
+    fontSize: "clamp(1rem, 0.95rem + 0.24 * min(1vw, 1.6vh), 1.15rem)"
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "normal"
   body-lead:
     fontFamily: "Saira, system-ui, sans-serif"
-    fontSize: "clamp(1.2rem, 1.11rem + 0.44vw, 1.5rem)"
+    fontSize: "clamp(1.2rem, 1.11rem + 0.44 * min(1vw, 1.6vh), 1.5rem)"
     fontWeight: 400
     lineHeight: 1.5
   label:
     fontFamily: "Saira, system-ui, sans-serif"
-    fontSize: "clamp(0.75rem, 0.72rem + 0.14vw, 0.82rem)"
+    fontSize: "clamp(0.75rem, 0.72rem + 0.14 * min(1vw, 1.6vh), 0.82rem)"
     fontWeight: 500
     letterSpacing: "0.12em"
     fontFeature: "tnum 1"
   display-aero:
     fontFamily: "Neuropol, system-ui, sans-serif"
-    fontSize: "calc(clamp(3.58rem, 2.11rem + 7.36vw, 9.5rem) * 0.8)"
+    fontSize: "calc(clamp(3.58rem, 2.11rem + 7.36 * min(1vw, 1.6vh), 9.5rem) * 0.8)"
     fontWeight: 400
     lineHeight: 1.04
     letterSpacing: "0"
   head-aero:
     fontFamily: "Unbounded, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(1.44rem, 1.29rem + 0.74vw, 2rem)"
+    fontSize: "clamp(1.44rem, 1.29rem + 0.74 * min(1vw, 1.6vh), 2rem)"
     fontWeight: 300
     lineHeight: 1.08
     letterSpacing: "-0.01em"
   body-aero:
     fontFamily: "Source Sans 3, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(1rem, 0.95rem + 0.24vw, 1.15rem)"
+    fontSize: "clamp(1rem, 0.95rem + 0.24 * min(1vw, 1.6vh), 1.15rem)"
     fontWeight: 400
     lineHeight: 1.6
   label-aero:
     fontFamily: "Source Sans 3, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(0.75rem, 0.72rem + 0.14vw, 0.82rem)"
+    fontSize: "clamp(0.75rem, 0.72rem + 0.14 * min(1vw, 1.6vh), 0.82rem)"
     fontWeight: 600
     letterSpacing: "0.01em"
 rounded:
@@ -210,17 +210,21 @@ In each world the sentence heads share their paragraph's page colour (ink over a
 
 ### Hierarchy
 - **Display** (`--step-7` × `--masthead-scale`, 0.72 in the console and 0.8 on glass, 1.04 leading): the masthead name only. One per page.
-- **Headline** (display face, `--step-4`, 1.0 leading): ledger figures — numbers, not titles. The console's % is Saira's, widened to 125% so it keeps Michroma's proportions.
-- **Title** (head face `--font-head`: Michroma in the console, Unbounded 300 on glass; `--step-2`, 1.06–1.1, −0.01em): section-owned heads (spec sheet title, credentials hang, timeline spine, run-in lead, contact close), each set inside its own mechanic.
-- **Lead** (body face, `--step-3`, `--lead-weight` 500 or 600, 1.28): the hero thesis. It is set in the body face so it reads as a sentence under the name rather than a second display line.
-- **Body** (400, `--step-0`, 1.6): all prose. Measures are capped: 66ch for the about column, 62ch for spec values, 46–48ch for leads and colophons.
-- **Body Lead** (400, `--step-1`, 1.5): the run-in paragraph and section summaries.
+- **Headline** (display face, `--step-4`, 1.0 leading): the ledger figures and the rail's year markers, which are numbers and single words, not titles. The console's % is Saira's, widened to 125% so it keeps Michroma's proportions.
+- **Close** (head face, `--step-4`, 1.06, −0.01em): the contact head, the one sentence set above title size. It is never hyphenated; `overflow-wrap: break-word` breaks a word only when it is wider than a zoomed screen.
+- **Title** (head face `--font-head`: Michroma in the console, Unbounded 300 on glass; `--step-2`, 1.06–1.1, −0.01em): section-owned heads (spec sheet title, credentials hang, timeline spine), each set inside its own mechanic.
+- **Lead** (body face, `--step-2`, `--lead-weight` 500 or 600, 1.28, 36ch): the hero thesis. It is set in the body face so it reads as a sentence under the name rather than a second display line, and it runs three lines so both buttons fit on a laptop's first screen.
+- **Run-in** (head face, `--step-1`): the About lead-in, one step above the prose it runs into.
+- **Body Lead** (`--step-1`): the AI-first claims (400, 1.45, a 48ch measure counted at their own size), the timeline role titles (600, one step under the spine title) and the ledger row names (500).
+- **Body** (400, `--step-0`, 1.6): all prose, the About column included. Measures are capped: 66ch for the about column, 62ch for spec values, 46–48ch for leads and colophons.
 - **Label** (`.label`, `--step--2`, `--label-weight`, `--label-case`, `--label-track`): nav links, spec keys, credential keys, contact keys, strip keys, action-bar items. Capitals at 0.12em in the console; sentence case at 0.01em on glass.
 
 ### Named Rules
 **The No Shared Head Rule.** The stack "small tag → huge title → small description" is banned outright, and there is deliberately no shared section-head class in the stylesheet to regenerate it from. A new section invents its own opening mechanic or it does not ship.
 
 **The 12px Floor Rule.** `--step--2` bottoms out at 12px. It carries every data label on the site, and smaller does not survive a phone screen outdoors. Nothing is shrunk below it to protect a desktop silhouette.
+
+**The First Screen Rule.** The ramp scales on `--screen: min(1vw, 1.6vh)`, never on `vw` alone. It was tuned on a 1440×900 frame, and a real laptop is shorter than that once the browser and the taskbar take their share: a 1536×864 screen at 125% leaves about 1486×690. A screen shorter than 16:10 scales by its height. A phone held upright is always narrower than that, so its sizes never move. The test is the first screen: the name, the thesis, both buttons and the status strip fit whole at 1280×600, 1366×625 and 1486×690, in both themes and both languages. A phone on its side, under 480px tall, takes the phone masthead.
 
 **The Instrument Numerals Rule.** Anything read as data or compared down a column carries tabular figures (`.tnum`); anything that is a key rather than a sentence is set in the label face, with the case and tracking its world gives it.
 
@@ -236,7 +240,7 @@ A single long-scroll column. Content is centred in a 1200px container (1400px fo
 
 Sections do not share a layout. Impact is a full-width ruled table; Trajectory is a two-column rail (160px period column plus body) hung off an absolute spine; Stack is a two-column spec grid whose head occupies the first row; Credentials is a hanging-indent grid (29% hang plus table) with a nested key/rows grid inside; Contact is a 1.05fr/1fr baseline-aligned pair. The hero fills `100svh` with the masthead block vertically centred and a status strip pinned to the bottom edge.
 
-Three breakpoints do the work. At **1024px** the credentials hang and the contact pair go single-column. At **900px** the desktop nav is replaced by a bottom-sheet menu and a fixed thumb-region action bar, the hero canvas moves to the empty upper-right under a horizontal mask, and the spec sheet and credential groups collapse to one column. At **640px** display steps drop one rung each, the ledger stops being a table and becomes stacked records, and the hero strip's vertical rules become horizontal ones, because vertical rules only read as rules while a row is unwrapped.
+Three breakpoints do the work. At **1024px** the credentials hang and the contact pair go single-column. At **900px** the desktop nav is replaced by a bottom-sheet menu and a fixed thumb-region action bar, the hero canvas moves to the empty upper-right under a horizontal mask, and the spec sheet and credential groups collapse to one column. At **640px** the masthead, the thesis, the ledger figures and the year markers drop one rung each, the ledger stops being a table and becomes stacked records, and the hero strip's vertical rules become horizontal ones, because vertical rules only read as rules while a row is unwrapped.
 
 **The Adapt-Never-Delete Rule.** When something costs too much on a phone, the cost is fixed where it is created — capped pixel ratios, bounded canvas heights, one type step down. Features are not withheld from small screens; the three generative canvases ship on every device, gated only on reduced motion.
 

@@ -50,20 +50,28 @@
   --label-track-tight: 0.06em;
   --label-weight: 500;
 
-  /* fluid modular scale (min 320px → max 1440px) */
+  /* The ramp reads the screen, not only its width. It was tuned on a
+     1440x900 frame (16:10). Scaled by width alone, a 1486x690 laptop got
+     that frame's sizes on three quarters of its height, and the masthead
+     pushed the buttons off the first screen. Any screen shorter than 16:10
+     now scales by its height instead. A phone held upright is always
+     narrower than that, so its sizes are unchanged. */
+  --screen: min(1vw, 1.6vh);
+
+  /* fluid modular scale (320px → 1440px wide, on the --screen unit) */
   /* floor raised to 12px: this step carries every data label on the site
      (ledger notes, spec keys, credential years, contact keys) and 11px does
      not survive a phone screen outdoors */
-  --step--2: clamp(0.75rem, 0.72rem + 0.14vw, 0.82rem);
-  --step--1: clamp(0.83rem, 0.79rem + 0.22vw, 0.95rem);
-  --step-0: clamp(1rem, 0.95rem + 0.24vw, 1.15rem);
-  --step-1: clamp(1.2rem, 1.11rem + 0.44vw, 1.5rem);
-  --step-2: clamp(1.44rem, 1.29rem + 0.74vw, 2rem);
-  --step-3: clamp(1.73rem, 1.49rem + 1.18vw, 2.75rem);
-  --step-4: clamp(2.07rem, 1.7rem + 1.84vw, 3.75rem);
-  --step-5: clamp(2.49rem, 1.9rem + 2.92vw, 5rem);
-  --step-6: clamp(2.99rem, 2.06rem + 4.61vw, 7rem);
-  --step-7: clamp(3.58rem, 2.11rem + 7.36vw, 9.5rem);
+  --step--2: clamp(0.75rem, 0.72rem + 0.14 * var(--screen), 0.82rem);
+  --step--1: clamp(0.83rem, 0.79rem + 0.22 * var(--screen), 0.95rem);
+  --step-0: clamp(1rem, 0.95rem + 0.24 * var(--screen), 1.15rem);
+  --step-1: clamp(1.2rem, 1.11rem + 0.44 * var(--screen), 1.5rem);
+  --step-2: clamp(1.44rem, 1.29rem + 0.74 * var(--screen), 2rem);
+  --step-3: clamp(1.73rem, 1.49rem + 1.18 * var(--screen), 2.75rem);
+  --step-4: clamp(2.07rem, 1.7rem + 1.84 * var(--screen), 3.75rem);
+  --step-5: clamp(2.49rem, 1.9rem + 2.92 * var(--screen), 5rem);
+  --step-6: clamp(2.99rem, 2.06rem + 4.61 * var(--screen), 7rem);
+  --step-7: clamp(3.58rem, 2.11rem + 7.36 * var(--screen), 9.5rem);
 
   /* ---- space ---- */
   --space-2xs: 0.5rem;
