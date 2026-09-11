@@ -571,10 +571,10 @@
 }
 .about__lead-in {
   display: inline;
-  font-family: var(--font-display);
+  font-family: var(--font-head);
   font-weight: 400;
   font-size: var(--step-2);
-  letter-spacing: var(--display-track);
+  letter-spacing: -0.01em;
   color: var(--bone);
   margin-right: 0.4em;
 }
@@ -613,11 +613,11 @@
   border-bottom: 1px solid var(--line);
 }
 .ledger__title {
-  font-family: var(--font-display);
+  font-family: var(--font-head);
   font-weight: 400;
   font-size: var(--step-1);
   text-wrap: balance;
-  letter-spacing: var(--display-track);
+  letter-spacing: -0.01em;
   color: var(--bone);
 }
 .ledger__row {
@@ -705,11 +705,16 @@
   margin-bottom: var(--space-xl);
 }
 .tj__title {
-  font-family: var(--font-display);
+  font-family: var(--font-head);
   font-weight: 400;
   font-size: var(--step-2);
   line-height: 1.1;
-  letter-spacing: var(--display-track);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  /* at high zoom "automatización." is wider than the column: break it
+     rather than paint past the edge (min-width lets the flex child shrink) */
+  overflow-wrap: break-word;
+  min-width: 0;
 }
 .tj__rule {
   flex: 1 1 3rem;
@@ -812,6 +817,7 @@
   font-size: var(--step-2);
   font-weight: 600;
   line-height: 1.15;
+  overflow-wrap: break-word;
 }
 .tl__company {
   color: var(--bone-dim);
@@ -862,6 +868,7 @@
 }
 .disclosure__label {
   flex: 1 1 auto;
+  min-width: 0;
 }
 .disclosure__icon {
   width: 15px;
@@ -937,11 +944,12 @@
   padding-block: var(--space-l);
 }
 .specsheet__title {
-  font-family: var(--font-display);
+  font-family: var(--font-head);
   font-weight: 400;
   font-size: var(--step-2);
   line-height: 1.06;
-  letter-spacing: var(--display-track);
+  letter-spacing: -0.01em;
+  overflow-wrap: break-word;
   text-wrap: balance;
 }
 .specsheet__summary {
@@ -996,7 +1004,7 @@
 }
 .aifirst__runhead {
   text-align: right;
-  font-family: var(--font-display);
+  font-family: var(--font-head);
   font-weight: 400;
   font-size: var(--step-0);
   letter-spacing: 0.01em;
@@ -1053,11 +1061,12 @@
   align-items: start;
 }
 .cred__hang {
-  font-family: var(--font-display);
+  font-family: var(--font-head);
   font-weight: 400;
   font-size: var(--step-2);
   line-height: 1.08;
-  letter-spacing: var(--display-track);
+  letter-spacing: -0.01em;
+  overflow-wrap: break-word;
   text-wrap: balance;
 }
 .cred__table {
@@ -1148,8 +1157,10 @@
   align-items: start;
 }
 .contact__title {
+  font-family: var(--font-head);
   font-size: var(--step-5);
   line-height: 1.06;
+  letter-spacing: -0.01em;
   overflow-wrap: anywhere;
   hyphens: auto;
 }
@@ -1272,7 +1283,9 @@
    ===================================================================== */
 @media (max-width: 1024px) {
   .cred {
-    grid-template-columns: 1fr;
+    /* minmax(0, …): a bare 1fr floors at the longest word, so at high zoom
+       the whole column widened instead of letting the hang break */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-l);
   }
   .contact__pair {
@@ -1397,7 +1410,10 @@
   }
 
   /* the ledger stops being a table and becomes stacked records */
+  /* the caption too: left as a table-caption inside a block table it
+     shrink-wraps to ~150px and stacks the head one word per line */
   .ledger,
+  .ledger__caption,
   .ledger tbody,
   .ledger__row,
   .ledger__row > * {
@@ -1433,7 +1449,7 @@
   }
 
   .tl {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-xs);
     padding-left: 24px;
     /* the entries collapse on the phone, so the generous desktop gap between

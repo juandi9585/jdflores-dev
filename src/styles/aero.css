@@ -46,10 +46,14 @@
 
   /* ---- type ---- */
   /* Neuropol (1996, public domain) is the rounded Y2K voice of the era's
-     tech posters. Labels drop the tracked capitals for sentence case, the
-     way Vista and 7 lettered their own glass, in a humanist sans of that
-     lineage; Segoe UI holds the metrics while it loads. */
+     tech posters, and it is kept to single words and figures: its one heavy
+     weight and near-capital lowercase turn a sentence into a slab. Sentence
+     heads go to Unbounded 300, an extended rounded face whose page colour
+     matches the body the way Michroma's matches Saira's. Labels drop the
+     tracked capitals for sentence case, the way Vista and 7 lettered their
+     own glass; Segoe UI holds the metrics while the text face loads. */
   --font-display: 'Neuropol', system-ui, sans-serif;
+  --font-head: 'Unbounded', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
   --font-label: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
   --display-track: 0;

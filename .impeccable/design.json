@@ -129,7 +129,7 @@
     "keyCharacteristics": [
       "One accent per theme, spent sparingly: amber in the dark world, water blue in the light one.",
       "Eight sections, eight distinct opening mechanics; no shared section head exists to regenerate a template from.",
-      "Fluid modular type ramp (ten steps) with a type pair per world: Michroma and Saira in the console, Neuropol and Source Sans 3 on glass. No monospace anywhere.",
+      "Fluid modular type ramp (ten steps) with a type system per world: Michroma and Saira in the console; on glass, Neuropol for single words and figures, Unbounded 300 for sentence heads and Source Sans 3 for text. No monospace anywhere.",
       "Dark world: flat, hairline-ruled, no shadows. Light world: layered glass plates, specular edges, wet sheens.",
       "Browser surfaces (scrollbar, caret, selection, tap highlight) are themed as part of the design, not left to the platform.",
       "AA contrast holds in both themes; tap targets meet 44×44; reduced motion is honoured everywhere including the canvases."

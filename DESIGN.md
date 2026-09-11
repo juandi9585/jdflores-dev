@@ -70,6 +70,12 @@ typography:
     fontWeight: 400
     lineHeight: 1.04
     letterSpacing: "0"
+  head-aero:
+    fontFamily: "Unbounded, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(1.44rem, 1.29rem + 0.74vw, 2rem)"
+    fontWeight: 300
+    lineHeight: 1.08
+    letterSpacing: "-0.01em"
   body-aero:
     fontFamily: "Source Sans 3, Segoe UI, system-ui, sans-serif"
     fontSize: "clamp(1rem, 0.95rem + 0.24vw, 1.15rem)"
@@ -152,7 +158,7 @@ The two are held together by one rule of construction: every semantic token keep
 **Key Characteristics:**
 - One accent per theme, spent sparingly: amber in the dark world, water blue in the light one.
 - Eight sections, eight distinct opening mechanics; no shared section head exists to regenerate a template from.
-- Fluid modular type ramp (ten steps) with a type pair per world: Michroma and Saira in the console, Neuropol and Source Sans 3 on glass. No monospace anywhere.
+- Fluid modular type ramp (ten steps) with a type system per world: Michroma and Saira in the console; on glass, Neuropol for single words and figures, Unbounded 300 for sentence heads and Source Sans 3 for text. No monospace anywhere.
 - Dark world: flat, hairline-ruled, no shadows. Light world: layered glass plates, specular edges, wet sheens.
 - Browser surfaces (scrollbar, caret, selection, tap highlight) are themed as part of the design, not left to the platform.
 - AA contrast holds in both themes; tap targets meet 44×44; reduced motion is honoured everywhere including the canvases.
@@ -193,17 +199,19 @@ Two palettes on one skeleton: a near-monochrome ink field with a single warm acc
 ## Typography
 
 **Console (dark):** display is Michroma, set through the composite family `Console Display`, which takes U+0025 from Saira. Body, labels and figures are Saira (variable, `wdth` 50–125, `wght` 100–900).
-**Aquarium (light):** display is Neuropol (Typodermic, 1996, CC0). Body and labels are Source Sans 3, with Segoe UI holding the metrics while it loads.
+**Aquarium (light):** Neuropol (Typodermic, 1996, CC0) sets single words and figures only: the name, the ledger figures, the year markers and the mobile menu links. Sentence heads are Unbounded, in the one 300 cut that ships. Body and labels are Source Sans 3, with Segoe UI holding the metrics while it loads.
 **No monospace.** Tabular figures come from Saira's `tnum` and from Source Sans 3's default figures.
 
-Every face is self-hosted from `public/fonts/` exactly as its author publishes it, with the licences in `public/fonts/licenses/`. `src/styles/fonts.css` declares them, and the family names live only in theme tokens, so a visitor downloads one world's pair and never the other's; the pre-paint script in `index.html` preloads that pair.
+Every face is self-hosted from `public/fonts/` exactly as its author publishes it, with the licences in `public/fonts/licenses/`. `src/styles/fonts.css` declares them, and the family names live only in theme tokens, so a visitor downloads one world's faces and never the other's: two in the console (Michroma, Saira) and three on glass (Neuropol, Source Sans 3, Unbounded). The pre-paint script in `index.html` preloads only what the first viewport needs, Michroma and Saira or Neuropol and Source Sans 3. Unbounded is left out on purpose, because its first head sits below the fold.
 
-**Character:** Two worlds, two eras of the same future. The console is lettered like an instrument panel: Microgramma's extended capitals for display, Eurostile's lowercase descendant for everything else, labels in tracked capitals. The aquarium is lettered like a 2006 tech poster: Neuropol's rounded Y2K display over a Vista-era humanist sans, with labels in sentence case the way Vista and 7 lettered their own glass. Both display faces draw a single weight, so hierarchy is carried by face and size, never by bold.
+**Character:** Two worlds, two eras of the same future. The console is lettered like an instrument panel: Microgramma's extended capitals for display, Eurostile's lowercase descendant for everything else, labels in tracked capitals. The aquarium is lettered like a 2006 tech poster: Neuropol's rounded Y2K display on the name and the figures, Unbounded's light extended rounds on the sentence heads, and a Vista-era humanist sans for everything else, with labels in sentence case the way Vista and 7 lettered their own glass. Both display faces draw a single weight, so hierarchy is carried by face and size, never by bold.
+
+In each world the sentence heads share their paragraph's page colour (ink over advance × x-height): Michroma 0.352 against Saira 0.346, and Unbounded 300 0.353 against Source Sans 3 0.367. That is why a run-in head reads as part of its paragraph. Neuropol measures 0.418, draws one heavy weight and has a near-capital lowercase, so at sentence length it turns into a slab. It stays on words that are read as shapes.
 
 ### Hierarchy
 - **Display** (`--step-7` × `--masthead-scale`, 0.72 in the console and 0.8 on glass, 1.04 leading): the masthead name only. One per page.
 - **Headline** (display face, `--step-4`, 1.0 leading): ledger figures — numbers, not titles. The console's % is Saira's, widened to 125% so it keeps Michroma's proportions.
-- **Title** (display face, `--step-2`, 1.06–1.1): section-owned heads (spec sheet title, credentials hang, timeline spine, run-in lead), each set inside its own mechanic.
+- **Title** (head face `--font-head`: Michroma in the console, Unbounded 300 on glass; `--step-2`, 1.06–1.1, −0.01em): section-owned heads (spec sheet title, credentials hang, timeline spine, run-in lead, contact close), each set inside its own mechanic.
 - **Lead** (body face, `--step-3`, `--lead-weight` 500 or 600, 1.28): the hero thesis. It is set in the body face so it reads as a sentence under the name rather than a second display line.
 - **Body** (400, `--step-0`, 1.6): all prose. Measures are capped: 66ch for the about column, 62ch for spec values, 46–48ch for leads and colophons.
 - **Body Lead** (400, `--step-1`, 1.5): the run-in paragraph and section summaries.
@@ -218,7 +226,9 @@ Every face is self-hosted from `public/fonts/` exactly as its author publishes i
 
 **The One Weight Rule.** Both display faces are declared across the full weight and stretch range, so the browser never fakes a bold on them. Hierarchy that once came from weight 800 now comes from face and size.
 
-**The Longest Word Rule.** A grid track that holds a display heading floors at `min-content`, never at a fixed pixel width. Both display faces run wide, and with a fixed floor the glyphs paint past the track while every box still measures clean; the Stack and Credentials heads did exactly that in Spanish at 1024–1440px.
+**The Short Signature Rule.** A display face that draws one heavy weight sets single words and figures only. On glass, Neuropol carries the name, the ledger figures, the year markers and the mobile menu links; every sentence goes to `--font-head`, however short it is. The console's Michroma is light enough to take sentences, so there `--font-head` simply resolves to the display face.
+
+**The Longest Word Rule.** A grid track that holds a display heading floors at `min-content`, never at a fixed pixel width. Both display faces run wide, and with a fixed floor the glyphs paint past the track while every box still measures clean; the Stack and Credentials heads did exactly that in Spanish at 1024–1440px. The one exception is a single-column phone track. There the track floors at 0 (`minmax(0, 1fr)`, with `min-width: 0` on flex children) and the heading carries `overflow-wrap: break-word`, so at high zoom a word wider than the screen breaks instead of pushing the column past the viewport. Never put `overflow-wrap: anywhere` on a head: it zeroes min-content and defeats the multi-column floor.
 
 ## Layout
 
