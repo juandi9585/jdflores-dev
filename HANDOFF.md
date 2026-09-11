@@ -595,3 +595,28 @@ reflejo de Impeccable). Pidió explícitamente opciones **gratuitas y sin proble
 - **Trampa de verificación en dev:** fijar `jdf-lang` en localStorage antes de cargar no sirve,
   porque el doble efecto de StrictMode escribe `'en'` antes de la segunda lectura. Para capturar
   en español hay que pulsar `.lang__btn`. En producción no pasa.
+
+### 16.1 Segunda pasada del Acuario (mismo día)
+Juan revisó el sitio en su teléfono: Neuropol saturaba los titulares largos, no casaba con
+Source Sans 3 y los títulos quedaban enormes en móvil; el oscuro no tenía ninguno de esos
+problemas. Una revisión tipográfica independiente (`/impeccable typeset`) lo midió con el
+gris de página (tinta ÷ avance × altura x): Michroma 0,352 y Saira 0,346 casan; Neuropol 0,418
+es 1,86× más grueso que Source Sans 3 al mismo tamaño y su minúscula es casi versal.
+
+- **Neuropol queda solo en palabras sueltas y cifras:** el nombre, las cifras del ledger y los
+  años del raíl (regla *Short Signature* en DESIGN.md).
+- **Titulares de frase en Unbounded 300** (OFL, 20 KB, solo ese corte) vía el token nuevo
+  `--font-head`. En la Consola `--font-head` resuelve a `Console Display`, así que el oscuro no
+  cambia. Unbounded 300 mide 0,353, el mismo gris que Michroma.
+- A 390 px en español los titulares ocupan ahora las mismas líneas en los dos temas: About 3,
+  Trayectoria 3, Stack 2, Credenciales 2, Contacto 3.
+- **Bug de ambos temas, corregido:** en ≤640 px `.ledger__caption` seguía siendo
+  `table-caption` dentro de una tabla `display: block`, se encogía a ~150 px y apilaba el título
+  palabra por palabra.
+- **Zoom (260 px ≈ 150%):** tres elementos desbordaban porque su pista grid o flex no podía
+  encoger por debajo de la palabra más larga. En móvil `.cred` y `.tl` pasan a
+  `minmax(0, 1fr)`, `.tj__title` y `.disclosure__label` reciben `min-width: 0`, y los titulares
+  llevan `overflow-wrap: break-word`. Con `anywhere` se rompería el piso `min-content` de las
+  columnas de escritorio. Medido: 0 desbordes a 260, 390 y 1440 px en ambos temas.
+- **Peso del Acuario:** 78 KB (Neuropol 30 + Source Sans 3 28 + Unbounded 20). Unbounded no se
+  precarga porque aparece bajo el pliegue.

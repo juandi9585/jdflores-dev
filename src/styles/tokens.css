@@ -35,6 +35,9 @@
   --font-display: 'Console Display', system-ui, sans-serif;
   --font-body: 'Saira', system-ui, sans-serif;
   --font-label: 'Saira', system-ui, sans-serif;
+  /* sentence-length heads. The console reuses its display face; glass sets
+     a lighter one of its own so its display face stays on short strings */
+  --font-head: var(--font-display);
 
   /* display faces draw a single weight, so hierarchy is face and size */
   --display-track: -0.01em;

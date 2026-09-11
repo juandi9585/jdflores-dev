@@ -49,6 +49,18 @@
   font-display: swap;
 }
 
+/* Glass's sentence heads. Only the 300 cut ships: at that weight its x-height,
+   stem and page colour match Michroma's, which is what keeps a head and the
+   paragraph it runs into reading as one line. Declared across the whole
+   weight range so no head ever gets a faked bold. */
+@font-face {
+  font-family: 'Unbounded';
+  src: url('/fonts/unbounded-300-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Source Sans 3';
   src: url('/fonts/source-sans-3-latin.woff2') format('woff2');
