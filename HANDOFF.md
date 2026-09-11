@@ -692,4 +692,21 @@ texto de Perfil iba a 24 px y el título de Contacto partía "necesi-tas".
 - **En la pantalla de Juan (antes → ahora):** nombre 114 → 92 px, tesis 41 → 29, Perfil 24 → 18,
   afirmaciones 32 → 23, Contacto 74 → 48.
 - **Para verificar escritorio no basta 1440×900:** hay que usar ventanas reales de laptop
-  (1486×690, 1366×625, 1280×600).
+  (1310×610, 1486×690, 1366×625, 1280×600).
+- **Segunda vuelta, el mismo día.** Juan lo vio publicado en su laptop, que en realidad deja
+  una ventana de unos 1310×610 (1366×768 al 100%, no 1536×864 al 125%). El nombre quedaba en
+  una sola línea de 83 px que cruzaba la esfera y la tesis en 28 px. El título de AI-first se
+  veía diminuto y el texto chico se sentía un poco pequeño.
+  - El masthead se mide contra el primer pantallazo: `min(--step-7, 13.5vh)` por la escala de
+    cada tema, siempre en dos líneas ("Juan Diego" sobre "Flores", medida de 9em). La tesis es
+    0,28 de ese tamaño, así nombre y tesis escalan como un bloque. En su pantalla el nombre
+    queda en 66 px y la tesis en 23 px.
+  - Los pasos de texto (−2 a 0) vuelven a leer solo el ancho, y la etiqueta llega a 14 px en
+    laptop. En su pantalla el cuerpo pasa de 17,5 a 18,3 px y las etiquetas de 12,9 a 13,8 px.
+    El teléfono no cambia.
+  - El encabezado de AI-first pasa de `--step-0` a `--step-2`, como los títulos de las otras
+    secciones.
+  - `I18nProvider` leía y escribía `localStorage` sin `try`: con el almacenamiento bloqueado la
+    app quedaba en blanco. Ahora está protegido igual que el tema.
+  - **Vista previa sin tocar el sitio:** `npx vite build --base ./ --outDir <carpeta>` genera una
+    copia con rutas relativas que se puede publicar como página privada (artifact de claude.ai).

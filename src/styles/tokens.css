@@ -50,21 +50,23 @@
   --label-track-tight: 0.06em;
   --label-weight: 500;
 
-  /* The ramp reads the screen, not only its width. It was tuned on a
-     1440x900 frame (16:10). Scaled by width alone, a 1486x690 laptop got
-     that frame's sizes on three quarters of its height, and the masthead
-     pushed the buttons off the first screen. Any screen shorter than 16:10
-     now scales by its height instead. A phone held upright is always
-     narrower than that, so its sizes are unchanged. */
+  /* The display steps read the screen, not only its width. The ramp was
+     tuned on a 1440x900 frame (16:10), and scaled by width alone a laptop
+     got that frame's sizes on three quarters of its height. Any screen
+     shorter than 16:10 now scales them by its height instead. A phone held
+     upright is always narrower than that, so its sizes are unchanged. */
   --screen: min(1vw, 1.6vh);
 
-  /* fluid modular scale (320px → 1440px wide, on the --screen unit) */
-  /* floor raised to 12px: this step carries every data label on the site
-     (ledger notes, spec keys, credential years, contact keys) and 11px does
-     not survive a phone screen outdoors */
-  --step--2: clamp(0.75rem, 0.72rem + 0.14 * var(--screen), 0.82rem);
-  --step--1: clamp(0.83rem, 0.79rem + 0.22 * var(--screen), 0.95rem);
-  --step-0: clamp(1rem, 0.95rem + 0.24 * var(--screen), 1.15rem);
+  /* fluid modular scale, 320px → 1440px wide */
+  /* The text steps (−2 to 0) read the width only: a short screen is no
+     reason to shrink what is read. The label step floors at 12px because it
+     carries every data label on the site (ledger notes, spec keys, credential
+     years, contact keys) and 11px does not survive a phone screen outdoors.
+     On a laptop it reaches about 14px. */
+  --step--2: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+  --step--1: clamp(0.83rem, 0.79rem + 0.22vw, 1rem);
+  --step-0: clamp(1rem, 0.95rem + 0.24vw, 1.15rem);
+  /* the display steps, on the --screen unit */
   --step-1: clamp(1.2rem, 1.11rem + 0.44 * var(--screen), 1.5rem);
   --step-2: clamp(1.44rem, 1.29rem + 0.74 * var(--screen), 2rem);
   --step-3: clamp(1.73rem, 1.49rem + 1.18 * var(--screen), 2.75rem);
