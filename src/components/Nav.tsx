@@ -96,7 +96,7 @@ export function Nav() {
       <div className="nav__inner container container--wide">
         <a href="#top" className="nav__brand" aria-label="Juan Diego Flores">
           <span className="nav__mark" aria-hidden="true" />
-          <span className="nav__brand-text mono">JDF</span>
+          <span className="nav__brand-text label">JDF</span>
         </a>
 
         <nav className="nav__links" aria-label="Sections">
@@ -104,7 +104,7 @@ export function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="nav__link mono"
+              className="nav__link label"
               aria-current={active === l.href ? 'true' : undefined}
             >
               {l.label}

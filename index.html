@@ -9,17 +9,31 @@
       // Resolve the theme before first paint so the page never flashes the
       // wrong world. An explicit choice wins; otherwise the OS decides.
       (function () {
+        var t = 'dark';
         try {
           var stored = localStorage.getItem('jdf-theme');
-          var t = stored === 'light' || stored === 'dark'
+          t = stored === 'light' || stored === 'dark'
             ? stored
             : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-          document.documentElement.dataset.theme = t;
-          if (t === 'light') {
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#CFE4F5');
-          }
-        } catch (e) {
-          document.documentElement.dataset.theme = 'dark';
+        } catch (e) {}
+        document.documentElement.dataset.theme = t;
+        if (t === 'light') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#CFE4F5');
+        }
+        // Fetch this world's two faces before the stylesheet asks for them;
+        // the other world's never download. Relative, so both the Pages
+        // sub-path and the dev root resolve.
+        var faces = t === 'light'
+          ? ['neuropol.woff2', 'source-sans-3-latin.woff2']
+          : ['michroma-latin.woff2', 'saira-latin.woff2'];
+        for (var i = 0; i < faces.length; i++) {
+          var l = document.createElement('link');
+          l.rel = 'preload';
+          l.as = 'font';
+          l.type = 'font/woff2';
+          l.crossOrigin = 'anonymous';
+          l.href = 'fonts/' + faces[i];
+          document.head.appendChild(l);
         }
       })();
     </script>
@@ -42,12 +56,6 @@
     <meta property="og:image:alt" content="Juan Diego Flores, Systems Engineer and AI Specialist" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://juandi9585.github.io/jdflores-dev/" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <div id="root"></div>

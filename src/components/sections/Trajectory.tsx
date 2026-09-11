@@ -61,7 +61,7 @@ export function Trajectory() {
               <div className="tl__rail" aria-hidden="true">
                 <span className="tl__node" />
               </div>
-              <div className="tl__period mono tnum">
+              <div className="tl__period label tnum">
                 {i === 0 && <span className="tl__now">{tr.nowLabel}</span>}
                 {r.period}
               </div>

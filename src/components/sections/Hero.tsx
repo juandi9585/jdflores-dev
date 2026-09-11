@@ -57,7 +57,7 @@ export function Hero() {
             {h.name}
           </h1>
 
-          <p className="hero__thesis display" data-hero="2">
+          <p className="hero__thesis" data-hero="2">
             {h.thesis.map((seg, i) => (
               <span key={i} className={seg.accent ? 'text-amber' : undefined}>
                 {seg.t}
@@ -77,7 +77,7 @@ export function Hero() {
         </div>
 
         <div className="hero__status" data-hero="4">
-          <div className="container container--wide hero__status-row mono">
+          <div className="container container--wide hero__status-row label">
             <span className="hero__stat">{h.role}</span>
             <span className="hero__stat">{h.location}</span>
             <span className="hero__stat hero__stat--live">

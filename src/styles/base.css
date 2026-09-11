@@ -138,17 +138,20 @@ button {
 /* ---- typography primitives ---- */
 .display {
   font-family: var(--font-display);
-  font-stretch: 125%;
-  font-weight: 800;
-  line-height: 0.94;
-  letter-spacing: -0.02em;
+  /* both display faces draw one weight: 400 keeps the browser from inventing
+     a bold, and holds the borrowed % at the stroke Michroma has */
+  font-weight: 400;
+  /* Spanish acutes clear the line above only from about 1.04 up */
+  line-height: 1.04;
+  letter-spacing: var(--display-track);
   text-wrap: balance;
 }
 
-.mono {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  letter-spacing: 0.04em;
+/* keys, dates, availability: anything read as instrument data, not prose */
+.label {
+  font-family: var(--font-label);
+  font-weight: var(--label-weight);
+  letter-spacing: var(--label-track-tight);
 }
 
 /* Deliberately absent: there is no shared section-head primitive here.
@@ -196,11 +199,11 @@ button {
   align-items: center;
   gap: 0.6em;
   padding: 0.85em 1.4em;
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: var(--step--1);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-weight: var(--label-weight);
+  letter-spacing: var(--label-track-tight);
+  text-transform: var(--label-case);
   color: var(--btn-fg);
   background: var(--btn-bg);
   border: 1px solid var(--btn-bd);

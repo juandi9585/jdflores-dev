@@ -30,42 +30,56 @@ colors:
   aero-accent-ink: "#ffffff"
 typography:
   display:
-    fontFamily: "Archivo, system-ui, sans-serif"
-    fontSize: "clamp(3.58rem, 2.11rem + 7.36vw, 9.5rem)"
-    fontWeight: 800
-    lineHeight: 0.94
-    letterSpacing: "-0.02em"
-    fontVariation: "font-stretch: 125%"
+    fontFamily: "Console Display, Michroma, system-ui, sans-serif"
+    fontSize: "calc(clamp(3.58rem, 2.11rem + 7.36vw, 9.5rem) * 0.72)"
+    fontWeight: 400
+    lineHeight: 1.04
+    letterSpacing: "-0.01em"
   headline:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Console Display, Michroma, system-ui, sans-serif"
     fontSize: "clamp(2.07rem, 1.7rem + 1.84vw, 3.75rem)"
-    fontWeight: 800
-    lineHeight: 0.95
-    letterSpacing: "-0.03em"
-    fontVariation: "font-stretch: 120%"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "-0.01em"
   title:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Console Display, Michroma, system-ui, sans-serif"
     fontSize: "clamp(1.44rem, 1.29rem + 0.74vw, 2rem)"
-    fontWeight: 600
-    lineHeight: 1.15
+    fontWeight: 400
+    lineHeight: 1.08
     letterSpacing: "-0.01em"
   body:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Saira, system-ui, sans-serif"
     fontSize: "clamp(1rem, 0.95rem + 0.24vw, 1.15rem)"
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "normal"
   body-lead:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Saira, system-ui, sans-serif"
     fontSize: "clamp(1.2rem, 1.11rem + 0.44vw, 1.5rem)"
     fontWeight: 400
     lineHeight: 1.5
   label:
-    fontFamily: "IBM Plex Mono, ui-monospace, SFMono-Regular, monospace"
+    fontFamily: "Saira, system-ui, sans-serif"
     fontSize: "clamp(0.75rem, 0.72rem + 0.14vw, 0.82rem)"
     fontWeight: 500
-    letterSpacing: "0.14em"
+    letterSpacing: "0.12em"
     fontFeature: "tnum 1"
+  display-aero:
+    fontFamily: "Neuropol, system-ui, sans-serif"
+    fontSize: "calc(clamp(3.58rem, 2.11rem + 7.36vw, 9.5rem) * 0.8)"
+    fontWeight: 400
+    lineHeight: 1.04
+    letterSpacing: "0"
+  body-aero:
+    fontFamily: "Source Sans 3, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(1rem, 0.95rem + 0.24vw, 1.15rem)"
+    fontWeight: 400
+    lineHeight: 1.6
+  label-aero:
+    fontFamily: "Source Sans 3, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(0.75rem, 0.72rem + 0.14vw, 0.82rem)"
+    fontWeight: 600
+    letterSpacing: "0.01em"
 rounded:
   sm: "4px"
   lg: "10px"
@@ -138,7 +152,7 @@ The two are held together by one rule of construction: every semantic token keep
 **Key Characteristics:**
 - One accent per theme, spent sparingly: amber in the dark world, water blue in the light one.
 - Eight sections, eight distinct opening mechanics; no shared section head exists to regenerate a template from.
-- Fluid modular type ramp (ten steps) driven by Archivo's variable width axis, with IBM Plex Mono carrying all data and labels.
+- Fluid modular type ramp (ten steps) with a type pair per world: Michroma and Saira in the console, Neuropol and Source Sans 3 on glass. No monospace anywhere.
 - Dark world: flat, hairline-ruled, no shadows. Light world: layered glass plates, specular edges, wet sheens.
 - Browser surfaces (scrollbar, caret, selection, tap highlight) are themed as part of the design, not left to the platform.
 - AA contrast holds in both themes; tap targets meet 44×44; reduced motion is honoured everywhere including the canvases.
@@ -163,7 +177,7 @@ Two palettes on one skeleton: a near-monochrome ink field with a single warm acc
 - **Console Ink** (`{colors.ink}`): the dark page ground, with raised panels (`{colors.ink-2}`) and recessed alternating bands (`{colors.ink-3}`) one step either side of it.
 - **Hairline** (`{colors.line}` / `{colors.line-soft}`): every rule, border, table divider and rail on the site. Structure is drawn with these, not with shadow.
 - **Bone** (`{colors.bone}` / `{colors.bone-dim}`): primary and near-primary type.
-- **Ash** (`{colors.muted}` / `{colors.muted-2}`): secondary and tertiary type, mono labels, spec keys.
+- **Ash** (`{colors.muted}` / `{colors.muted-2}`): secondary and tertiary type, labels, spec keys.
 - **Sea Glass** (`{colors.aero-glass}`) over **Pale Ground** (`{colors.aero-ground}`): the light world's recessed shelf and page ground, with white plates lifted above them.
 - **Deep Water Ink** (`{colors.aero-bone}` / `{colors.aero-muted}` / `{colors.aero-muted-2}`): the light world's type. These are deliberately dark, not mid-tone, because the fixed sky layer puts its deepest band at the bottom of every viewport.
 
@@ -178,26 +192,33 @@ Two palettes on one skeleton: a near-monochrome ink field with a single warm acc
 
 ## Typography
 
-**Display Font:** Archivo (variable, width axis 62–125), fallback `system-ui, sans-serif`
-**Body Font:** Archivo, same family, static width
-**Label/Mono Font:** IBM Plex Mono, fallback `ui-monospace, SFMono-Regular, monospace`
+**Console (dark):** display is Michroma, set through the composite family `Console Display`, which takes U+0025 from Saira. Body, labels and figures are Saira (variable, `wdth` 50–125, `wght` 100–900).
+**Aquarium (light):** display is Neuropol (Typodermic, 1996, CC0). Body and labels are Source Sans 3, with Segoe UI holding the metrics while it loads.
+**No monospace.** Tabular figures come from Saira's `tnum` and from Source Sans 3's default figures.
 
-**Character:** One grotesque doing two jobs. Display setting is width-driven rather than size-driven — the masthead is stretched to 125% and heavier heads sit at 105–120% — so hierarchy reads as pressure rather than as scale alone. Mono is not ornament: it marks anything the reader is meant to treat as instrument data.
+Every face is self-hosted from `public/fonts/` exactly as its author publishes it, with the licences in `public/fonts/licenses/`. `src/styles/fonts.css` declares them, and the family names live only in theme tokens, so a visitor downloads one world's pair and never the other's; the pre-paint script in `index.html` preloads that pair.
+
+**Character:** Two worlds, two eras of the same future. The console is lettered like an instrument panel: Microgramma's extended capitals for display, Eurostile's lowercase descendant for everything else, labels in tracked capitals. The aquarium is lettered like a 2006 tech poster: Neuropol's rounded Y2K display over a Vista-era humanist sans, with labels in sentence case the way Vista and 7 lettered their own glass. Both display faces draw a single weight, so hierarchy is carried by face and size, never by bold.
 
 ### Hierarchy
-- **Display** (800, `--step-7`, 0.94 leading, 125% width): the masthead name only. One per page.
-- **Headline** (800, `--step-4`, 0.95 leading, −0.03em): ledger figures and rail endpoints — numbers, not titles.
-- **Title** (600–800, `--step-2`/`--step-3`, 1.04–1.15): section-owned heads (spec sheet title, credentials hang, timeline spine, run-in lead), each set inside its own mechanic.
+- **Display** (`--step-7` × `--masthead-scale`, 0.72 in the console and 0.8 on glass, 1.04 leading): the masthead name only. One per page.
+- **Headline** (display face, `--step-4`, 1.0 leading): ledger figures — numbers, not titles. The console's % is Saira's, widened to 125% so it keeps Michroma's proportions.
+- **Title** (display face, `--step-2`, 1.06–1.1): section-owned heads (spec sheet title, credentials hang, timeline spine, run-in lead), each set inside its own mechanic.
+- **Lead** (body face, `--step-3`, `--lead-weight` 500 or 600, 1.28): the hero thesis. It is set in the body face so it reads as a sentence under the name rather than a second display line.
 - **Body** (400, `--step-0`, 1.6): all prose. Measures are capped: 66ch for the about column, 62ch for spec values, 46–48ch for leads and colophons.
 - **Body Lead** (400, `--step-1`, 1.5): the run-in paragraph and section summaries.
-- **Label** (mono 500, `--step--2`, 0.10–0.18em, uppercase): nav links, spec keys, credential keys, contact keys, strip keys, action-bar items.
+- **Label** (`.label`, `--step--2`, `--label-weight`, `--label-case`, `--label-track`): nav links, spec keys, credential keys, contact keys, strip keys, action-bar items. Capitals at 0.12em in the console; sentence case at 0.01em on glass.
 
 ### Named Rules
 **The No Shared Head Rule.** The stack "small tag → huge title → small description" is banned outright, and there is deliberately no shared section-head class in the stylesheet to regenerate it from. A new section invents its own opening mechanic or it does not ship.
 
 **The 12px Floor Rule.** `--step--2` bottoms out at 12px. It carries every data label on the site, and smaller does not survive a phone screen outdoors. Nothing is shrunk below it to protect a desktop silhouette.
 
-**The Instrument Numerals Rule.** Anything read as data or compared down a column carries tabular figures (`.tnum`); anything that is a key rather than a sentence is set in mono, uppercase and tracked.
+**The Instrument Numerals Rule.** Anything read as data or compared down a column carries tabular figures (`.tnum`); anything that is a key rather than a sentence is set in the label face, with the case and tracking its world gives it.
+
+**The One Weight Rule.** Both display faces are declared across the full weight and stretch range, so the browser never fakes a bold on them. Hierarchy that once came from weight 800 now comes from face and size.
+
+**The Longest Word Rule.** A grid track that holds a display heading floors at `min-content`, never at a fixed pixel width. Both display faces run wide, and with a fixed floor the glyphs paint past the track while every box still measures clean; the Stack and Credentials heads did exactly that in Spanish at 1024–1440px.
 
 ## Layout
 
@@ -240,7 +261,7 @@ The light world is rounded, as its material demands: 10px on small parts, 20px o
 
 ### Buttons
 - **Shape:** squared-off in the dark world (4px), full pill in the light world (999px).
-- **Primary:** amber fill with dark amber-ink type, mono uppercase at `--step--1` with 0.06em tracking, 0.85em/1.4em padding. In the light world the same button becomes an aqua lozenge: a top-to-bottom water gradient with a specular highlight inset 1px from the edges that occupies the top 46% and stops at the midline.
+- **Primary:** amber fill with dark amber-ink type, label face in capitals at `--step--1` with 0.06em tracking (sentence case on glass), 0.85em/1.4em padding. In the light world the same button becomes an aqua lozenge: a top-to-bottom water gradient with a specular highlight inset 1px from the edges that occupies the top 46% and stops at the midline.
 - **Hover / Focus:** lifts 2px and takes an accent-tinted border; the trailing arrow icon slides 3px right. Focus is a 2px accent outline offset 3px. On touch devices the lift and border change are neutralised so nothing sticks in a hover state after a tap; `:active` drops opacity to 0.65 instead.
 - **Ghost:** transparent fill, hairline border, bone type — the default `.btn`. The large variant bumps padding to 1.05em/1.8em and type to `--step-0`.
 
@@ -249,9 +270,9 @@ The light world is rounded, as its material demands: 10px on small parts, 20px o
 - **Light:** the glass plate is the container — white gradient fill, near-white 1px edge, 20px radius by default, plate lift shadow, backdrop blur, `clamp(1.25rem, 2.4vw, 2.25rem)` padding, and a wet reflection below the lower edge.
 
 ### Navigation
-- Fixed top bar, 68px tall, transparent until scrolled; then a blurred, hairline-bottomed panel fades in. Links are mono uppercase `--step--2` at 0.14em, muted at rest, bone on hover and when current, with an accent underline that scales in from the left.
+- Fixed top bar, 68px tall, transparent until scrolled; then a blurred, hairline-bottomed panel fades in. Links are set in the label face at `--step--2`, capitals at 0.12em in the console and sentence case on glass, muted at rest, bone on hover and when current, with an accent underline that scales in from the left.
 - Under 900px the links are replaced by a burger opening a bottom sheet: rounded top corners, safe-area padding, links at `--step-3` with a small accent dot marking the current section, over a dimming scrim.
-- The language toggle is a mono `EN / ES` pair with a hairline separator; the active side takes the accent. The theme toggle is a 46×25 capsule whose 19px knob slides between the two worlds and carries a drawn sun or moon.
+- The language toggle is an `EN / ES` pair in the label face with a hairline separator; the active side takes the accent. The theme toggle is a 46×25 capsule whose 19px knob slides between the two worlds and carries a drawn sun or moon.
 
 ### Signature: the eight section mechanics
 Each section opens with a mechanic no other section uses, and this is the system's load-bearing rule. **Hero** — masthead plus a status strip pinned to the viewport bottom, with no label above the name and no descriptor beneath it. **About** — a run-in head: the section name is set inline in display type and the prose continues in the same line flow. **Impact** — a ruled ledger where the figures carry the display type and the section name demotes to the table caption. **Trajectory** — a spine line against a hairline, with rail endpoints carrying the display type. **Stack** — a spec sheet whose head occupies the first row of the same two-column grid as the data. **AI-First** — corner marginalia: the section name runs flush right like a running head over a full-bleed orbit. **Credentials** — a hanging indent beside the first row, with one row grammar shared by every group. **Contact** — a baseline-aligned pair on the same left edge as every other section.
@@ -268,8 +289,8 @@ A phone-only progressive-disclosure control used on the timeline and credentials
 - **Do** style every new component against semantic tokens (`--bone`, `--line`, `--amber`, `--ink-2`) so the light stylesheet themes it without a new rule.
 - **Do** give a new section its own opening mechanic, in its own class namespace.
 - **Do** spend the accent once per section: one accent figure, one accent node, one primary button.
-- **Do** set keys, years, counts and any column of compared numbers in mono with tabular figures.
-- **Do** keep prose measures capped (66ch body, 46–48ch leads) and drive display type through Archivo's `font-stretch` axis.
+- **Do** set keys, years, counts and any column of compared numbers in the label face with tabular figures.
+- **Do** keep prose measures capped (66ch body, 46–48ch leads) and carry display hierarchy with face and size: the display faces have one weight and no width axis.
 - **Do** draw icons as SVG paths on the shared 16-unit grid at 1.25 stroke; Unicode arrows are not an icon system.
 - **Do** theme the browser's own surfaces — scrollbar, caret, selection, tap highlight, `theme-color` — as part of any new world.
 - **Do** validate at phone width and on touch before calling a change done, and neutralise any `:hover` that would stick after a tap.

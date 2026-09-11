@@ -20,13 +20,13 @@ const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Saira:wdth,wght@50..125,100..900&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; box-sizing: border-box; }
   body {
     width: 1200px; height: 630px; overflow: hidden;
     background: #0A0C10; color: #ECEEF3;
-    font-family: Archivo, system-ui, sans-serif;
+    font-family: Saira, system-ui, sans-serif;
     position: relative;
     display: flex; flex-direction: column; justify-content: center;
     padding: 0 76px;
@@ -42,19 +42,20 @@ const html = `<!doctype html>
   }
   .inner { position: relative; z-index: 2; max-width: 720px; }
   h1 {
-    font-size: 96px; line-height: 0.92; font-weight: 800;
-    font-stretch: 125%; letter-spacing: -0.02em;
+    font-family: Michroma, system-ui, sans-serif;
+    font-size: 74px; line-height: 1.04; font-weight: 400;
+    letter-spacing: -0.01em;
   }
   p.thesis {
-    margin-top: 26px; font-size: 32px; line-height: 1.3;
-    font-weight: 600; color: #C3C8D4; max-width: 20ch;
+    margin-top: 26px; font-size: 32px; line-height: 1.28;
+    font-weight: 500; color: #C3C8D4; max-width: 22ch;
   }
   .amber { color: #FFB84D; }
   .strip {
     position: absolute; left: 76px; right: 232px; bottom: 46px;
     display: flex; gap: 28px; align-items: center;
-    font-family: 'IBM Plex Mono', monospace; font-size: 19px;
-    letter-spacing: 0.04em; color: #8B93A4;
+    font-family: Saira, system-ui, sans-serif; font-size: 20px; font-weight: 500;
+    letter-spacing: 0.06em; color: #8B93A4;
     border-top: 1px solid #222836; padding-top: 22px;
   }
   .strip > span { white-space: nowrap; }

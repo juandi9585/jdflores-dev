@@ -29,9 +29,23 @@
   --danger: #ff6b6b;
 
   /* ---- type ---- */
-  --font-display: 'Archivo', system-ui, sans-serif;
-  --font-body: 'Archivo', system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  /* The console reads like instrument lettering: Michroma (Microgramma's
+     genre) for display, Saira (Eurostile's) for everything else. aero.css
+     swaps the values for the light world and never the names. */
+  --font-display: 'Console Display', system-ui, sans-serif;
+  --font-body: 'Saira', system-ui, sans-serif;
+  --font-label: 'Saira', system-ui, sans-serif;
+
+  /* display faces draw a single weight, so hierarchy is face and size */
+  --display-track: -0.01em;
+  --masthead-scale: 0.72;
+  --lead-weight: 500;
+
+  /* labels: tracked capitals on the console, sentence case on glass */
+  --label-case: uppercase;
+  --label-track: 0.12em;
+  --label-track-tight: 0.06em;
+  --label-weight: 500;
 
   /* fluid modular scale (min 320px → max 1440px) */
   /* floor raised to 12px: this step carries every data label on the site
