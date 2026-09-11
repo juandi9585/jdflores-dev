@@ -660,3 +660,36 @@ quinto color).
   mitad (el sitio usa `scroll-behavior: smooth`); hay que capturar por tramos con `clip` y el
   scroll suave apagado. En headless con SwiftShader la página corre a 6–10 fps mientras la esfera
   está activa, así que las transiciones CSS parecen atrasadas; no es un bug del sitio.
+
+## 18. Escala tipográfica a la medida de la pantalla (2026-09-11)
+Juan vio el sitio en su laptop (HP, 1536×864 al 125%, en Opera GX; queda una ventana de unos
+1486×690) y varios tamaños eran enormes: el hero no cabía y los botones quedaban al borde, el
+texto de Perfil iba a 24 px y el título de Contacto partía "necesi-tas".
+
+- **Causa:** la escala fluida solo miraba el ancho y se afinó en un marco de 1440×900. Ninguna
+  laptop real tiene esa proporción una vez que el navegador y la barra de tareas toman su parte,
+  así que recibía tamaños de monitor en tres cuartos de la altura.
+- **Cambio de sistema:** `tokens.css` define `--screen: min(1vw, 1.6vh)` y los diez pasos usan
+  esa unidad en vez de `vw`. Una pantalla más baja que 16:10 escala por su altura. Un teléfono en
+  vertical siempre es más angosto que eso, así que sus tamaños no cambian (regla *First Screen*
+  en DESIGN.md).
+- **Roles que bajaron:**
+  - La tesis del hero pasa a `--step-2` con medida de 36ch, en tres líneas.
+  - El texto de Perfil es cuerpo (`--step-0`) y su titular va a `--step-1`, como ya estaba en
+    el teléfono.
+  - Las afirmaciones de AI-first van a `--step-1`, y su medida se cuenta en su propio tamaño.
+    Antes eran unas veinte letras por línea en una columna más alta que la pantalla.
+  - Los cargos de Trayectoria van un paso por debajo del título de la sección; antes empataban.
+  - El título de Contacto queda en `--step-4` en todo ancho, sin guiones, con `break-word` en
+    vez de `anywhere`. A 1920 px el oscuro partía "Cuént|ame".
+- **Pantallas cortas:** el `padding-top` del hero es `clamp(88px, 15vh, 108px)`, y un teléfono
+  acostado (menos de 480 px de alto) toma el masthead del teléfono.
+- **Medido en español e inglés, ambos temas:** el primer pantallazo entero (nombre, tesis, botones y
+  franja de estado) en 1280×600, 1366×625, 1440×790, 1486×690, 1920×960, 2560×1300 y en tablet.
+  Antes el hero medía 763 px en la pantalla de Juan y en 1366×625 los botones no se veían. Sin
+  palabras partidas ni desbordes. El teléfono en vertical queda igual salvo los cargos
+  (23,5 → 19,5 px).
+- **En la pantalla de Juan (antes → ahora):** nombre 114 → 92 px, tesis 41 → 29, Perfil 24 → 18,
+  afirmaciones 32 → 23, Contacto 74 → 48.
+- **Para verificar escritorio no basta 1440×900:** hay que usar ventanas reales de laptop
+  (1486×690, 1366×625, 1280×600).
