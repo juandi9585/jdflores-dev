@@ -168,7 +168,7 @@ El crudo de los 4 ya está staged, así que **no hace falta el MCP**. Para cada 
    de 360 a 1440 px: 0 desbordes. Lección que queda: un `getBoundingClientRect()` de la caja no
    detecta esto; hay que medir el `Range` del texto contra la caja.
 
-1. **💧 Un ornamento equivalente a las burbujas para el tema oscuro.** Petición de Juan
+1. ~~💧 Un ornamento equivalente a las burbujas para el tema oscuro~~ **✅ PUBLICADO (2026-09-11), ver §17.** Petición de Juan
    el 2026-09-08: le gustan las burbujas del mundo claro y quiere "un efecto similar" en el
    oscuro. Hoy el tema oscuro no tiene capa de ornamento: `.bubbles` solo se renderiza en claro
    (`Bubbles.tsx` devuelve `null` fuera de él) y el mundo oscuro es deliberadamente plano, sin
@@ -620,3 +620,43 @@ es 1,86× más grueso que Source Sans 3 al mismo tamaño y su minúscula es casi
   columnas de escritorio. Medido: 0 desbordes a 260, 390 y 1440 px en ambos temas.
 - **Peso del Acuario:** 78 KB (Neuropol 30 + Source Sans 3 28 + Unbounded 20). Unbounded no se
   precarga porque aparece bajo el pliegue.
+
+## 17. Lluvia de código (Matrix): el ornamento del tema oscuro (2026-09-11)
+Juan pidió para el oscuro "un efecto similar" a las burbujas, algo tecnológico, estilo
+hacker/Matrix. Un tablero comparó "con letras" (katakana en espejo, en cian) con "solo señal"
+(trazos finos sin caracteres). Juan eligió primero solo señal y, ya implementada, cambió a
+**con letras**: la lluvia de Matrix, en el cian de la consola en vez de verde (el verde sería un
+quinto color).
+
+- **Qué es:** columnas de katakana de ancho medio y números, en espejo como en la película. Todo
+  en cian; el carácter que encabeza cada columna va en un cian aclarado, casi blanco, y algunos
+  caracteres cambian mientras caen. Dos planos: cerca (más brillante, rápido y largo) y lejos
+  (tenue, lento y corto). 7 columnas en el teléfono, 16 en escritorio.
+- **Sin fuente japonesa no llueven cajas vacías:** al crearse, el motor dibuja un katakana y un
+  punto de código sin asignar; si salen iguales, el sistema no tiene fuente japonesa y la lluvia
+  usa solo números.
+- **No es monospace:** los caracteres se dibujan en el canvas, no son texto de la página, así que
+  el sitio sigue sin monospace.
+- **Archivos:** `src/components/CodeRain.tsx` (montaje y reglas) y
+  `src/components/codeRainEngine.ts` (el dibujo, sin React). El motor no se llama `codeRain.ts`
+  porque en Windows choca con `CodeRain.tsx` al resolver módulos sin distinguir mayúsculas.
+  Estilos en `.rain` (`base.css`); se monta en `App.tsx` junto a `Bubbles`.
+- **Capa:** `position: fixed; z-index: -1`. Queda sobre el fondo tinta y debajo de todas las
+  secciones, así que ningún carácter cruza el texto y las franjas de Impacto y AI-First la tapan
+  como paneles. Solo se monta en oscuro.
+- **Regla de Juan: nunca comparte pantalla con la esfera.** Un IntersectionObserver sobre `#top`
+  con `rootMargin: '25% 0px 0px 0px'` cuenta el hero como presente un cuarto de pantalla antes de
+  que asome. Al volver hacia arriba, la lluvia ya se está desvaneciendo cuando aparece el borde
+  del hero.
+- **Siempre se desvanece, nunca se apaga de golpe** (pedido de Juan tras el primer tablero):
+  aparece en 1,6 s y se va en 1,1 s con `cubic-bezier(0.37, 0, 0.63, 1)`. Los caracteres siguen
+  cayendo durante el desvanecido y el bucle se detiene 100 ms después; la duración se lee del CSS,
+  no está duplicada en JS.
+- **Costo:** canvas 2D con `devicePixelRatio` tope 1,5 y altura `100lvh`, para que la barra del
+  navegador móvil no lo redimensione. Son unas 300 letras por cuadro en escritorio y unas 120 en
+  el teléfono, y el `requestAnimationFrame` corre solo mientras la lluvia se ve. Con reducir
+  movimiento dibuja un único cuadro quieto.
+- **Gotchas de verificación:** una captura de página completa con Playwright repetía su primera
+  mitad (el sitio usa `scroll-behavior: smooth`); hay que capturar por tramos con `clip` y el
+  scroll suave apagado. En headless con SwiftShader la página corre a 6–10 fps mientras la esfera
+  está activa, así que las transiciones CSS parecen atrasadas; no es un bug del sitio.

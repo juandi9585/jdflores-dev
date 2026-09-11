@@ -47,6 +47,35 @@ body::before {
     radial-gradient(100% 60% at 50% 110%, rgba(87, 224, 216, 0.035), transparent 60%);
 }
 
+/* Code rain (CodeRain.tsx), the console's one ornament. z-index -1 puts it
+   above the ink ground and under every section, so the recessed bands of
+   Impact and AI-First cover it like panels and no character ever crosses text.
+   It keeps away from the hero: the sphere and the rain never share a screen. */
+.rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  /* the large viewport, so the canvas is not resized as a phone's toolbar slides */
+  height: 100lvh;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  /* Both directions are fades with the same gentle curve: the rain thins out
+     and gathers again, it never switches. CodeRain reads this duration to
+     know when the fade-out is over and the drawing can stop. */
+  transition: opacity 1.1s cubic-bezier(0.37, 0, 0.63, 1);
+}
+.rain[data-on='true'] {
+  opacity: 1;
+  transition-duration: 1.6s;
+}
+.rain canvas {
+  width: 100%;
+  height: 100%;
+}
+
 img,
 picture,
 svg,
