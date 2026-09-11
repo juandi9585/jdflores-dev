@@ -25,7 +25,7 @@ export function Stack() {
           {s.groups.map((g, i) => (
             <div className="specsheet__row" key={i} data-reveal-item>
               <dl className="specsheet__pair">
-                <dt className="specsheet__k mono">{g.label}</dt>
+                <dt className="specsheet__k label">{g.label}</dt>
                 <dd className="specsheet__v">{g.items.join(', ')}</dd>
               </dl>
             </div>

@@ -1,0 +1,58 @@
+/* =========================================================
+   Type — self-hosted, one family set per world.
+   Console (dark): Michroma for display, Saira for text, labels, figures.
+   Aquarium (light): Neuropol (1996) for display, Source Sans 3 for text.
+
+   Every file is served exactly as its author publishes it (Google Fonts'
+   latin cut for the OFL faces, Typodermic's own WOFF2 for the CC0 one);
+   the licences ship beside them in /fonts/licenses. A browser downloads a
+   face only when a rendered element resolves to it, so because the family
+   names live in theme tokens, each visitor pays for one world, not two.
+   ========================================================= */
+
+/* Michroma draws % as "°/o", which misreads on the headline figure. The
+   console's display family is a composite: Michroma for every glyph except
+   U+0025, which comes from Saira. Both faces must declare the same weight
+   and stretch ranges: otherwise font matching drops Michroma on any element
+   asking for a stretch it does not claim, and the line falls to a system
+   face. The ranges also stop the browser from faking a bold on a face that
+   draws one weight. */
+@font-face {
+  font-family: 'Console Display';
+  src: url('/fonts/michroma-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Console Display';
+  src: url('/fonts/saira-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-display: swap;
+  unicode-range: U+0025;
+}
+
+@font-face {
+  font-family: 'Saira';
+  src: url('/fonts/saira-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 50% 125%;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neuropol';
+  src: url('/fonts/neuropol.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('/fonts/source-sans-3-latin.woff2') format('woff2');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}

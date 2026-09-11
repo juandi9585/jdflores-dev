@@ -38,7 +38,7 @@ export function Contact() {
 
           <dl className="contact__ledger">
             <div className="contact__row">
-              <dt className="mono">{c.emailLabel}</dt>
+              <dt className="label">{c.emailLabel}</dt>
               <dd>
                 <a href={`mailto:${LINKS.email}`} className="contact__link">
                   {LINKS.email}
@@ -46,7 +46,7 @@ export function Contact() {
               </dd>
             </div>
             <div className="contact__row">
-              <dt className="mono">{c.whatsappLabel}</dt>
+              <dt className="label">{c.whatsappLabel}</dt>
               <dd>
                 <a
                   href={LINKS.whatsapp}
@@ -60,7 +60,7 @@ export function Contact() {
               </dd>
             </div>
             <div className="contact__row">
-              <dt className="mono">{c.phoneLabel}</dt>
+              <dt className="label">{c.phoneLabel}</dt>
               <dd>
                 <a href={`tel:${LINKS.phoneHref}`} className="contact__link tnum">
                   {LINKS.phone}
@@ -68,7 +68,7 @@ export function Contact() {
               </dd>
             </div>
             <div className="contact__row">
-              <dt className="mono">{c.githubLabel}</dt>
+              <dt className="label">{c.githubLabel}</dt>
               <dd>
                 <a
                   href={LINKS.github}
@@ -82,7 +82,7 @@ export function Contact() {
               </dd>
             </div>
             <div className="contact__row">
-              <dt className="mono">{c.linkedinLabel}</dt>
+              <dt className="label">{c.linkedinLabel}</dt>
               <dd>
                 <a
                   href={LINKS.linkedin}
@@ -96,7 +96,7 @@ export function Contact() {
               </dd>
             </div>
             <div className="contact__row">
-              <dt className="mono">{c.locationLabel}</dt>
+              <dt className="label">{c.locationLabel}</dt>
               <dd>{c.location}</dd>
             </div>
           </dl>

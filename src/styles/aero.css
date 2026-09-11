@@ -44,6 +44,22 @@
   --radius: 10px;
   --radius-lg: 20px;
 
+  /* ---- type ---- */
+  /* Neuropol (1996, public domain) is the rounded Y2K voice of the era's
+     tech posters. Labels drop the tracked capitals for sentence case, the
+     way Vista and 7 lettered their own glass, in a humanist sans of that
+     lineage; Segoe UI holds the metrics while it loads. */
+  --font-display: 'Neuropol', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --font-label: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --display-track: 0;
+  --masthead-scale: 0.8;
+  --lead-weight: 600;
+  --label-case: none;
+  --label-track: 0.01em;
+  --label-track-tight: 0.01em;
+  --label-weight: 600;
+
   color-scheme: light;
 }
 

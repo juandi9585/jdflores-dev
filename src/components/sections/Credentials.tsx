@@ -21,7 +21,7 @@ export function Credentials() {
         <div className="cred__table">
           <Disclosure
             className="cred__group"
-            headingClassName="cred__k mono"
+            headingClassName="cred__k label"
             heading={c.eduLabel}
             revealItem
           >
@@ -35,7 +35,7 @@ export function Credentials() {
                     </span>
                     {e.note && <p className="cred__note">{e.note}</p>}
                   </div>
-                  <span className="cred__meta mono tnum">{e.period}</span>
+                  <span className="cred__meta label tnum">{e.period}</span>
                 </div>
               ))}
             </div>
@@ -43,7 +43,7 @@ export function Credentials() {
 
           <Disclosure
             className="cred__group"
-            headingClassName="cred__k mono"
+            headingClassName="cred__k label"
             heading={c.certLabel}
             revealItem
           >
@@ -54,7 +54,7 @@ export function Credentials() {
                     <span className="cred__primary">{cert.name}</span>
                     <span className="cred__secondary">{cert.issuer}</span>
                   </div>
-                  {cert.year && <span className="cred__meta mono tnum">{cert.year}</span>}
+                  {cert.year && <span className="cred__meta label tnum">{cert.year}</span>}
                 </div>
               ))}
             </div>
@@ -62,7 +62,7 @@ export function Credentials() {
 
           <Disclosure
             className="cred__group"
-            headingClassName="cred__k mono"
+            headingClassName="cred__k label"
             heading={c.langLabel}
             revealItem
           >
@@ -80,7 +80,7 @@ export function Credentials() {
 
           <Disclosure
             className="cred__group"
-            headingClassName="cred__k mono"
+            headingClassName="cred__k label"
             heading={c.beyondLabel}
             revealItem
           >

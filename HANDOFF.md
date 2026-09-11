@@ -43,7 +43,7 @@
   - `framer-motion` `^11.15` — **instalado pero aún sin usar**; lo requiere `sticker-peel` cuando se integre.
   - `simple-icons` — marcas monocromas de las herramientas (logos del Stack y la órbita).
 - **Dev:** `@vitejs/plugin-react`, `typescript`, `@types/*`, `playwright` (solo para screenshots de QA).
-- **Fuentes:** Google Fonts vía `<link>` en `index.html` — `Archivo` (variable, ejes `wdth` + `wght`) + `IBM Plex Mono`.
+- **Fuentes:** autoalojadas en `public/fonts/` (ver §16): Michroma + Saira en oscuro, Neuropol + Source Sans 3 en claro. Ya no hay Google Fonts en runtime.
 
 ---
 
@@ -60,9 +60,9 @@ Definido en `src/styles/tokens.css`.
 ```
 
 **Tipografía**
-- Display: `Archivo` con `font-stretch: 125%` + peso 800 (titulares, nombre).
-- Body: `Archivo` normal 400/500.
-- Data/labels: `IBM Plex Mono` (eyebrows, métricas, periodos) — guiño al IBM AS/400 del CV.
+- Display: Michroma (oscuro) / Neuropol (claro). Un solo peso cada una: la jerarquía va por fuente y tamaño.
+- Body: Saira (oscuro) / Source Sans 3 (claro).
+- Labels y cifras: la misma familia del body, sin monoespaciada (ver §16).
 - Escala fluida `--step--2 … --step-7` con `clamp()`.
 
 **Firma:** el sitio se lee como el panel de lectura de los sistemas desplegados; los
@@ -162,22 +162,11 @@ El crudo de los 4 ya está staged, así que **no hace falta el MCP**. Para cada 
 
 ## 6. Pendiente / TODO (priorizado)
 
-0. **🐛 Overflow del título en Stack (tema claro) — diagnosticado, sin arreglar.**
-   Reportado por Juan el 2026-09-08 con captura. En `.specsheet__row--head` el título se sale
-   de su columna y sus glifos se pintan encima del texto del resumen.
-   **No es una colisión de cajas** — medido a 1203px, la caja del título termina en 323,9 y el
-   resumen empieza en 360, o sea 36px de separación. Lo que desborda es **la palabra**:
-   `.specsheet__row` usa `grid-template-columns: minmax(150px, 24%) 1fr`, el 24% resuelve a
-   **251,6px**, y la palabra más ancha del título mide **281,7px en ES** ("herramientas") y
-   **259,4px en EN** ("orchestrate."), ambas a `--step-3` = 38px. Desborda en los dos idiomas
-   (ES +30,1px, EN +7,8px), solo que en español se nota mucho más.
-   **Por qué la rejilla no lo corrige sola:** el mínimo del `minmax()` es un `150px` fijo, así
-   que el dimensionado automático de CSS Grid (que ensancharía la pista hasta el `min-content`
-   del contenido) nunca entra.
-   **Vías de arreglo, sin elegir una todavía:** `minmax(min-content, 24%)` en la pista;
-   `overflow-wrap: anywhere` + `hyphens: auto` en `.specsheet__title`; o bajar el título un paso
-   tipográfico en el rango de anchos donde la columna queda por debajo de la palabra.
-   Verificar **en español** y a varios anchos, no solo a 1440.
+0. ~~Overflow del título en Stack~~ **✅ RESUELTO (2026-09-11), ver §16.** La pista pasó a
+   `minmax(min-content, 24%)` y el título a `--step-2`; `.cred` recibió el mismo piso porque
+   "reconocimientos." también desbordaba con las fuentes nuevas. Medido en ambos temas, EN y ES,
+   de 360 a 1440 px: 0 desbordes. Lección que queda: un `getBoundingClientRect()` de la caja no
+   detecta esto; hay que medir el `Range` del texto contra la caja.
 
 1. **💧 Un ornamento equivalente a las burbujas para el tema oscuro.** Petición de Juan
    el 2026-09-08: le gustan las burbujas del mundo claro y quiere "un efecto similar" en el
@@ -559,3 +548,50 @@ así diagnostiqué mal a `KineticGrid` la primera vez. La prueba buena compara
 Divulgación progresiva en Trajectory/Credentials (solo teléfono), barra de acción fija, drawer
 como hoja inferior con lock `position: fixed`, objetivos táctiles ≥44×44, suelo tipográfico de
 12px, GSAP y framer-motion fuera, `og:image` y meta por idioma, WhatsApp y "Caracas".
+
+---
+
+## 16. Tipografía nueva (2026-09-11)
+
+**Por qué.** Juan pidió con urgencia cambiar las fuentes: Archivo expandida con etiquetas en IBM
+Plex Mono, en mayúsculas espaciadas, leía como "vibe coded" (IBM Plex está en la lista de fuentes
+reflejo de Impeccable). Pidió explícitamente opciones **gratuitas y sin problemas de licencia**.
+
+| Mundo | Display | Texto, etiquetas y cifras |
+|---|---|---|
+| Consola (oscuro) | Michroma (OFL), vía la familia compuesta `Console Display` | Saira (OFL, variable `wdth` 50–125, `wght` 100–900) |
+| Acuario (claro) | Neuropol de 1996 (Typodermic, **CC0**) | Source Sans 3 (OFL), con Segoe UI como respaldo métrico |
+
+- **Sin monoespaciada.** El token `--font-mono` pasó a `--font-label` y la clase `.mono` a
+  `.label`. Las cifras tabulares salen de Saira (`tnum` real) y de Source Sans 3 (tabulares por
+  defecto).
+- **Licencias.** Los WOFF2 están en `public/fonts/` tal como los publica su autor: el corte latin
+  de Google Fonts para las OFL y el WOFF2 oficial de Typodermic para Neuropol, sin subsetting ni
+  conversión propios. Las licencias van en `public/fonts/licenses/`. **Neuropol X** (la versión
+  nueva de la referencia de Juan) no se usa porque es comercial: Adobe Fonts exige suscripción
+  activa y no permite autoalojar, y la licencia de escritorio de MyFonts excluye la web.
+- **Solo baja el mundo activo.** Los nombres de familia viven en tokens por tema (`tokens.css` /
+  `aero.css`), así que cada visita descarga dos archivos. El script previo al pintado de
+  `index.html` precarga esos dos con rutas relativas, que resuelven igual bajo `/jdflores-dev/`
+  y en `/` en dev. Peso medido: 131 KB antes; **114 KB** la Consola (Michroma 17 + Saira 97) y
+  **58 KB** el Acuario (Neuropol 30 + Source Sans 3 28).
+- **El % de Michroma** se dibuja "°/o". `Console Display` toma U+0025 de Saira con
+  `unicode-range`, ensanchado a 125% en `.ledger__figure`. **Trampa:** las dos caras de una
+  familia compuesta deben declarar los mismos rangos de `font-weight` y `font-stretch`; si no, el
+  emparejamiento de CSS descarta Michroma en cualquier elemento con `font-stretch` y toda la
+  línea cae a una serif del sistema.
+- **Un solo peso.** Michroma y Neuropol dibujan un peso; se declaran con rango 100–900 para que
+  el navegador no invente negritas, y los titulares pasaron de 800 a 400. El nombre del hero se
+  escala con `--masthead-scale` (0,72 / 0,8) en vez de con `font-stretch`, y la tesis pasó a la
+  fuente de texto (`--lead-weight`).
+- **Etiquetas por tema.** `--label-case`, `--label-track`, `--label-track-tight` y
+  `--label-weight`: mayúsculas espaciadas en la Consola, minúscula normal en el Acuario, como
+  rotulaban Vista y 7.
+- **Pendiente #0 de §6, resuelto.** Las columnas que llevan un titular display
+  (`.specsheet__row`, `.cred`) tienen ahora piso `minmax(min-content, …)` en vez de un píxel fijo,
+  y el título de Stack bajó a `--step-2`. Medido con `Range.getBoundingClientRect()` contra la
+  caja de cada elemento, en ambos temas, EN y ES, de 360 a 1440 px: **0 desbordes**.
+- **Share card** regenerada con Michroma + Saira (`npm run og`).
+- **Trampa de verificación en dev:** fijar `jdf-lang` en localStorage antes de cargar no sirve,
+  porque el doble efecto de StrictMode escribe `'en'` antes de la segunda lectura. Para capturar
+  en español hay que pulsar `.lang__btn`. En producción no pasa.

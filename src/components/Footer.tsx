@@ -24,7 +24,7 @@ export function Footer() {
           </a>
         </nav>
 
-        <span className="footer__year mono tnum">© {new Date().getFullYear()} · {t.footer.rights}</span>
+        <span className="footer__year label tnum">© {new Date().getFullYear()} · {t.footer.rights}</span>
       </div>
     </footer>
   )
