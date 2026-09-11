@@ -269,6 +269,10 @@
   min-height: 100svh;
   display: flex;
   overflow: hidden;
+  /* The masthead is sized to the first screen, at most 13.5% of its height,
+     and the thesis is a fixed share of it, so the two scale as one block. A
+     1366x768 laptop leaves about 610px, which sets the name at 66px. */
+  --masthead: min(var(--step-7), 13.5vh);
 }
 .hero__viz {
   position: absolute;
@@ -325,18 +329,21 @@
 }
 .hero__name {
   /* both worlds' display faces run wide on their own, so the masthead steps
-     down from the top of the ramp by a per-theme factor */
-  font-size: calc(var(--step-7) * var(--masthead-scale));
+     down by a per-theme factor */
+  font-size: calc(var(--masthead) * var(--masthead-scale));
+  /* always stacked, "Juan Diego" over "Flores": on one line the name ran
+     across the sphere and three quarters of a laptop screen */
+  max-width: 9em;
 }
 .hero__thesis {
   /* tight to the name so the two read as one block, never as
      "huge title, then a smaller description" */
   margin-top: 0.35em;
   font-family: var(--font-body);
-  /* A step under what it was, on a wider measure. At step-3 in 26ch the
-     thesis ran four heavy lines, and with the name above it the first
-     screen of a laptop had no room left for the buttons. Three lines now. */
-  font-size: var(--step-2);
+  /* A fixed share of the masthead, on a measure wide enough for three lines.
+     At step-3 in 26ch it ran four heavy lines and pushed the buttons off a
+     laptop's first screen. */
+  font-size: calc(var(--masthead) * 0.28);
   font-stretch: 100%;
   font-weight: var(--lead-weight);
   line-height: 1.28;
@@ -984,8 +991,8 @@
 }
 
 /* =====================================================================
-   AI-FIRST — corner marginalia: the section name sits flush right like a
-   running head, the claims carry the size, the orbit goes full-bleed.
+   AI-FIRST — the section name sits flush right over a hairline like a
+   running head, the claims hang under it, the orbit goes full-bleed.
    ===================================================================== */
 .aifirst {
   position: relative;
@@ -1016,9 +1023,12 @@
   text-align: right;
   font-family: var(--font-head);
   font-weight: 400;
-  font-size: var(--step-0);
-  letter-spacing: 0.01em;
-  color: var(--muted);
+  /* title size, like every other section's own head: at body size it read
+     as a caption once the claims came down a step */
+  font-size: var(--step-2);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--bone);
   padding-bottom: var(--space-s);
   border-bottom: 1px solid var(--line);
 }
@@ -1491,6 +1501,7 @@
 @media (max-height: 480px) and (orientation: landscape) {
   .hero__name {
     font-size: calc(var(--step-6) * var(--masthead-scale));
+    max-width: none;
   }
   .hero__thesis {
     font-size: var(--step-1);

@@ -15,8 +15,14 @@ const STORAGE_KEY = 'jdf-lang'
 
 function getInitialLang(): Lang {
   if (typeof window === 'undefined') return 'en'
-  const stored = window.localStorage.getItem(STORAGE_KEY)
-  if (stored === 'en' || stored === 'es') return stored
+  // Storage can throw (blocked site data, some private modes, sandboxed
+  // previews). Unguarded, that took the whole app down to a blank page.
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY)
+    if (stored === 'en' || stored === 'es') return stored
+  } catch {
+    /* fall through to the browser's language */
+  }
   // Default to English, but respect a Spanish-first browser.
   const nav = window.navigator.language?.toLowerCase() ?? ''
   return nav.startsWith('es') ? 'es' : 'en'
@@ -32,7 +38,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = lang
-    window.localStorage.setItem(STORAGE_KEY, lang)
+    try {
+      window.localStorage.setItem(STORAGE_KEY, lang)
+    } catch {
+      /* private mode: the choice simply does not outlive the session */
+    }
 
     // The share card is a real screen of this design: the site travels as a
     // link pasted into WhatsApp. Without this a Spanish reader gets an English
