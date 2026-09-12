@@ -7,6 +7,8 @@
 > de assets (trabajo bajo confidencialidad del cliente) → ver **§5.3**.
 > **Cambio mayor (2026-09-08):** pasada de diseño `/impeccable` que eliminó el patrón
 > eyebrow → título → lead de las 7 secciones → ver **§11**.
+> **Cambio mayor (2026-09-11):** el texto sale del código a `src/content/*.json`, se edita en
+> `/admin` y cada push a `main` publica solo → ver **§19**.
 
 ---
 
@@ -27,6 +29,8 @@
 | Config Vercel | ✅ Lista |
 | Deploy | ✅ **En vivo** — GitHub Pages, rama `gh-pages` |
 | URL de LinkedIn real | ✅ Completo |
+| Edición del contenido sin código | ✅ Editor en `/admin` (Sveltia CMS) — §19 |
+| Despliegue automático | ✅ GitHub Actions en cada push a `main` — §19 |
 
 **Preview local:** `npm run dev` → http://localhost:5173
 
@@ -218,12 +222,16 @@ jdflores-dev/
 ├─ vite.config.ts, tsconfig*  # config
 ├─ vercel.json                # deploy
 ├─ README.md, HANDOFF.md
+├─ .github/workflows/deploy.yml   # valida, compila y publica en cada push a main
+├─ scripts/           check-content.mjs (valida el contenido), make-og.mjs
 ├─ public/
 │  ├─ favicon.svg
+│  ├─ admin/          index.html + config.yml   # el editor (Sveltia CMS)
 │  └─ Juan-Diego-Flores-CV-EN.pdf / -ES.pdf
 ├─ src/
 │  ├─ main.tsx, App.tsx
-│  ├─ i18n/           content.ts (EN/ES), I18nProvider.tsx
+│  ├─ content/        content.en.json, content.es.json, links.json   # el texto del sitio
+│  ├─ i18n/           content.ts (tipos + import del JSON), I18nProvider.tsx
 │  ├─ data/           tools.ts (simple-icons)
 │  ├─ hooks/          useReveal.ts, useReducedMotion.ts
 │  ├─ styles/         index.css → tokens / base / motion / sections
@@ -242,14 +250,24 @@ jdflores-dev/
 
 ```bash
 npm install
-npm run dev       # dev server (HMR)
-npm run build     # tsc -b && vite build → /dist
-npm run preview   # sirve /dist
-npm run lint      # type-check
+npm run dev            # dev server (HMR)
+npm run check:content  # valida src/content/*.json; `npm run build` lo corre primero
+npm run build          # check:content && tsc -b && vite build → /dist
+npm run preview        # sirve /dist
+npm run lint           # type-check
 node _shot.mjs    # screenshots de QA — layout/fallback (reducedMotion)
 URL=http://localhost:5183 node _verify-viz.mjs   # verifica canvas VIVO (motion ON + mouse simulado)
 ```
 > Nota: vite preview/dev bindea a `localhost` (IPv6), no a `127.0.0.1` — apunta los scripts a `localhost`.
+
+**Publicar ya no es manual:** cada push a `main` dispara `.github/workflows/deploy.yml`, que
+valida, compila y sobrescribe `gh-pages`. El despliegue a mano (build + force-push de `dist`)
+sigue funcionando si hace falta.
+
+**Editar el contenido sin cuenta ni token:** `npm run dev` y abrir
+`http://localhost:5173/admin/index.html` en Chrome o Edge → «Trabajar con un repositorio local» →
+elegir la carpeta del repo. Escribe directo en `src/content/*.json`, sin commits. En el sitio
+publicado el editor está en `/admin/` y entra con un token fine-grained (Contents: read/write).
 
 ---
 
@@ -259,6 +277,9 @@ URL=http://localhost:5183 node _verify-viz.mjs   # verifica canvas VIVO (motion 
   `juandi9585@gmail.com`, `+58 414 925 7525`, Caracas.
 - Se añadió, según pediste, el ángulo de **freelance con herramientas de IA modernas (principalmente Claude Code)** en Hero, About y la sección AI-First.
 - El toggle EN/ES cambia también el PDF de CV que se descarga.
+- **Desde el 2026-09-11 el texto ya no vive en el código**: está en `src/content/content.en.json`,
+  `content.es.json` y `links.json`, y se edita en `/admin` (§19). `src/i18n/content.ts` solo
+  declara los tipos.
 
 ---
 
@@ -744,6 +765,14 @@ CMS con formularios.
   "Read and write". El despliegue manual desde la laptop sigue funcionando igual.
 - **Sigue en código:** diseño, fuentes, tamaños y los iconos del Stack y del orbe
   (`src/data/tools.ts`), porque cada uno es un SVG dibujado. Los textos del Stack sí son editables.
-- **Falta probar con sesión real:** guardar una edición desde /admin y confirmar que escribe los
-  dos archivos completos. Si guardara un idioma incompleto, la validación detiene el build y el
-  sitio sigue sirviendo la versión anterior.
+- **Publicado (commit `ad12167`).** El primer despliegue automático corrió solo y en verde: validó
+  el contenido, compiló y actualizó `gh-pages` (`737bc52` → `08801a4`), sin tener que tocar ningún
+  ajuste de permisos del repo. En vivo se comprobó que el contenido quedó idéntico en los dos
+  idiomas (6 cargos con viñetas 4,1,3,2,1,1, 4 mediciones, 6 grupos de stack, 13 filas de
+  credenciales, el CV correcto por idioma) y que `/admin/` y su `config.yml` se sirven.
+- **Falta una sola cosa y necesita la sesión de Juan:** guardar una edición desde el editor
+  publicado y confirmar que escribe completos los dos archivos de idioma. Si guardara uno
+  incompleto, la validación detiene el despliegue y el sitio sigue sirviendo la versión anterior.
+- **El token es solo del editor:** vive en el navegador de Juan. Para editar desde una sesión de
+  Claude Code no hace falta: se editan los JSON del repo y se hace push. Como ahora los dos lados
+  escriben en `main`, conviene `git pull` antes de tocar contenido.
