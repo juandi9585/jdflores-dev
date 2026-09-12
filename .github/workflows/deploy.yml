@@ -1,0 +1,49 @@
+# Builds the site and publishes it, so an edit saved in /admin reaches the live page on its own.
+# The CMS commits the content JSON to main; this runs on that commit, validates the content,
+# builds, and force-pushes dist to gh-pages, which is the branch GitHub Pages serves.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# one deploy at a time: two edits saved a few seconds apart must not race to the branch
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # `npm run build` runs the content check, then tsc, then vite. A bad edit fails here and
+      # the live site keeps serving the previous version.
+      - run: npm run build
+
+      # GitHub Pages would otherwise hide any path that begins with an underscore
+      - run: touch dist/.nojekyll
+
+      - name: Push the build to gh-pages
+        run: |
+          cd dist
+          git init -q -b gh-pages
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -qm "Deploy ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages:gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

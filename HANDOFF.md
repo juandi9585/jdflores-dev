@@ -710,3 +710,40 @@ texto de Perfil iba a 24 px y el título de Contacto partía "necesi-tas".
     app quedaba en blanco. Ahora está protegido igual que el tema.
   - **Vista previa sin tocar el sitio:** `npx vite build --base ./ --outDir <carpeta>` genera una
     copia con rutas relativas que se puede publicar como página privada (artifact de claude.ai).
+
+## 19. El contenido sale del código: CMS en /admin (2026-09-11)
+Juan preguntó si podía insertar y editar campos sin tocar código. Hasta aquí el texto vivía en
+`src/i18n/content.ts`, 443 líneas de TypeScript, y cada despliegue salía de su laptop. Eligió un
+CMS con formularios.
+
+- **Contenido en JSON:** `src/content/content.en.json`, `content.es.json` y `links.json`.
+  `src/i18n/content.ts` ya solo declara los tipos y los importa; `tsconfig.app.json` lleva
+  `resolveJsonModule`. Los archivos se generaron **ejecutando** el `content.ts` original (esbuild
+  más import dinámico), no a mano, y se verificó que el objeto `{en, es, LINKS}` resultante es
+  idéntico al anterior campo por campo. El render en ambos idiomas también se comparó: 6 cargos
+  con viñetas 4,1,3,2,1,1, 4 mediciones, 6 grupos de stack, 13 filas de credenciales.
+- **Los tipos ya no validan el JSON:** un import de JSON ensancha `kind` fuera de su unión, así
+  que `en`/`es` se pasan con `as unknown as Content`. Quien valida de verdad es
+  `scripts/check-content.mjs`, que corre primero en `npm run build`: campos obligatorios, nada de
+  claves inventadas, mediciones `count` (con número) o `text` (con texto), y listas emparejadas
+  del mismo largo en los dos idiomas, porque un cargo agregado solo en español dejaría la
+  trayectoria distinta según el idioma. Prueba negativa hecha: cuatro errores legibles y salida
+  distinta de cero, con lo que el build no llega a desplegar.
+- **CMS:** Sveltia CMS en `public/admin/` (`index.html` y `config.yml`), sin servidor propio.
+  Inglés y español lado a lado: los dos archivos se manejan con `{{locale}}` en la ruta del
+  archivo y con `i18n: true` en **cada** campo (sin eso, un idioma se guardaría incompleto). Las
+  mediciones de Impacto usan tipos variables con `typeKey: kind`. El config se cruzó contra el
+  contenido con un script: cada campo del formulario existe en el JSON, cada clave del JSON es
+  editable, y todos los campos localizados llevan `i18n`.
+- **Login sin infraestructura:** Sveltia trae "Sign In with Token". GitHub genera un token con los
+  permisos ya preseleccionados y queda en el navegador. El worker OAuth de Cloudflare
+  (`sveltia/sveltia-cms-auth`) queda como mejora opcional, no como requisito.
+- **Despliegue automático:** `.github/workflows/deploy.yml` corre en cada push a main, valida,
+  compila y hace force-push de `dist` a `gh-pages` con el `GITHUB_TOKEN`. Si el repo tiene el
+  token en modo solo lectura, hay que poner Settings > Actions > General > Workflow permissions en
+  "Read and write". El despliegue manual desde la laptop sigue funcionando igual.
+- **Sigue en código:** diseño, fuentes, tamaños y los iconos del Stack y del orbe
+  (`src/data/tools.ts`), porque cada uno es un SVG dibujado. Los textos del Stack sí son editables.
+- **Falta probar con sesión real:** guardar una edición desde /admin y confirmar que escribe los
+  dos archivos completos. Si guardara un idioma incompleto, la validación detiene el build y el
+  sitio sigue sirviendo la versión anterior.
