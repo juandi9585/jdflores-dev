@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/jdflores-dev/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0A0C10" />
+    <script>
+      // Resolve the theme before first paint so the page never flashes the
+      // wrong world. An explicit choice wins; otherwise the OS decides.
+      (function () {
+        var t = 'dark';
+        try {
+          var stored = localStorage.getItem('jdf-theme');
+          t = stored === 'light' || stored === 'dark'
+            ? stored
+            : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        } catch (e) {}
+        document.documentElement.dataset.theme = t;
+        if (t === 'light') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#CFE4F5');
+        }
+        // Fetch this world's two faces before the stylesheet asks for them;
+        // the other world's never download. Relative, so both the Pages
+        // sub-path and the dev root resolve.
+        var faces = t === 'light'
+          ? ['neuropol.woff2', 'source-sans-3-latin.woff2']
+          : ['michroma-latin.woff2', 'saira-latin.woff2'];
+        for (var i = 0; i < faces.length; i++) {
+          var l = document.createElement('link');
+          l.rel = 'preload';
+          l.as = 'font';
+          l.type = 'font/woff2';
+          l.crossOrigin = 'anonymous';
+          l.href = 'fonts/' + faces[i];
+          document.head.appendChild(l);
+        }
+      })();
+    </script>
+    <title>Juan Diego Flores · Systems Engineer &amp; AI Specialist</title>
+    <meta
+      name="description"
+      content="Freelance systems engineer building autonomous agents and full-stack systems. Cut banking operating costs by 94%."
+    />
+    <meta property="og:title" content="Juan Diego Flores · Systems Engineer &amp; AI Specialist" />
+    <meta
+      property="og:description"
+      content="Freelance systems engineer building autonomous agents and full-stack systems. Cut banking operating costs by 94%."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://juandi9585.github.io/jdflores-dev/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://juandi9585.github.io/jdflores-dev/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Juan Diego Flores, Systems Engineer and AI Specialist" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://juandi9585.github.io/jdflores-dev/" />
+    <script type="module" crossorigin src="/jdflores-dev/assets/index-DVkCfDux.js"></script>
+    <link rel="stylesheet" crossorigin href="/jdflores-dev/assets/index-DUIfVBdu.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="max-width:38rem;margin:16vh auto;padding:0 1.5rem;font:400 1rem/1.6 system-ui,sans-serif;color:#ECEEF3">
+        <h1 style="font-size:2rem;line-height:1.1;margin-bottom:1rem">Juan Diego Flores</h1>
+        <p style="color:#C3C8D4">
+          Systems Engineer &amp; AI Specialist, Caracas. This page needs JavaScript for its
+          interactive parts, but you can still reach me directly:
+        </p>
+        <p style="margin-top:1rem">
+          <a href="mailto:juandi9585@gmail.com" style="color:#FFB84D">juandi9585@gmail.com</a>
+          &nbsp;&middot;&nbsp;
+          <a href="https://wa.me/584149257525" style="color:#FFB84D">WhatsApp</a>
+          &nbsp;&middot;&nbsp;
+          <a href="./Juan-Diego-Flores-CV-EN.pdf" style="color:#FFB84D">R&eacute;sum&eacute; (PDF)</a>
+        </p>
+      </div>
+    </noscript>
+  </body>
+</html>
