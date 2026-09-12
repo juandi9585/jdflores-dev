@@ -1,0 +1,297 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+# Sveltia CMS — the editor behind /admin.
+#
+# The site's copy lives in two JSON files, one per language, plus one file of
+# language-neutral links. Saving here commits straight to main; the Deploy
+# workflow then validates the content, rebuilds and publishes, so an edit is
+# live a couple of minutes later. A field left in a shape the site cannot use
+# fails that validation, and the live page keeps serving the previous version.
+#
+# Every field carries `i18n: true`, which is what makes the two languages
+# editable side by side and keeps both files complete.
+
+backend:
+  name: github
+  repo: juandi9585/jdflores-dev
+  branch: main
+
+# A new résumé PDF lands next to the ones the site already serves.
+media_folder: public
+public_folder: /jdflores-dev
+
+i18n:
+  structure: multiple_files
+  locales: [en, es]
+  default_locale: en
+
+collections:
+  - name: content
+    label: Contenido
+    icon: edit_note
+    i18n: true
+    files:
+      - name: page
+        label: Textos de la página
+        file: src/content/content.{{locale}}.json
+        format: json
+        i18n: true
+        fields:
+          - name: hero
+            label: Portada
+            widget: object
+            i18n: true
+            fields:
+              - { name: name, label: Nombre, widget: string, i18n: true }
+              - { name: role, label: Rol, widget: string, i18n: true, hint: 'La línea de la franja inferior, junto a la ubicación' }
+              - name: thesis
+                label: Frase principal
+                widget: list
+                i18n: true
+                collapsed: false
+                summary: '{{fields.t}}'
+                hint: La frase se arma por trozos, en orden. Marca «Resaltado» en los que van en color.
+                fields:
+                  - { name: t, label: Texto, widget: string, i18n: true }
+                  - { name: accent, label: Resaltado, widget: boolean, required: false, default: false, i18n: true }
+              - { name: location, label: Ubicación, widget: string, i18n: true }
+              - { name: availability, label: Disponibilidad, widget: string, i18n: true }
+              - { name: ctaPrimary, label: Botón principal, widget: string, i18n: true }
+              - { name: ctaSecondary, label: Botón secundario, widget: string, i18n: true }
+              - { name: scrollCue, label: Indicación de bajar, widget: string, i18n: true }
+
+          - name: about
+            label: Perfil
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titular, widget: text, i18n: true, hint: Va en la fuente de titulares y la prosa sigue en la misma línea }
+              - name: body
+                label: Párrafos
+                widget: list
+                i18n: true
+                field: { name: p, label: Párrafo, widget: text, i18n: true }
+              - { name: signature, label: Cierre, widget: text, i18n: true }
+
+          - name: impact
+            label: Impacto
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titular, widget: text, i18n: true }
+              - { name: lead, label: Entrada, widget: text, i18n: true }
+              - name: metrics
+                label: Mediciones
+                widget: list
+                i18n: true
+                collapsed: true
+                typeKey: kind
+                summary: '{{fields.label}}'
+                hint: Una cifra se anima al entrar en pantalla; un texto se muestra tal cual.
+                types:
+                  - name: count
+                    label: Cifra
+                    fields:
+                      - { name: value, label: Número, widget: number, value_type: int, i18n: true }
+                      - { name: suffix, label: Sufijo, widget: string, required: false, i18n: true, hint: 'Por ejemplo % o %+' }
+                      - { name: label, label: Qué mide, widget: string, i18n: true }
+                      - { name: note, label: Detalle, widget: text, i18n: true }
+                  - name: text
+                    label: Texto
+                    fields:
+                      - { name: text, label: Texto, widget: string, i18n: true }
+                      - { name: label, label: Qué mide, widget: string, i18n: true }
+                      - { name: note, label: Detalle, widget: text, i18n: true }
+
+          - name: trajectory
+            label: Trayectoria
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titular, widget: text, i18n: true }
+              - { name: lead, label: Entrada, widget: text, i18n: true }
+              - { name: nowLabel, label: Etiqueta «Ahora», widget: string, i18n: true }
+              - name: roles
+                label: Cargos
+                label_singular: Cargo
+                widget: list
+                i18n: true
+                collapsed: true
+                summary: '{{fields.title}} · {{fields.company}}'
+                hint: El primero de la lista es el que el sitio marca como actual.
+                fields:
+                  - { name: period, label: Período, widget: string, i18n: true, hint: 'Por ejemplo 09/2025–Presente' }
+                  - { name: company, label: Empresa, widget: string, i18n: true }
+                  - { name: location, label: Ubicación, widget: string, i18n: true }
+                  - { name: title, label: Cargo, widget: string, i18n: true }
+                  - name: points
+                    label: Logros
+                    widget: list
+                    i18n: true
+                    field: { name: point, label: Logro, widget: text, i18n: true }
+
+          - name: stack
+            label: Stack
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titular, widget: text, i18n: true }
+              - { name: lead, label: Entrada, widget: text, i18n: true }
+              - name: groups
+                label: Grupos
+                label_singular: Grupo
+                widget: list
+                i18n: true
+                collapsed: true
+                summary: '{{fields.label}}'
+                fields:
+                  - { name: label, label: Grupo, widget: string, i18n: true }
+                  - name: items
+                    label: Herramientas
+                    widget: list
+                    i18n: true
+                    field: { name: item, label: Herramienta, widget: string, i18n: true }
+
+          - name: aiFirst
+            label: AI-first
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titular, widget: string, i18n: true }
+              - name: body
+                label: Párrafos
+                widget: list
+                i18n: true
+                field: { name: p, label: Párrafo, widget: text, i18n: true }
+              - name: points
+                label: Ficha
+                widget: list
+                i18n: true
+                collapsed: true
+                summary: '{{fields.k}}: {{fields.v}}'
+                fields:
+                  - { name: k, label: Clave, widget: string, i18n: true }
+                  - { name: v, label: Valor, widget: string, i18n: true }
+
+          - name: credentials
+            label: Formación
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titular, widget: text, i18n: true }
+              - { name: eduLabel, label: Etiqueta de estudios, widget: string, i18n: true }
+              - { name: certLabel, label: Etiqueta de certificaciones, widget: string, i18n: true }
+              - { name: langLabel, label: Etiqueta de idiomas, widget: string, i18n: true }
+              - { name: beyondLabel, label: Etiqueta de «más allá de la pantalla», widget: string, i18n: true }
+              - name: education
+                label: Estudios
+                label_singular: Estudio
+                widget: list
+                i18n: true
+                collapsed: true
+                summary: '{{fields.degree}} · {{fields.school}}'
+                fields:
+                  - { name: school, label: Institución, widget: string, i18n: true }
+                  - { name: place, label: Lugar, widget: string, i18n: true }
+                  - { name: degree, label: Título, widget: string, i18n: true }
+                  - { name: period, label: Período, widget: string, i18n: true }
+                  - { name: note, label: Nota, widget: text, required: false, i18n: true }
+              - name: certs
+                label: Certificaciones
+                label_singular: Certificación
+                widget: list
+                i18n: true
+                collapsed: true
+                summary: '{{fields.name}}'
+                fields:
+                  - { name: name, label: Nombre, widget: string, i18n: true }
+                  - { name: issuer, label: Emisor, widget: string, i18n: true }
+                  - { name: year, label: Año, widget: string, required: false, i18n: true }
+              - name: languages
+                label: Idiomas
+                label_singular: Idioma
+                widget: list
+                i18n: true
+                collapsed: true
+                summary: '{{fields.lang}} · {{fields.level}}'
+                fields:
+                  - { name: lang, label: Idioma, widget: string, i18n: true }
+                  - { name: level, label: Nivel, widget: string, i18n: true }
+              - name: beyond
+                label: Más allá de la pantalla
+                widget: list
+                i18n: true
+                field: { name: item, label: Línea, widget: string, i18n: true }
+
+          - name: contact
+            label: Contacto
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titular, widget: text, i18n: true }
+              - { name: lead, label: Entrada, widget: text, i18n: true }
+              - { name: availability, label: Disponibilidad, widget: string, i18n: true }
+              - { name: cta, label: Botón, widget: string, i18n: true }
+              - { name: location, label: Ubicación, widget: string, i18n: true }
+              - { name: emailLabel, label: 'Etiqueta: email', widget: string, i18n: true }
+              - { name: phoneLabel, label: 'Etiqueta: teléfono', widget: string, i18n: true }
+              - { name: whatsappLabel, label: 'Etiqueta: WhatsApp', widget: string, i18n: true }
+              - { name: githubLabel, label: 'Etiqueta: GitHub', widget: string, i18n: true }
+              - { name: linkedinLabel, label: 'Etiqueta: LinkedIn', widget: string, i18n: true }
+              - { name: locationLabel, label: 'Etiqueta: ubicación', widget: string, i18n: true }
+
+          - name: nav
+            label: Menú
+            widget: object
+            i18n: true
+            fields:
+              - { name: about, label: Perfil, widget: string, i18n: true }
+              - { name: impact, label: Impacto, widget: string, i18n: true }
+              - { name: work, label: Trayectoria, widget: string, i18n: true }
+              - { name: stack, label: Stack, widget: string, i18n: true }
+              - { name: method, label: AI-first, widget: string, i18n: true }
+              - { name: contact, label: Contacto, widget: string, i18n: true }
+              - { name: resume, label: Botón del CV, widget: string, i18n: true }
+              - { name: close, label: Cerrar el menú, widget: string, i18n: true }
+
+          - name: meta
+            label: Buscadores y enlaces compartidos
+            widget: object
+            i18n: true
+            hint: Lo que aparece en la pestaña del navegador y al pegar el enlace en WhatsApp
+            fields:
+              - { name: title, label: Título, widget: string, i18n: true }
+              - { name: description, label: Descripción, widget: text, i18n: true }
+
+          - name: theme
+            label: Interruptor de tema
+            widget: object
+            i18n: true
+            fields:
+              - { name: label, label: Nombre, widget: string, i18n: true }
+              - { name: toLight, label: Pasar al claro, widget: string, i18n: true }
+              - { name: toDark, label: Pasar al oscuro, widget: string, i18n: true }
+
+          - name: footer
+            label: Pie
+            widget: object
+            i18n: true
+            fields:
+              - { name: rights, label: Derechos, widget: string, i18n: true }
+
+      - name: links
+        label: Enlaces y CV
+        file: src/content/links.json
+        format: json
+        i18n: false
+        fields:
+          - { name: email, label: Email, widget: string }
+          - { name: phone, label: Teléfono visible, widget: string, hint: Como se lee en la página }
+          - { name: phoneHref, label: Teléfono para llamar, widget: string, hint: 'Sin espacios ni signos, por ejemplo +584149257525' }
+          - { name: whatsapp, label: Enlace de WhatsApp, widget: string }
+          - { name: linkedin, label: Enlace de LinkedIn, widget: string }
+          - { name: linkedinHandle, label: LinkedIn visible, widget: string }
+          - { name: github, label: Enlace de GitHub, widget: string }
+          - { name: githubHandle, label: GitHub visible, widget: string }
+          - { name: resumeEnFile, label: Archivo del CV en inglés, widget: string, hint: Nombre del PDF que está en public/ }
+          - { name: resumeEsFile, label: Archivo del CV en español, widget: string, hint: Nombre del PDF que está en public/ }
