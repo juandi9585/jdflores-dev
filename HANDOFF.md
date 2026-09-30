@@ -776,3 +776,34 @@ CMS con formularios.
 - **El token es solo del editor:** vive en el navegador de Juan. Para editar desde una sesión de
   Claude Code no hace falta: se editan los JSON del repo y se hace push. Como ahora los dos lados
   escriben en `main`, conviene `git pull` antes de tocar contenido.
+
+## 20. Boost de animaciones: una entrada por mundo (2026-09-29)
+Juan pidió más animación, sobre todo al entrar, acorde a cada tema. La especificación está en
+DESIGN.md → Components → Motion; el código en `src/styles/motion.css`.
+
+- **Entrada (una vez, al cargar):** el script pre-paint de `index.html` pone `html.intro`, salvo
+  que se pida movimiento reducido. `Hero.tsx` (`useIntro`) la quita a los 2,8 s, y también si se
+  cambia de tema a mitad de la entrada, para no reproducir la del otro mundo.
+  - **Consola:** una línea de escaneo ámbar de 1 px baja por la pantalla. El nombre se decodifica
+    desde numerales: cada letra es un `span.ch` y su sustituto se pinta encima con `::after`, así
+    que la línea no se reacomoda. La tesis se imprime con `clip-path`, las lecturas de la franja
+    se encienden con un parpadeo y la esfera crece.
+  - **Acuario:** las letras suben desde un desenfoque una a una, la repisa de cristal sube, un
+    brillo cruza el botón principal y `Bubbles.tsx` lanza una ráfaga de 12 burbujas cada vez que
+    se entra al mundo claro.
+- **Cambio de tema:** `ThemeToggle.tsx` usa `document.startViewTransition` con `flushSync`, y el
+  mundo nuevo crece en círculo desde el interruptor. Sin soporte o con movimiento reducido, cambia
+  sin animación.
+- **Reveals por mundo:** en la consola cada entrada se imprime de arriba abajo; en el acuario sube
+  desde un desenfoque. Son transiciones, no keyframes, porque un keyframe se reinicia al cambiar
+  de tema. `useReveal` añade `.is-settled` al terminar para quitar el clip y el filtro, porque el
+  riel del timeline cuelga 6 px bajo cada entrada.
+- **Lecciones:**
+  - Ningún bloque de texto del hero empieza en `opacity: 0`: Chrome no lo cuenta como pintado y
+    el LCP se iba a unos 2,9 s. Medido después del arreglo en 390 px: 0,79 s en oscuro y 0,13 s
+    en claro.
+  - Un estado inicial con alcance de tema necesita estados finales con el mismo alcance. Si no,
+    pierden por especificidad: los ítems del modo claro se quedaban borrosos.
+- **Arnés:** en headless, capturar el móvil después de bajar hasta Trayectoria se cuelga. Ya
+  pasaba antes de este cambio. Hay que lanzar un navegador por contexto y usar `page.clock` más
+  `getAnimations()` para congelar los fotogramas de la entrada.

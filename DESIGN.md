@@ -298,6 +298,15 @@ Three canvases (particle sphere in the hero, reactive lines behind About, kineti
 
 **The No Shared Screen Rule.** The code rain and the hero sphere are never on screen together. The hero counts as present a quarter of a screen before any of it shows, so on the way back up the rain is already fading when the hero's edge appears. The rain never switches: it gathers over 1.6s and thins out over 1.1s on one symmetric curve, and keeps falling until its fade-out has finished.
 
+### Motion
+Motion follows the same one-spine-two-worlds rule as colour and type: the console **prints and powers on**, the aquarium **surfaces through water**. Everything lives in `src/styles/motion.css`.
+
+- **First screen (once, on load).** The pre-paint script adds `html.intro` unless reduced motion is asked for; Hero removes it after 2.6s, so a later theme switch never replays it. Console: one amber 1px scan line crosses the hero, the name decodes out of stand-in numerals (set over the real glyphs, so the line never reflows), the thesis prints left to right, and the instrument strip comes online reading by reading with a single lamp flicker. Aquarium: the name's letters rise out of a blur one by one, the thesis and buttons follow, the glass shelf slides up, a band of light crosses the primary button, and a burst of bubbles rises once. The sphere scales in under both. Keyframes are from-only, so end states are whatever the element already computes.
+- **Theme switch.** A view transition grows the new world as a circle out of the switch, over the old one. No crossfade; without view-transition support or under reduced motion it simply changes.
+- **Scroll reveal.** Console entries are printed top-down with a clip; aquarium entries rise out of a blur. Transitions, not keyframes, so a theme switch cannot replay them; once the stagger ends `.is-settled` drops the clip and the filter. The Trajectory spine rule draws toward the timeline.
+- **Hover.** The aquarium's primary button catches a band of light; the console keeps its lift and arrow nudge.
+- **The Once Rule.** Authored motion plays once per arrival (page load, entering a world, a section coming into view) and never loops, except the ornaments that already did (bubbles, code rain, pulse).
+
 ### Disclosure
 A phone-only progressive-disclosure control used on the timeline and credentials. The panel animates between `grid-template-rows: 0fr` and `1fr` on a symmetric ease so a collapse is not front-loaded, stays in the DOM under `inert`, and its plus icon retracts its upright stroke into a minus. Above 900px both sections render fully expanded with no control present at all.
 

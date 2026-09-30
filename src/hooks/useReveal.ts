@@ -26,19 +26,23 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(options: Optio
       return
     }
 
-    if (stagger) {
-      const items = el.querySelectorAll<HTMLElement>('[data-reveal-item]')
-      items.forEach((item, i) => item.style.setProperty('--reveal-i', String(i)))
-    }
+    const items = el.querySelectorAll<HTMLElement>('[data-reveal-item]')
+    if (stagger) items.forEach((item, i) => item.style.setProperty('--reveal-i', String(i)))
+    // when the last item has arrived, drop the reveal's clip and filter (motion.css)
+    const settleMs = 1000 + (stagger ? items.length * 80 : 0)
+    let settle = 0
 
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-revealed')
+            window.clearTimeout(settle)
+            settle = window.setTimeout(() => entry.target.classList.add('is-settled'), settleMs)
             if (once) io.unobserve(entry.target)
           } else if (!once) {
-            entry.target.classList.remove('is-revealed')
+            window.clearTimeout(settle)
+            entry.target.classList.remove('is-revealed', 'is-settled')
           }
         })
       },
@@ -49,7 +53,10 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(options: Optio
     )
 
     io.observe(el)
-    return () => io.disconnect()
+    return () => {
+      io.disconnect()
+      window.clearTimeout(settle)
+    }
   }, [stagger, threshold, once])
 
   return ref

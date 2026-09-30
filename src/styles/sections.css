@@ -335,6 +335,15 @@
      across the sphere and three quarters of a laptop screen */
   max-width: 9em;
 }
+/* Hero.tsx sets the name one character per box so the entrance can move each
+   letter on its own; the words stay unbreakable, as they were as plain text. */
+.hero__name .w {
+  white-space: nowrap;
+}
+.hero__name .ch {
+  position: relative;
+  display: inline-block;
+}
 .hero__thesis {
   /* tight to the name so the two read as one block, never as
      "huge title, then a smaller description" */

@@ -131,6 +131,14 @@ in the thumb zone.
 
 Regenerate the share card with `npm run og` after changing the hero copy.
 
+## Motion
+
+One language per theme, all in `src/styles/motion.css` (spec in DESIGN.md → Motion). On load the
+console powers on (scan line, the name decodes, the status strip lights up) and the aquarium
+surfaces (letters rise out of a blur, bubble burst). A theme switch grows the new world as a
+circle out of the toggle (View Transitions). Scroll reveals print in the dark and rise out of
+the water in the light. Hero text never starts at opacity 0, which keeps LCP early.
+
 ## Accessibility & performance
 
 Responsive to mobile · keyboard focus states · `prefers-reduced-motion` respected ·

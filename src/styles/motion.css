@@ -1,62 +1,260 @@
 /* =========================================================
-   Scroll-reveal primitives (paired with useReveal)
+   Motion. One language per world, the same way colour and type work:
+   the console prints and powers on, the aquarium surfaces through water.
+   Nothing here is scoped by media query alone; the global reduced-motion
+   rule in base.css collapses every duration, and the pre-paint script never
+   sets .intro when the visitor asks for less motion.
    ========================================================= */
 
-[data-reveal],
+/* ---- scroll reveal (paired with useReveal) ----
+   Transitions, not keyframes: a keyframe restarts when its name changes, so a
+   theme switch would have replayed every reveal on the page. Once the stagger
+   is over useReveal adds .is-settled, which drops the clip and the filter so a
+   revealed item never keeps a stacking context or clips its own overflow (the
+   timeline rail hangs 6px below each entry). */
 [data-reveal-item] {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(12px);
+  /* console: each entry is printed top-down, the way a terminal fills a line */
+  clip-path: inset(0 0 100% 0);
   transition:
-    opacity 0.7s var(--ease-out),
-    transform 0.7s var(--ease-out);
+    opacity 0.5s var(--ease-out),
+    transform 0.8s var(--ease-arrive),
+    clip-path 0.8s var(--ease-arrive),
+    filter 0.9s var(--ease-arrive);
+  transition-delay: calc(var(--reveal-i, 0) * 80ms);
   will-change: opacity, transform;
 }
-
-[data-reveal].is-revealed,
+/* aquarium: each plate's content rises out of the water, soft until it clears */
+:root[data-theme='light'] [data-reveal-item] {
+  transform: translateY(26px);
+  clip-path: none;
+  filter: blur(6px);
+}
 .is-revealed [data-reveal-item] {
   opacity: 1;
   transform: none;
+  clip-path: inset(0);
+  filter: blur(0);
+}
+/* the light start state is theme-scoped, so its end states must be too or
+   they lose on specificity and the items stay under water */
+:root[data-theme='light'] .is-revealed [data-reveal-item] {
+  transform: none;
+  clip-path: none;
+  filter: blur(0);
+}
+/* a focused control must never lose its ring to a reveal still in flight */
+.is-revealed [data-reveal-item]:focus-within {
+  clip-path: none;
+}
+.is-settled [data-reveal-item],
+:root[data-theme='light'] .is-settled [data-reveal-item] {
+  clip-path: none;
+  filter: none;
+  will-change: auto;
 }
 
-/* staggered children */
-.is-revealed [data-reveal-item] {
-  transition-delay: calc(var(--reveal-i, 0) * 80ms);
+/* The spine rule draws itself toward the timeline it introduces. */
+.tj__rule {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 1.2s var(--ease-arrive) 0.25s;
+}
+.is-revealed .tj__rule {
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal],
-  [data-reveal-item] {
+  [data-reveal-item],
+  :root[data-theme='light'] [data-reveal-item] {
     opacity: 1 !important;
     transform: none !important;
+    clip-path: none !important;
+    filter: none !important;
     transition: none !important;
   }
-}
-
-/* ---- hero entrance ----
-   Was a GSAP timeline; GSAP rode in the main bundle for this alone, which is
-   real weight on a mobile connection. Four elements, four delays, no library. */
-@keyframes heroIn {
-  from {
-    opacity: 0;
-    transform: translateY(26px);
-  }
-  to {
-    opacity: 1;
+  .tj__rule {
     transform: none;
   }
 }
-[data-hero] {
-  animation: heroIn 0.9s var(--ease-out) both;
+
+/* =========================================================
+   The first screen. Plays once, on load, only while <html> carries .intro
+   (set by the pre-paint script, removed by Hero when the sequence is over), so
+   a later theme switch never replays it. Every keyframe below is from-only:
+   the end state is whatever the element already computes, which keeps the
+   phone sphere's 0.85 opacity and the hero's own transforms intact. No text
+   block starts at opacity 0: Chrome does not count an invisible element as
+   painted, so every one of them would have made Largest Contentful Paint wait
+   for the end of the entrance. Text arrives by clip, blur and position.
+   ========================================================= */
+
+/* ---- console: power-on ----
+   An amber scan line crosses the screen once, the name decodes out of
+   numerals (Hero.tsx drives the glyphs), the thesis prints left to right and
+   the instrument strip comes online reading by reading. */
+.intro[data-theme='dark'] .hero::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  z-index: 3;
+  pointer-events: none;
+  background: var(--amber);
+  opacity: 0;
+  animation: scanDown 1.15s var(--ease-in-out) 0.05s both;
 }
-[data-hero='1'] {
-  animation-delay: 0.1s;
+@keyframes scanDown {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100svh);
+    opacity: 0;
+  }
 }
-[data-hero='2'] {
-  animation-delay: 0.2s;
+
+.intro[data-theme='dark'] .hero__viz {
+  animation: vizWake 1.8s var(--ease-arrive) 0.35s both;
 }
-[data-hero='3'] {
-  animation-delay: 0.3s;
+@keyframes vizWake {
+  from {
+    opacity: 0;
+    scale: 0.82;
+  }
 }
-[data-hero='4'] {
-  animation-delay: 0.4s;
+
+/* a character still decoding shows its stand-in, set over the real glyph so
+   the line never reflows while the name resolves */
+.hero__name .ch[data-g] {
+  color: transparent;
+}
+.hero__name .ch[data-g]::after {
+  content: attr(data-g);
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.intro[data-theme='dark'] .hero__thesis {
+  animation: printLine 0.9s var(--ease-arrive) 0.45s both;
+}
+@keyframes printLine {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 -1em 0 0);
+  }
+}
+
+.intro[data-theme='dark'] .hero__cta {
+  animation: riseIn 0.7s var(--ease-arrive) 0.85s both;
+}
+
+.intro[data-theme='dark'] .hero__stat {
+  animation: powerOn 0.45s linear both;
+}
+.intro[data-theme='dark'] .hero__stat:nth-child(1) {
+  animation-delay: 1.15s;
+}
+.intro[data-theme='dark'] .hero__stat:nth-child(2) {
+  animation-delay: 1.27s;
+}
+.intro[data-theme='dark'] .hero__stat:nth-child(3) {
+  animation-delay: 1.39s;
+}
+.intro[data-theme='dark'] .hero__stat:nth-child(4) {
+  animation-delay: 1.51s;
+}
+/* a reading that catches, drops once, then holds: a lamp, not a fade */
+@keyframes powerOn {
+  0% {
+    opacity: 0.12;
+  }
+  30% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.3;
+  }
+  62%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ---- aquarium: surfacing ----
+   The letters of the name rise one by one out of the blur like bubbles
+   clearing the surface, the rest of the screen follows through the water,
+   and the glass shelf slides up to meet it. Bubbles.tsx adds the burst. */
+.intro[data-theme='light'] .hero__name .ch {
+  animation: surface 1s var(--ease-arrive) both;
+  animation-delay: calc(0.15s + var(--i, 0) * 45ms);
+}
+@keyframes surface {
+  from {
+    transform: translateY(0.45em) scale(0.92);
+    filter: blur(10px);
+  }
+}
+
+.intro[data-theme='light'] .hero__viz {
+  animation: vizWake 1.8s var(--ease-arrive) 0.2s both;
+}
+.intro[data-theme='light'] .hero__thesis {
+  animation: surface 1s var(--ease-arrive) 0.7s both;
+}
+.intro[data-theme='light'] .hero__cta {
+  animation: surface 1s var(--ease-arrive) 0.85s both;
+}
+.intro[data-theme='light'] .hero__status {
+  animation: shelfUp 0.9s var(--ease-arrive) 0.95s both;
+}
+@keyframes shelfUp {
+  from {
+    transform: translateY(100%);
+  }
+}
+/* the light catches the primary button once as everything settles */
+.intro[data-theme='light'] .hero__cta .btn--primary::after {
+  animation: sheen 1.1s var(--ease-in-out) 1.55s both;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes sheen {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(260%) skewX(-18deg);
+  }
+}
+
+/* =========================================================
+   Theme switch. ThemeToggle wraps the change in a view transition and grows
+   the new world out of the switch itself as a circle; the old one stays put
+   underneath instead of crossfading.
+   ========================================================= */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  z-index: 2;
 }

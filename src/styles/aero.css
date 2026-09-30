@@ -147,7 +147,15 @@
     opacity: 0;
   }
 }
+.bubble--burst {
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-timing-function: var(--ease-out);
+}
 @media (prefers-reduced-motion: reduce) {
+  .bubble--burst {
+    display: none;
+  }
   .bubble {
     animation: none;
     opacity: 0.5;
@@ -235,6 +243,21 @@
   border-radius: 999px 999px 40% 40% / 999px 999px 22px 22px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.16));
   pointer-events: none;
+}
+/* a band of light that crosses the lozenge on hover (and once on arrival);
+   it goes back unseen, since both of its rest positions sit off the button */
+:root[data-theme='light'] .btn--primary::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-120%) skewX(-18deg);
+  pointer-events: none;
+}
+:root[data-theme='light'] .btn--primary:hover::after {
+  transform: translateX(260%) skewX(-18deg);
+  transition: transform 0.8s var(--ease-in-out);
 }
 :root[data-theme='light'] .btn--primary:hover {
   background: linear-gradient(180deg, #4fcdff 0%, #00a1f2 48%, #0086cf 100%);
