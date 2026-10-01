@@ -129,7 +129,8 @@ collapse behind taps on the phone only (`ui/Disclosure.tsx`); a wide viewport re
 expanded with no control at all. A persistent action bar carries résumé, WhatsApp and email
 in the thumb zone.
 
-Regenerate the share card with `npm run og` after changing the hero copy.
+Regenerate the share card with `npm run og` after changing the hero copy. It is set in the
+Aquarium world (sky, glass shelf, Neuropol), whatever theme the visitor ends up in.
 
 ## Motion
 
