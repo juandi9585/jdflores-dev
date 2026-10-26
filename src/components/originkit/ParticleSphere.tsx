@@ -232,6 +232,12 @@ export default function ParticleSphereRefactor({
     }
     const isCanvas = isCanvasRef.current
 
+    // The color reaches the scene through a ref so a theme switch can recolor
+    // the particles in place: rebuilding the WebGL scene for it froze a phone
+    // for ~400 ms in the middle of the switch.
+    const sphereColorRef = useRef(sphereColor)
+    sphereColorRef.current = sphereColor
+
     // Map UI speed to internal speed
     const rotationSpeed = React.useMemo(() => {
         const baseSpeed = mapSpeedUiToInternal(speedN)
@@ -330,7 +336,7 @@ export default function ParticleSphereRefactor({
         rendererRef.current = renderer
 
         // Parse color
-        const colorObj = new Color(sphereColor)
+        const colorObj = new Color(sphereColorRef.current)
 
         // Create particles evenly distributed on sphere surface
         const vertices = []
@@ -347,8 +353,8 @@ export default function ParticleSphereRefactor({
         particleScatterVelocitiesRef.current = []
 
         // Resolve color tokens (CSS variables) and parse color properly
-        const resolvedSphereColor = resolveTokenColor(sphereColor)
-        const sphereRgba = parseColorToRgba(resolvedSphereColor || sphereColor)
+        const resolvedSphereColor = resolveTokenColor(sphereColorRef.current)
+        const sphereRgba = parseColorToRgba(resolvedSphereColor || sphereColorRef.current)
         // Use Color constructor with string for proper color space handling
         // Then apply the parsed RGB values to ensure opacity is extracted correctly
         const baseColorObj = resolvedSphereColor
@@ -1439,12 +1445,24 @@ export default function ParticleSphereRefactor({
         clickForce,
         cursorRadius,
         cursorStrength,
-        sphereColor,
         rotationSpeed,
         scaleMultiplier,
         particleSize,
         isCanvas,
     ])
+
+    useEffect(() => {
+        const particles = particlesRef.current
+        if (!particles) return
+        const resolved = resolveTokenColor(sphereColor)
+        const rgba = parseColorToRgba(resolved || sphereColor)
+        const c = resolved ? new Color(resolved) : new Color(rgba.r, rgba.g, rgba.b)
+        const attr = particles.instanceColor ?? particles.geometry.getAttribute("color")
+        if (!attr) return
+        for (let i = 0; i < attr.count; i++) attr.setXYZ(i, c.r, c.g, c.b)
+        attr.needsUpdate = true
+        particles.material.opacity = rgba.a
+    }, [sphereColor])
 
     // Container styles
     const containerStyle: React.CSSProperties = {

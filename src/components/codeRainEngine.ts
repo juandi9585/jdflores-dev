@@ -50,8 +50,14 @@ function pick<T>(arr: T[]): T {
 }
 
 /* A system with no Japanese face would rain empty boxes. Probe once: if a
-   katakana draws exactly like an unassigned code point, rain numerals only. */
+   katakana draws exactly like an unassigned code point, rain numerals only.
+   The answer is kept for the page's life: the probe makes the browser hunt for
+   a CJK face, and paying that on every switch to the dark world was a stall. */
+let glyphsCache: string[] | null = null
 function glyphSet(): string[] {
+  return (glyphsCache ??= probeGlyphs())
+}
+function probeGlyphs(): string[] {
   const probe = document.createElement('canvas')
   probe.width = 32
   probe.height = 32
