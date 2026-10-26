@@ -80,7 +80,7 @@
   },
   "projects": {
     "title": "Personal projects in production.",
-    "body": "Each one with a website opens live; the public ones also show their code.",
+    "body": "The ones with a website open live; the public ones also show their code.",
     "prev": "Previous project",
     "next": "Next project",
     "of": "of",
