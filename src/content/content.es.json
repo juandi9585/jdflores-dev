@@ -79,8 +79,8 @@
     ]
   },
   "projects": {
-    "title": "Cosas que puedes abrir.",
-    "body": "Proyectos personales, publicados y en uso. Los que tienen web se abren en vivo; los públicos enseñan su código.",
+    "title": "Proyectos propios en producción.",
+    "body": "Los que tienen web se abren en vivo; los públicos también enseñan su código.",
     "prev": "Proyecto anterior",
     "next": "Proyecto siguiente",
     "of": "de",
