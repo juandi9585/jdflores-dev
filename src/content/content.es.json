@@ -2,6 +2,7 @@
   "nav": {
     "about": "Perfil",
     "impact": "Impacto",
+    "projects": "Proyectos",
     "work": "Trayectoria",
     "stack": "Stack",
     "method": "AI-first",
@@ -74,6 +75,67 @@
         "text": "Core",
         "label": "Migración de pagos",
         "note": "Líder de versionado y liberaciones · IBM AS/400 · banca"
+      }
+    ]
+  },
+  "projects": {
+    "title": "Cosas que puedes abrir.",
+    "body": "Proyectos personales, publicados y en uso. Los que tienen web se abren en vivo; los públicos enseñan su código.",
+    "prev": "Proyecto anterior",
+    "next": "Proyecto siguiente",
+    "of": "de",
+    "open": "Abrir",
+    "code": "Código",
+    "demo": "Probar la demo",
+    "items": [
+      {
+        "slug": "banderas",
+        "name": "Banderas del Mundo",
+        "line": "197 países, tres modos de juego y ranking global. Funciona sin conexión.",
+        "stack": "PWA · Supabase",
+        "frame": "phone",
+        "live": "https://juego-banderas-khaki.vercel.app",
+        "code": "https://github.com/juandi9585/juego-banderas"
+      },
+      {
+        "slug": "copa",
+        "name": "Guía La Copa",
+        "line": "La guía de mi grupo para la competencia de hamburguesas de Caracas: comandas, reseñas, mapa y ranking.",
+        "stack": "PWA · Neon · Leaflet",
+        "frame": "phone",
+        "live": "https://guia-la-copa.vercel.app"
+      },
+      {
+        "slug": "questlog",
+        "name": "Questlog",
+        "line": "Las tareas de tres frentes (personal, banco y freelance) como misiones que se desglosan y suman puntos.",
+        "stack": "PWA · Neon",
+        "frame": "phone",
+        "live": "https://questlog-jd.vercel.app/?demo",
+        "demo": true
+      },
+      {
+        "slug": "palabras",
+        "name": "Juego de palabras diario",
+        "line": "Un reto nuevo cada día, el mismo para todos los jugadores.",
+        "stack": "Vite · TypeScript · Vercel Functions",
+        "frame": "phone",
+        "live": "https://guacharo-poc.vercel.app"
+      },
+      {
+        "slug": "aerostore",
+        "name": "AeroStore",
+        "line": "Reservas de inventario que no venden de más aunque lleguen pedidos a la vez.",
+        "stack": "Java 21 · Quarkus · PostgreSQL · Next.js",
+        "frame": "desktop",
+        "code": "https://github.com/juandi9585/aero-store-quarkus"
+      },
+      {
+        "slug": "pedal",
+        "name": "Pedal de efectos",
+        "line": "Convierte un PC con Windows en un pedal de guitarra en tiempo real, con unos 10 ms de latencia en la tarjeta de sonido integrada.",
+        "stack": "Rust · Tauri",
+        "frame": "desktop"
       }
     ]
   },

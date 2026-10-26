@@ -6,6 +6,7 @@ import { MobileActionBar } from './components/MobileActionBar'
 import { Hero } from './components/sections/Hero'
 import { About } from './components/sections/About'
 import { Impact } from './components/sections/Impact'
+import { Projects } from './components/sections/Projects'
 import { Trajectory } from './components/sections/Trajectory'
 import { Stack } from './components/sections/Stack'
 import { AIFirst } from './components/sections/AIFirst'
@@ -25,6 +26,7 @@ export default function App() {
         <Hero />
         <About />
         <Impact />
+        <Projects />
         <Trajectory />
         <Stack />
         <AIFirst />

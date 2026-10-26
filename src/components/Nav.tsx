@@ -22,6 +22,7 @@ export function Nav() {
   const links = [
     { href: '#about', label: t.nav.about },
     { href: '#impact', label: t.nav.impact },
+    { href: '#projects', label: t.nav.projects },
     { href: '#trajectory', label: t.nav.work },
     { href: '#stack', label: t.nav.stack },
     { href: '#ai-first', label: t.nav.method },

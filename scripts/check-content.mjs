@@ -18,7 +18,7 @@ const fail = (file, path, msg) => errors.push(`${file}: ${path} ${msg}`)
 // 's' non-empty string · 's?' optional string · 'b?' optional boolean
 // an array holds one schema for every item · 'metrics' is the one tagged union
 const CONTENT = {
-  nav: { about: 's', impact: 's', work: 's', stack: 's', method: 's', contact: 's', resume: 's', close: 's' },
+  nav: { about: 's', impact: 's', projects: 's', work: 's', stack: 's', method: 's', contact: 's', resume: 's', close: 's' },
   hero: {
     role: 's', name: 's',
     thesis: [{ t: 's', accent: 'b?' }],
@@ -26,6 +26,10 @@ const CONTENT = {
   },
   about: { title: 's', body: ['s'], signature: 's' },
   impact: { title: 's', lead: 's', metrics: 'metrics' },
+  projects: {
+    title: 's', body: 's', prev: 's', next: 's', of: 's', open: 's', code: 's', demo: 's',
+    items: [{ slug: 's', name: 's', line: 's', stack: 's', frame: 's', live: 's?', code: 's?', demo: 'b?' }],
+  },
   trajectory: {
     title: 's', lead: 's', nowLabel: 's',
     roles: [{ period: 's', company: 's', location: 's', title: 's', points: ['s'] }],
@@ -108,6 +112,25 @@ const PAIRED = [
   ['impact', 'metrics'], ['trajectory', 'roles'], ['stack', 'groups'], ['aiFirst', 'points'],
   ['credentials', 'education'], ['credentials', 'certs'], ['credentials', 'languages'],
 ]
+// frame is a union and the urls are links: the shape check cannot say that, so it is said here
+function checkProjects(file, items) {
+  if (!Array.isArray(items)) return
+  const slugs = new Set()
+  items.forEach((it, i) => {
+    const p = `projects.items[${i}]`
+    if (!it || typeof it !== 'object') return
+    if (it.frame !== 'phone' && it.frame !== 'desktop') fail(file, `${p}.frame`, 'must be "phone" or "desktop"')
+    for (const k of ['live', 'code']) {
+      if (typeof it[k] === 'string' && it[k] !== '' && !it[k].startsWith('https://')) fail(file, `${p}.${k}`, 'must start with https://')
+    }
+    if (typeof it.slug === 'string') {
+      if (!/^[a-z0-9-]+$/.test(it.slug)) fail(file, `${p}.slug`, 'must be lowercase letters, digits and dashes (it names the files in public/projects/)')
+      if (slugs.has(it.slug)) fail(file, `${p}.slug`, 'is used twice')
+      slugs.add(it.slug)
+    }
+  })
+}
+
 const PROSE = [['about', 'body'], ['aiFirst', 'body'], ['credentials', 'beyond'], ['hero', 'thesis']]
 const at = (o, p) => p.reduce((acc, k) => acc?.[k], o)
 
@@ -127,6 +150,8 @@ const links = await read('links.json')
 
 if (en) check('content.en.json', CONTENT, en)
 if (es) check('content.es.json', CONTENT, es)
+if (en) checkProjects('content.en.json', en.projects?.items)
+if (es) checkProjects('content.es.json', es.projects?.items)
 if (links) {
   check('links.json', LINKS, links)
   if (typeof links.email === 'string' && !links.email.includes('@')) fail('links.json', 'email', 'must be an email address')
@@ -144,6 +169,15 @@ if (en && es) {
     if (Array.isArray(a) && Array.isArray(b) && a.length !== b.length) {
       errors.push(`${p.join('.')}: English has ${a.length} and Spanish has ${b.length}. Both languages list the same things, so they must match.`)
     }
+  }
+  const pa = en.projects?.items, pb = es.projects?.items
+  if (Array.isArray(pa) && Array.isArray(pb)) {
+    if (pa.length !== pb.length) errors.push(`projects.items: English has ${pa.length} and Spanish has ${pb.length}. Both languages list the same projects, so they must match.`)
+    else pa.forEach((a, i) => {
+      for (const k of ['slug', 'frame', 'live', 'code', 'demo', 'stack']) {
+        if ((a[k] || undefined) !== (pb[i][k] || undefined)) errors.push(`projects.items[${i}].${k}: English says ${JSON.stringify(a[k])} and Spanish says ${JSON.stringify(pb[i][k])}. Links, stack and frame are the same in both languages.`)
+      }
+    })
   }
   const roles = [at(en, ['trajectory', 'roles']), at(es, ['trajectory', 'roles'])]
   if (Array.isArray(roles[0]) && Array.isArray(roles[1]) && roles[0].length === roles[1].length) {
@@ -169,4 +203,4 @@ if (errors.length) {
   console.error('\nFix it in /admin, or in the JSON file the message names, and save again.\n')
   process.exit(1)
 }
-console.log(`content ok: two languages, ${en.trajectory.roles.length} roles, ${en.impact.metrics.length} metrics, ${en.credentials.certs.length} certifications`)
+console.log(`content ok: two languages, ${en.trajectory.roles.length} roles, ${en.impact.metrics.length} metrics, ${en.projects.items.length} projects, ${en.credentials.certs.length} certifications`)

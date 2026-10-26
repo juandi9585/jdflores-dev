@@ -48,8 +48,19 @@ export type EduItem = {
 
 export type CertItem = { name: string; issuer: string; year?: string }
 
+export type Project = {
+  slug: string
+  name: string
+  line: string
+  stack: string
+  frame: 'phone' | 'desktop'
+  live?: string
+  code?: string
+  demo?: boolean
+}
+
 export type Content = {
-  nav: { about: string; impact: string; work: string; stack: string; method: string; contact: string; resume: string; close: string }
+  nav: { about: string; impact: string; projects: string; work: string; stack: string; method: string; contact: string; resume: string; close: string }
   hero: {
     role: string
     name: string
@@ -62,6 +73,17 @@ export type Content = {
   }
   about: { title: string; body: string[]; signature: string }
   impact: { title: string; lead: string; metrics: Metric[] }
+  projects: {
+    title: string
+    body: string
+    prev: string
+    next: string
+    of: string
+    open: string
+    code: string
+    demo: string
+    items: Project[]
+  }
   trajectory: { title: string; lead: string; nowLabel: string; roles: Role[] }
   stack: { title: string; lead: string; groups: StackGroup[] }
   aiFirst: { title: string; body: string[]; points: { k: string; v: string }[] }
