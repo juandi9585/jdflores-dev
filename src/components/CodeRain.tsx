@@ -17,6 +17,7 @@ export function CodeRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const rainRef = useRef<Rain | null>(null)
   const [heroGone, setHeroGone] = useState(false)
+  const [ready, setReady] = useState(false)
   const dark = theme === 'dark'
 
   useEffect(() => {
@@ -34,14 +35,23 @@ export function CodeRain() {
     return () => io.disconnect()
   }, [dark])
 
+  // Created after the theme switch, not inside it: the font probe and the first
+  // frames froze a phone for ~250 ms while the new world was opening. The hero
+  // hides the rain on arrival anyway, so nobody sees it start late.
   useEffect(() => {
     const canvas = canvasRef.current
     if (!dark || !canvas) return
-    const rain = createRain(canvas)
-    rainRef.current = rain
+    let rain: Rain | null = null
+    const t = window.setTimeout(() => {
+      rain = createRain(canvas)
+      rainRef.current = rain
+      setReady(true)
+    }, 800)
     return () => {
-      rain.destroy()
+      window.clearTimeout(t)
+      rain?.destroy()
       rainRef.current = null
+      setReady(false)
     }
   }, [dark])
 
@@ -61,7 +71,7 @@ export function CodeRain() {
     const fade = parseFloat(getComputedStyle(layer).transitionDuration) * 1000 || 0
     const t = window.setTimeout(() => rain.stop(), fade + 100)
     return () => window.clearTimeout(t)
-  }, [dark, reduced, heroGone])
+  }, [dark, reduced, heroGone, ready])
 
   if (!dark) return null
 

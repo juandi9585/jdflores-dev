@@ -96,7 +96,6 @@ export function Hero() {
         <LazyViz eager reducedFallback={<div className="hero__sphere-fallback" />}>
           <Suspense fallback={null}>
             <ParticleSphere
-              key={theme}
               particlesCount={coarse ? 4200 : 8000}
               particleScale={coarse ? 4.1 : 3.4}
               speed={13}
