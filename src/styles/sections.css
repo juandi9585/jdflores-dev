@@ -1612,3 +1612,367 @@
   }
 }
 
+
+/* =====================================================================
+   PROJECTS — the reel. The section opens with a leader (title, sentence,
+   counter, transport) ahead of a track of frames. Wide: the leader holds
+   still and the track runs off the right edge. Narrow: a title-and-counter
+   row over a one-slide-per-swipe carousel, transport under the thumb.
+   ===================================================================== */
+.projects {
+  overflow-x: clip;
+}
+.reel {
+  --reel-h: min(560px, 62vh);
+  --frame-r: 28px;
+}
+
+/* ---- track (shared) ---- */
+.reel__track {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  /* room for the active ring, which the scroller would otherwise cut */
+  padding-block: 8px;
+}
+.reel__track::-webkit-scrollbar {
+  display: none;
+}
+.reel__track:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+.reel__item {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+/* ---- frame ---- */
+.reel__frame {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: var(--frame-r);
+}
+.reel__frame[data-frame='desktop'] {
+  --frame-r: 12px;
+}
+.reel__poster,
+.reel__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.reel__video {
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-out);
+}
+.reel__video[data-shown] {
+  opacity: 1;
+}
+.reel__toggle {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.reel__toggle:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: -4px;
+}
+
+/* ---- caption ---- */
+.reel__cap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.reel__name {
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--bone);
+  text-wrap: balance;
+}
+.reel__line {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--bone-dim);
+  text-wrap: pretty;
+}
+.reel__stack {
+  font-size: var(--step--2);
+  text-transform: var(--label-case);
+  letter-spacing: var(--label-track);
+  color: var(--muted);
+}
+.reel__links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-m);
+}
+.reel__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  font-family: var(--font-label);
+  font-size: var(--step--1);
+  font-weight: var(--label-weight);
+  color: var(--bone);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.reel__link-icon {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.reel__link:hover {
+  color: var(--amber);
+}
+.reel__link:hover .reel__link-icon {
+  transform: translate(2px, -2px);
+}
+
+/* ---- transport ---- */
+.reel__ctrl {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex: none;
+  color: var(--bone);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+.reel__ctrl svg {
+  width: 18px;
+  height: 18px;
+}
+.reel__ctrl:hover:not(:disabled) {
+  border-color: var(--amber-line);
+}
+.reel__ctrl:active:not(:disabled) {
+  opacity: 0.65;
+}
+.reel__ctrl:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.reel__title {
+  font-family: var(--font-head);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--bone);
+  text-wrap: balance;
+}
+.reel__body {
+  color: var(--muted);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  max-width: 46ch;
+}
+.reel__count {
+  font-size: var(--step--1);
+  color: var(--bone-dim);
+  white-space: nowrap;
+}
+
+/* ---- wide: leader beside a track that bleeds off the right ---- */
+.reel--wide {
+  display: grid;
+  grid-template-columns: minmax(15rem, 20rem) minmax(0, 1fr);
+  column-gap: var(--space-l);
+  /* the track runs to the viewport's right edge; the section clips the few px
+     a scrollbar's width adds */
+  margin-right: calc(-1 * max(var(--gutter), (100vw - var(--container)) / 2 + var(--gutter)));
+}
+.reel--wide .reel__leader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-l);
+  margin-block: 8px;
+}
+.reel--wide .reel__lead-top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+.reel--wide .reel__title {
+  font-size: var(--step-2);
+}
+.reel__transport {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+.reel__progress {
+  height: 1px;
+  background: var(--line);
+}
+.reel__progress span {
+  display: block;
+  height: 100%;
+  background: var(--bone);
+  transform-origin: left center;
+  transition: transform var(--dur-slow) var(--ease-arrive);
+}
+.reel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.reel__ctrls {
+  display: flex;
+  gap: var(--space-2xs);
+}
+.reel--wide .reel__track {
+  gap: var(--space-l);
+  padding-left: 8px;
+  padding-right: var(--gutter);
+  scroll-padding-left: 8px;
+}
+.reel--wide .reel__item {
+  width: max(calc(var(--reel-h) * 390 / 844), 17rem);
+}
+.reel--wide .reel__item[data-frame='desktop'] {
+  width: calc(var(--reel-h) * 1.6);
+}
+.reel--wide .reel__frame {
+  height: var(--reel-h);
+  width: calc(var(--reel-h) * 390 / 844);
+  opacity: 0.6;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    opacity var(--dur) var(--ease-out);
+}
+.reel--wide .reel__frame[data-frame='desktop'] {
+  width: 100%;
+}
+.reel--wide .reel__cap {
+  flex: 1;
+}
+.reel--wide .reel__links {
+  margin-top: auto;
+}
+.reel--wide .reel__item[data-active] .reel__frame {
+  opacity: 1;
+  border-color: var(--amber);
+}
+
+/* ---- narrow: title row, carousel, thumb-zone transport ---- */
+.reel--narrow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+.reel--narrow .reel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-s);
+}
+.reel--narrow .reel__title {
+  font-size: var(--step-1);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.reel--narrow .reel__body {
+  font-size: var(--step--1);
+}
+.reel--narrow .reel__track {
+  /* bleed to the screen edges so a swipe is not clipped at the gutter */
+  margin-inline: calc(-1 * var(--gutter));
+}
+.reel--narrow .reel__item {
+  width: 100%;
+  padding-inline: var(--gutter);
+  align-items: center;
+  scroll-snap-stop: always;
+}
+.reel--narrow .reel__frame {
+  /* the width follows the screen's height too, so frame, caption and
+     transport share one phone screen */
+  width: min(78vw, 300px, calc((100svh - 25rem) * 390 / 844));
+  aspect-ratio: 390 / 844;
+}
+.reel--narrow .reel__frame[data-frame='desktop'] {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+.reel--narrow .reel__cap {
+  align-self: stretch;
+}
+.reel__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.reel__cta {
+  flex: 1;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 0;
+  text-align: center;
+}
+.reel__cta--none {
+  display: block;
+  font-size: var(--step--2);
+  text-transform: var(--label-case);
+  letter-spacing: var(--label-track);
+  color: var(--muted);
+}
+.reel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+.reel__dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--line);
+  transition:
+    width var(--dur) var(--ease-arrive),
+    background var(--dur) var(--ease-out);
+}
+.reel__dots span[data-on] {
+  width: 20px;
+  background: var(--bone);
+}
+
+@media (hover: none) {
+  .reel__link:hover {
+    color: var(--bone);
+  }
+  .reel__link:hover .reel__link-icon {
+    transform: none;
+  }
+  .reel__ctrl:hover:not(:disabled) {
+    border-color: var(--line);
+  }
+}

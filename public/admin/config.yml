@@ -103,6 +103,38 @@ collections:
                       - { name: label, label: Qué mide, widget: string, i18n: true }
                       - { name: note, label: Detalle, widget: text, i18n: true }
 
+          - name: projects
+            label: Proyectos
+            widget: object
+            i18n: true
+            hint: 'Los videos y portadas viven en public/projects/ con el nombre del identificador: <id>.mp4 y <id>.jpg'
+            fields:
+              - { name: title, label: Titular, widget: string, i18n: true }
+              - { name: body, label: Entrada, widget: text, i18n: true }
+              - { name: prev, label: 'Botón: anterior', widget: string, i18n: true }
+              - { name: next, label: 'Botón: siguiente', widget: string, i18n: true }
+              - { name: of, label: 'Contador: «de»', widget: string, i18n: true, hint: 'En «2 de 6»' }
+              - { name: open, label: 'Enlace: abrir', widget: string, i18n: true }
+              - { name: code, label: 'Enlace: código', widget: string, i18n: true }
+              - { name: demo, label: 'Enlace: demo', widget: string, i18n: true }
+              - name: items
+                label: Proyectos
+                label_singular: Proyecto
+                widget: list
+                i18n: true
+                collapsed: true
+                summary: '{{fields.name}} · {{fields.stack}}'
+                hint: El orden de la lista es el orden en la página. Identificador, formato, enlaces y stack son iguales en los dos idiomas.
+                fields:
+                  - { name: slug, label: Identificador, widget: string, i18n: true, hint: 'Minúsculas y guiones; nombra los archivos en public/projects/' }
+                  - { name: name, label: Nombre, widget: string, i18n: true }
+                  - { name: line, label: Descripción, widget: text, i18n: true }
+                  - { name: stack, label: Stack, widget: string, i18n: true, hint: 'Separado por ·' }
+                  - { name: frame, label: Formato, widget: select, options: [phone, desktop], default: phone, i18n: true, hint: 'phone = móvil vertical, desktop = pantalla ancha' }
+                  - { name: live, label: Enlace en vivo, widget: string, required: false, i18n: true, hint: Debe empezar por https:// }
+                  - { name: code, label: Enlace al código, widget: string, required: false, i18n: true, hint: Debe empezar por https:// }
+                  - { name: demo, label: Es una demo, widget: boolean, required: false, default: false, i18n: true, hint: 'Cambia «Abrir» por «Probar la demo»' }
+
           - name: trajectory
             label: Trayectoria
             widget: object
@@ -247,6 +279,7 @@ collections:
             fields:
               - { name: about, label: Perfil, widget: string, i18n: true }
               - { name: impact, label: Impacto, widget: string, i18n: true }
+              - { name: projects, label: Proyectos, widget: string, i18n: true }
               - { name: work, label: Trayectoria, widget: string, i18n: true }
               - { name: stack, label: Stack, widget: string, i18n: true }
               - { name: method, label: AI-first, widget: string, i18n: true }

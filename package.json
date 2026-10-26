@@ -9,7 +9,8 @@
     "check:content": "node scripts/check-content.mjs",
     "preview": "vite preview",
     "lint": "tsc -b --noEmit",
-    "og": "node scripts/make-og.mjs"
+    "og": "node scripts/make-og.mjs",
+    "capture": "node scripts/capture-projects.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
