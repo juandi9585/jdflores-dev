@@ -89,6 +89,13 @@
     "demo": "Probar la demo",
     "items": [
       {
+        "slug": "finanzas",
+        "name": "Finanzas personales",
+        "line": "Gastos, sueldo e inversiones en bolívares y dólares, con la tasa BCV del día y presupuesto por categoría.",
+        "stack": "React · Vercel Functions · Neon",
+        "frame": "phone"
+      },
+      {
         "slug": "banderas",
         "name": "Banderas del Mundo",
         "line": "197 países, tres modos de juego y ranking global. Funciona sin conexión.",
@@ -113,13 +120,6 @@
         "frame": "phone",
         "live": "https://questlog-jd.vercel.app/?demo",
         "demo": true
-      },
-      {
-        "slug": "finanzas",
-        "name": "Finanzas personales",
-        "line": "Gastos, sueldo e inversiones en bolívares y dólares, con la tasa BCV del día y presupuesto por categoría.",
-        "stack": "React · Vercel Functions · Neon",
-        "frame": "phone"
       },
       {
         "slug": "palabras",

@@ -13,8 +13,11 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from '../ui/Icon'
    becomes a single title-and-counter row and the track becomes a carousel that
    still swipes, one slide per swipe, with the transport under the thumb.
 
-   Video: only the frames that are mostly in view play. A video's source is
-   attached when its frame is within one item of the viewport, never before.
+   Video: only the active frame plays, and only while the section is on screen;
+   the others rest on their poster. Two videos decoding at once halved the frame
+   rate on a desktop GPU (60 → 30 fps), so this is a measured limit, not taste.
+   A video's source is attached when its frame is within one item of the
+   active one, never before.
    The poster is a plain <img> under the video, so a missing mp4 leaves the
    poster and a missing poster leaves a neutral frame, never a broken icon. */
 
@@ -111,7 +114,7 @@ export function Projects() {
   const track = useRef<HTMLDivElement>(null)
 
   const [active, setActive] = useState(0)
-  const [inView, setInView] = useState<boolean[]>(() => items.map(() => false))
+  const [onScreen, setOnScreen] = useState(false)
 
   const linksOf = (p: Project): Link[] => {
     const out: Link[] = []
@@ -167,27 +170,14 @@ export function Projects() {
     }
   }, [measure, wide])
 
-  // which frames are mostly in view (these play)
+  // is the reel on screen at all (against the viewport, not the track)
   useEffect(() => {
     const tr = track.current
     if (!tr) return
-    const frames = tr.querySelectorAll<HTMLElement>('.reel__frame')
-    const io = new IntersectionObserver(
-      (entries) => {
-        setInView((prev) => {
-          const next = prev.slice()
-          entries.forEach((e) => {
-            const i = Array.prototype.indexOf.call(frames, e.target)
-            if (i >= 0) next[i] = e.intersectionRatio >= 0.6
-          })
-          return next
-        })
-      },
-      { root: tr, threshold: [0, 0.6, 1] },
-    )
-    frames.forEach((f) => io.observe(f))
+    const io = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting), { threshold: 0.25 })
+    io.observe(tr)
     return () => io.disconnect()
-  }, [wide, n])
+  }, [wide])
 
   const go = (i: number) => {
     const tr = track.current
@@ -283,8 +273,8 @@ export function Projects() {
                 >
                   <Frame
                     p={p}
-                    load={Math.abs(i - active) <= 1 || inView[i]}
-                    play={inView[i]}
+                    load={Math.abs(i - active) <= 1}
+                    play={onScreen && i === active}
                     reduced={reduced}
                   />
                   <div className="reel__cap">
