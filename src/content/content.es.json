@@ -93,7 +93,8 @@
         "name": "Finanzas personales",
         "line": "Gastos, sueldo e inversiones en bolívares y dólares, con la tasa BCV del día y presupuesto por categoría.",
         "stack": "React · Vercel Functions · Neon",
-        "frame": "phone"
+        "frame": "phone",
+        "live": "https://jd-finance.vercel.app"
       },
       {
         "slug": "banderas",

@@ -93,7 +93,8 @@
         "name": "Personal Finance",
         "line": "Spending, salary and investments in bolívares and dollars, at the day's BCV rate, with a budget per category.",
         "stack": "React · Vercel Functions · Neon",
-        "frame": "phone"
+        "frame": "phone",
+        "live": "https://jd-finance.vercel.app"
       },
       {
         "slug": "banderas",
