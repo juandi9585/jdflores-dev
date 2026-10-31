@@ -84,6 +84,46 @@ const PROJECTS = {
       await beat(p, 1500)
     },
   },
+  finanzas: {
+    viewport: PHONE,
+    url: 'https://jd-finance.vercel.app/dashboard',
+    dur: 12,
+    poster: 0.08,
+    // Logs in (unrecorded) as the demo user: invented data, seeded by jd-finance/scripts/sembrar-demo.mjs.
+    // Credentials live in .env.capture (gitignored): FINANZAS_DEMO_EMAIL / FINANZAS_DEMO_PASSWORD.
+    async prep(browser, opts) {
+      const env = Object.fromEntries(readFileSync(join(ROOT, '.env.capture'), 'utf8').trim().split(/\r?\n/).map((l) => l.split(/=(.*)/s).slice(0, 2)))
+      const ctx = await browser.newContext(opts)
+      const p = await ctx.newPage()
+      await p.goto('https://jd-finance.vercel.app', { waitUntil: 'networkidle' })
+      await p.fill('input[type=email]', env.FINANZAS_DEMO_EMAIL)
+      await p.fill('input[type=password]', env.FINANZAS_DEMO_PASSWORD)
+      await p.click('button[type=submit]')
+      await p.waitForSelector('nav.navbar', { timeout: 30000 })
+      await p.goto('https://jd-finance.vercel.app/dashboard', { waitUntil: 'networkidle' }) // warms the SWR cache
+      const state = await ctx.storageState()
+      await ctx.close()
+      return state
+    },
+    async run(p) {
+      await beat(p, 1800)
+      await p.getByRole('link', { name: 'Registro' }).tap()
+      await beat(p, 700)
+      await p.locator('.registro-desc').tap()
+      await p.keyboard.type('Café con Ana', { delay: 80 })
+      await p.locator('.registro-monto').first().tap()
+      await p.keyboard.type('4500', { delay: 110 })
+      await beat(p, 900)
+      await p.getByRole('link', { name: 'Inversiones' }).tap()
+      await beat(p, 1800)
+      await p.evaluate(() => window.scrollBy({ top: 260, behavior: 'smooth' }))
+      await beat(p, 1300)
+      await p.getByRole('link', { name: 'Consulta' }).tap()
+      await beat(p, 1500)
+      await p.evaluate(() => window.scrollBy({ top: 420, behavior: 'smooth' }))
+      await beat(p, 1500)
+    },
+  },
   palabras: {
     viewport: PHONE,
     url: 'https://guacharo-poc.vercel.app',

@@ -115,6 +115,13 @@
         "demo": true
       },
       {
+        "slug": "finanzas",
+        "name": "Personal Finance",
+        "line": "Spending, salary and investments in bolívares and dollars, at the day's BCV rate, with a budget per category.",
+        "stack": "React · Vercel Functions · Neon",
+        "frame": "phone"
+      },
+      {
         "slug": "palabras",
         "name": "Daily Word Game",
         "line": "A new puzzle every day, the same for every player.",

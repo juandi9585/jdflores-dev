@@ -115,6 +115,13 @@
         "demo": true
       },
       {
+        "slug": "finanzas",
+        "name": "Finanzas personales",
+        "line": "Gastos, sueldo e inversiones en bolívares y dólares, con la tasa BCV del día y presupuesto por categoría.",
+        "stack": "React · Vercel Functions · Neon",
+        "frame": "phone"
+      },
+      {
         "slug": "palabras",
         "name": "Juego de palabras diario",
         "line": "Un reto nuevo cada día, el mismo para todos los jugadores.",
