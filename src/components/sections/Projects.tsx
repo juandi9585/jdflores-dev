@@ -304,7 +304,7 @@ export function Projects() {
                     <ArrowUpRight className="btn__arrow" />
                   </a>
                 ) : (
-                  <p className="reel__cta reel__cta--none label">{cur.stack}</p>
+                  <span className="reel__cta" /> /* no link: an empty slot keeps the arrows at the ends */
                 )}
                 {nextBtn}
               </div>

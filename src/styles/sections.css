@@ -1939,13 +1939,6 @@
   min-width: 0;
   text-align: center;
 }
-.reel__cta--none {
-  display: block;
-  font-size: var(--step--2);
-  text-transform: var(--label-case);
-  letter-spacing: var(--label-track);
-  color: var(--muted);
-}
 .reel__dots {
   display: flex;
   justify-content: center;
