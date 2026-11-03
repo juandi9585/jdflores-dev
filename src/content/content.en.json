@@ -153,17 +153,6 @@
     "nowLabel": "Now",
     "roles": [
       {
-        "period": "06/2026–Present",
-        "company": "Business consulting firm",
-        "location": "Freelance work",
-        "title": "Full Stack Developer",
-        "points": [
-          "Design and development of custom web applications for the company (Next.js, React, TypeScript), adapted to mobile and able to work offline.",
-          "Implementation of centralized authentication (OAuth 2.1, Supabase), roles and permissions, and administration consoles.",
-          "Quality and security assurance: automated testing (Playwright), continuous deployment (Vercel), and technical documentation."
-        ]
-      },
-      {
         "period": "09/2025–Present",
         "company": "PadTech Solution, C.A.",
         "location": "Contractor at Banesco, Banco Universal · Venezuela",
@@ -173,6 +162,17 @@
           "Led the design and implementation of an autonomous agentic support chatbot that reduced operating costs by 94%.",
           "Built AI-driven document-management tools that cut processes from several hours to about 15 minutes.",
           "Designed end-to-end full-stack & AI architecture on GCP + n8n, from front/back-end to AI agent orchestration."
+        ]
+      },
+      {
+        "period": "06/2026–Present",
+        "company": "Business consulting firm",
+        "location": "Freelance work · Alongside my current role",
+        "title": "Full Stack Developer",
+        "points": [
+          "Design and development of custom web applications for the company (Next.js, React, TypeScript), adapted to mobile and able to work offline.",
+          "Implementation of centralized authentication (OAuth 2.1, Supabase), roles and permissions, and administration consoles.",
+          "Quality and security assurance: automated testing (Playwright), continuous deployment (Vercel), and technical documentation."
         ]
       },
       {

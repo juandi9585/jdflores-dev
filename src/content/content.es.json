@@ -153,17 +153,6 @@
     "nowLabel": "Ahora",
     "roles": [
       {
-        "period": "06/2026–Presente",
-        "company": "Empresa de consultoría de negocios",
-        "location": "Trabajo freelance",
-        "title": "Desarrollador Full Stack",
-        "points": [
-          "Diseño y desarrollo de aplicaciones web a la medida para la empresa (Next.js, React, TypeScript), adaptadas a móvil y con funcionamiento sin conexión.",
-          "Implementación de autenticación centralizada (OAuth 2.1, Supabase), roles y permisos, y consolas de administración.",
-          "Aseguramiento de la calidad y la seguridad: pruebas automatizadas (Playwright), despliegue continuo (Vercel) y documentación técnica."
-        ]
-      },
-      {
         "period": "09/2025–Presente",
         "company": "PadTech Solution, C.A.",
         "location": "Contratista en Banesco, Banco Universal · Venezuela",
@@ -173,6 +162,17 @@
           "Lideré el diseño e implementación de un chatbot de soporte agéntico autónomo que redujo los costos operativos en un 94%.",
           "Desarrollé herramientas de gestión documental con IA que redujeron procesos de varias horas a unos 15 minutos.",
           "Diseñé arquitectura full-stack e IA de punta a punta en GCP + n8n, del front/back-end a la orquestación de agentes."
+        ]
+      },
+      {
+        "period": "06/2026–Presente",
+        "company": "Empresa de consultoría de negocios",
+        "location": "Trabajo freelance · En paralelo a mi cargo actual",
+        "title": "Desarrollador Full Stack",
+        "points": [
+          "Diseño y desarrollo de aplicaciones web a la medida para la empresa (Next.js, React, TypeScript), adaptadas a móvil y con funcionamiento sin conexión.",
+          "Implementación de autenticación centralizada (OAuth 2.1, Supabase), roles y permisos, y consolas de administración.",
+          "Aseguramiento de la calidad y la seguridad: pruebas automatizadas (Playwright), despliegue continuo (Vercel) y documentación técnica."
         ]
       },
       {
@@ -188,7 +188,7 @@
         "period": "01/2025–09/2025",
         "company": "Inversiones Galiang, C.A.",
         "location": "Contratista en Banesco, Banco Universal · Venezuela",
-        "title": "Arquitecto Especialista Full-Stack",
+        "title": "Arquitecto Especialista Integral",
         "points": [
           "Líder de gestión de liberaciones y versionado (IBM AS/400) para la migración del Core de Medios de Pago.",
           "Desarrollé dashboards y reportería de indicadores (KPI) para la migración del Core de Pagos.",
