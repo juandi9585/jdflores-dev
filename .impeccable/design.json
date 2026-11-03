@@ -87,7 +87,7 @@
       "kind": "card",
       "refersTo": "plate-aero",
       "description": "The light theme's only container: raised wet glass with a specular edge and a wet reflection pooling below its lower edge.",
-      "html": "<div class=\"ds-plate\"><p class=\"ds-plate-body\">Autonomous agents and full-stack systems, shipped into production banking environments.</p></div>",
+      "html": "<div class=\"ds-plate\"><p class=\"ds-plate-body\">AI agents and full-stack systems, shipped into production banking environments.</p></div>",
       "css": ".ds-plate { position: relative; padding: clamp(1.25rem, 2.4vw, 2.25rem); color: #06344f; background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.66)); border: 1px solid rgba(255,255,255,0.92); border-radius: 20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.98), inset 0 -1px 0 rgba(255,255,255,0.6), 0 6px 16px rgba(0,74,117,0.1); backdrop-filter: blur(8px) saturate(1.15); -webkit-backdrop-filter: blur(8px) saturate(1.15); } .ds-plate::after { content: ''; position: absolute; left: 4%; right: 4%; top: 100%; height: 34px; background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(226,244,255,0.55) 38%, rgba(255,255,255,0) 100%); mix-blend-mode: screen; filter: blur(3px); border-radius: 0 0 46% 46% / 0 0 100% 100%; pointer-events: none; } .ds-plate-body { margin: 0; font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif; font-size: 1.05rem; line-height: 1.6; }"
     },
     {
@@ -95,7 +95,7 @@
       "kind": "custom",
       "refersTo": null,
       "description": "The Impact mechanic: a ruled table row where the figure carries the display type and the source note is set in the label face. The first row is the only accent figure in the section.",
-      "html": "<table class=\"ds-ledger\"><tr class=\"ds-ledger-row ds-ledger-row-lead\"><td class=\"ds-ledger-figure\">94%</td><td class=\"ds-ledger-what\">operating-cost reduction</td><td class=\"ds-ledger-where\">Autonomous support solution, production banking</td></tr><tr class=\"ds-ledger-row\"><td class=\"ds-ledger-figure\">90%+</td><td class=\"ds-ledger-what\">man-hours removed</td><td class=\"ds-ledger-where\">Payments migration workflow</td></tr></table>",
+      "html": "<table class=\"ds-ledger\"><tr class=\"ds-ledger-row ds-ledger-row-lead\"><td class=\"ds-ledger-figure\">94%</td><td class=\"ds-ledger-what\">operating-cost reduction</td><td class=\"ds-ledger-where\">Agentic support solution, production banking</td></tr><tr class=\"ds-ledger-row\"><td class=\"ds-ledger-figure\">90%+</td><td class=\"ds-ledger-what\">man-hours removed</td><td class=\"ds-ledger-where\">Payments migration workflow</td></tr></table>",
       "css": ".ds-ledger { width: 100%; border-collapse: collapse; text-align: left; color: #eceef3; font-family: Saira, system-ui, sans-serif; } .ds-ledger-row { border-bottom: 1px solid #191e29; } .ds-ledger-row > * { padding: 2.5rem 1.5rem 2.5rem 0; vertical-align: baseline; font-weight: 400; } .ds-ledger-figure { font-stretch: 120%; font-weight: 800; font-size: 3rem; line-height: 0.95; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; width: 26%; white-space: nowrap; } .ds-ledger-row-lead .ds-ledger-figure { color: #ffb84d; } .ds-ledger-what { font-size: 1.3rem; font-weight: 500; width: 30%; } .ds-ledger-where { font-family: Saira, system-ui, sans-serif; font-size: 0.8rem; color: #8b93a4; line-height: 1.55; }"
     },
     {

@@ -78,7 +78,7 @@ const html = `<!doctype html>
   ${bubbles}
   <div class="inner">
     <h1>Juan Diego<br>Flores</h1>
-    <p class="thesis">Autonomous agents and full-stack systems that cut banking operating costs by <span class="accent">94%</span>.</p>
+    <p class="thesis">AI agents and full-stack systems that cut banking operating costs by <span class="accent">94%</span>.</p>
   </div>
   <div class="shelf">
     <span>Systems Engineer · AI Specialist</span><span class="rule"></span>

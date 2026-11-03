@@ -360,6 +360,9 @@
   color: var(--bone-dim);
   text-wrap: balance;
 }
+.hero__nobreak {
+  white-space: nowrap;
+}
 .hero__cta {
   display: flex;
   flex-wrap: wrap;

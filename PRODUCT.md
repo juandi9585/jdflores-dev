@@ -21,7 +21,7 @@ A personal portfolio that converts a short, distracted skim into either a résum
 
 ## Positioning
 
-A systems engineer who ships **autonomous agents and full-stack systems into production banking environments**, working freelance with an AI-first delivery method (primarily Claude Code) while keeping banking-grade release discipline. The combination a neighbouring portfolio cannot truthfully copy: core-banking integration experience (IBM AS/400, Oracle Service Bus, payments migration) plus agentic AI delivery, evidenced by a **94%** operating-cost reduction on an autonomous support solution.
+A systems engineer who ships **AI agents and full-stack systems into production banking environments**, working freelance with an AI-first delivery method (primarily Claude Code) while keeping banking-grade release discipline. The combination a neighbouring portfolio cannot truthfully copy: core-banking integration experience (IBM AS/400, Oracle Service Bus, payments migration) plus agentic AI delivery, evidenced by a **94%** operating-cost reduction on an agentic support solution.
 
 ## Operating Context
 

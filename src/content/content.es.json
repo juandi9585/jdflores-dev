@@ -18,7 +18,7 @@
         "t": "Construyo "
       },
       {
-        "t": "agentes autónomos",
+        "t": "agentes de IA",
         "accent": true
       },
       {
@@ -39,12 +39,12 @@
     "scrollCue": "Desliza"
   },
   "about": {
-    "title": "Un ingeniero que despliega agentes autónomos en producción.",
+    "title": "Un ingeniero que despliega agentes de IA en producción.",
     "body": [
-      "Ingeniero de Sistemas de la UNIMET con Trabajo Final de Grado con mención honorífica, especialista en Inteligencia Artificial. Tengo experiencia comprobada desarrollando arquitecturas full-stack y agentes autónomos que han generado reducciones sustanciales de costos operativos en el sector bancario.",
+      "Ingeniero de Sistemas de la UNIMET con Trabajo Final de Grado con mención honorífica, especialista en Inteligencia Artificial. Tengo experiencia comprobada desarrollando arquitecturas full-stack y agentes de IA que han generado reducciones sustanciales de costos operativos en el sector bancario.",
       "Trabajo como ingeniero freelance usando las últimas herramientas de desarrollo con IA (principalmente Claude Code) para diseñar, orquestar y entregar software en producción más rápido que los equipos tradicionales. Mi base es la orquestación de flujos con n8n, el ecosistema de Google Cloud y el software escalable."
     ],
-    "signature": "Del front-end a los agentes de IA autónomos: un solo arquitecto, de punta a punta."
+    "signature": "Del front-end a los agentes de IA: un solo arquitecto, de punta a punta."
   },
   "impact": {
     "title": "Resultados, no entregables.",
@@ -55,7 +55,7 @@
         "value": 94,
         "suffix": "%",
         "label": "Reducción de costos operativos",
-        "note": "Solución de soporte agéntico autónomo · sector bancario"
+        "note": "Solución de soporte agéntico · sector bancario"
       },
       {
         "kind": "count",
@@ -149,7 +149,7 @@
   },
   "trajectory": {
     "title": "Un recorrido entre banca, IA y automatización.",
-    "lead": "Más de tres años construyendo, de la integración de datos a agentes autónomos en producción.",
+    "lead": "Más de tres años construyendo, de la integración de datos a agentes de IA en producción.",
     "nowLabel": "Ahora",
     "roles": [
       {
@@ -159,7 +159,7 @@
         "title": "Desarrollador de IA",
         "points": [
           "Desarrollo full-stack de un aplicativo de análisis de crédito con IA, con un ahorro de horas-hombre superior al 90%.",
-          "Lideré el diseño e implementación de un chatbot de soporte agéntico autónomo que redujo los costos operativos en un 94%.",
+          "Lideré el diseño e implementación de un chatbot de soporte agéntico que redujo los costos operativos en un 94%.",
           "Desarrollé herramientas de gestión documental con IA que redujeron procesos de varias horas a unos 15 minutos.",
           "Diseñé arquitectura full-stack e IA de punta a punta en GCP + n8n, del front/back-end a la orquestación de agentes."
         ]
@@ -289,7 +289,7 @@
       },
       {
         "k": "Orquestación",
-        "v": "n8n · agentes autónomos"
+        "v": "n8n · agentes de IA"
       },
       {
         "k": "Cloud",
@@ -389,7 +389,7 @@
   },
   "meta": {
     "title": "Juan Diego Flores · Ingeniero de Sistemas y Especialista en IA",
-    "description": "Ingeniero de sistemas freelance. Construyo agentes autónomos y sistemas full-stack que redujeron los costos operativos de la banca en un 94%."
+    "description": "Ingeniero de sistemas freelance. Construyo agentes de IA y sistemas full-stack que redujeron los costos operativos de la banca en un 94%."
   },
   "footer": {
     "rights": "Todos los derechos reservados."

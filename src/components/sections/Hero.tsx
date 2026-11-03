@@ -135,7 +135,10 @@ export function Hero() {
           <p className="hero__thesis">
             {h.thesis.map((seg, i) => (
               <span key={i} className={seg.accent ? 'text-amber' : undefined}>
-                {seg.t}
+                {/* a compound like "full-stack" must not split across lines at its hyphen */}
+                {seg.t.split(/([^ ]+-[^ ]+)/).map((part, j) =>
+                  j % 2 ? <span key={j} className="hero__nobreak">{part}</span> : part,
+                )}
               </span>
             ))}
           </p>

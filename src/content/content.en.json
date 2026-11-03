@@ -18,7 +18,7 @@
         "t": "I engineer "
       },
       {
-        "t": "autonomous agents",
+        "t": "AI agents",
         "accent": true
       },
       {
@@ -39,12 +39,12 @@
     "scrollCue": "Scroll"
   },
   "about": {
-    "title": "An engineer who ships autonomous agents into production.",
+    "title": "An engineer who ships AI agents into production.",
     "body": [
-      "Systems Engineer from UNIMET with a final degree project awarded with honors, specializing in Artificial Intelligence. I have a proven track record building full-stack architectures and autonomous agents that have driven major operational cost reductions in the banking sector.",
+      "Systems Engineer from UNIMET with a final degree project awarded with honors, specializing in Artificial Intelligence. I have a proven track record building full-stack architectures and AI agents that have driven major operational cost reductions in the banking sector.",
       "I work as a freelance engineer using the latest AI development tooling (primarily Claude Code) to design, orchestrate and ship production software faster than traditional teams. My core is n8n workflow orchestration, the Google Cloud ecosystem, and scalable software."
     ],
-    "signature": "From front-end to autonomous AI agents: one architect, end to end."
+    "signature": "From front-end to AI agents: one architect, end to end."
   },
   "impact": {
     "title": "Outcomes, not output.",
@@ -55,7 +55,7 @@
         "value": 94,
         "suffix": "%",
         "label": "Operating cost reduction",
-        "note": "Autonomous agentic support solution · banking sector"
+        "note": "Agentic support solution · banking sector"
       },
       {
         "kind": "count",
@@ -149,7 +149,7 @@
   },
   "trajectory": {
     "title": "A track record across banking, AI and automation.",
-    "lead": "Over three years of building, from data integration to autonomous agents in production.",
+    "lead": "Over three years of building, from data integration to AI agents in production.",
     "nowLabel": "Now",
     "roles": [
       {
@@ -159,7 +159,7 @@
         "title": "AI Developer",
         "points": [
           "Full-stack development of an AI-powered credit-analysis application, resulting in 90%+ man-hour savings.",
-          "Led the design and implementation of an autonomous agentic support chatbot that reduced operating costs by 94%.",
+          "Led the design and implementation of an agentic support chatbot that reduced operating costs by 94%.",
           "Built AI-driven document-management tools that cut processes from several hours to about 15 minutes.",
           "Designed end-to-end full-stack & AI architecture on GCP + n8n, from front/back-end to AI agent orchestration."
         ]
@@ -289,7 +289,7 @@
       },
       {
         "k": "Orchestration",
-        "v": "n8n · autonomous agents"
+        "v": "n8n · AI agents"
       },
       {
         "k": "Cloud",
@@ -389,7 +389,7 @@
   },
   "meta": {
     "title": "Juan Diego Flores · Systems Engineer & AI Specialist",
-    "description": "Freelance systems engineer building autonomous agents and full-stack systems. Cut banking operating costs by 94%."
+    "description": "Freelance systems engineer building AI agents and full-stack systems. Cut banking operating costs by 94%."
   },
   "footer": {
     "rights": "All rights reserved."
