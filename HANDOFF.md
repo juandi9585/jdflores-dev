@@ -400,9 +400,8 @@ Para automatizarlo: `gh auth refresh -s workflow`, añadir un workflow de Pages 
 fuente de Pages a "GitHub Actions".
 
 ### 12.4 Nota de cuentas
-La máquina tiene **dos cuentas de `gh`**: `otra-cuenta` (era la activa) y `juandi9585` (dueño del
-repo). Hubo que hacer `gh auth switch --user juandi9585` para el push y la API; **la activa se
-restauró a `otra-cuenta`** al terminar. Ninguna de las dos tiene scope `workflow`.
+El repo pertenece a la cuenta `juandi9585`: el push y la API se hacen con ella. Su token no tiene
+scope `workflow`.
 
 ### 12.5 Verificado en producción
 `/`, JS, CSS, favicon y ambos PDFs devuelven **200** con el content-type correcto. En el sitio
