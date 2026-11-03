@@ -385,23 +385,11 @@ Es un *project site*, así que se sirve desde `/jdflores-dev/`, no desde la raí
 - **Si alguna vez se renombra el repo, hay que cambiar `base`** o todos los assets dan 404.
 
 ### 12.3 Procedimiento de publicación
-El token local de `gh` **no tiene el scope `workflow`**, así que no se puede hacer push de un
-archivo en `.github/workflows/`. Por eso el deploy es un push manual de `dist/` a `gh-pages`:
-
-```bash
-npm run build
-cd dist && touch .nojekyll
-git init -b gh-pages && git add -A && git commit -m "Deploy"
-git push -f https://github.com/juandi9585/jdflores-dev.git gh-pages:gh-pages
-```
-
-`dist/` está gitignoreado en el repo principal, así que el `.git` anidado no molesta.
-Para automatizarlo: `gh auth refresh -s workflow`, añadir un workflow de Pages y cambiar la
-fuente de Pages a "GitHub Actions".
+Cada push a `main` dispara `.github/workflows/deploy.yml`: valida el contenido, compila y publica
+`dist/` con force push a `gh-pages`, la rama que sirve GitHub Pages. No hace falta publicar a mano.
 
 ### 12.4 Nota de cuentas
-El repo pertenece a la cuenta `juandi9585`: el push y la API se hacen con ella. Su token no tiene
-scope `workflow`.
+El repo pertenece a la cuenta `juandi9585`: el push y la API se hacen con ella.
 
 ### 12.5 Verificado en producción
 `/`, JS, CSS, favicon y ambos PDFs devuelven **200** con el content-type correcto. En el sitio
