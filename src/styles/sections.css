@@ -1474,8 +1474,12 @@
        them turns into dead air; tighten it so the list reads as a list */
     padding-bottom: var(--space-l);
   }
-  .tl[data-open='true'],
-  .tl:has([data-open='true']) {
+  /* the open entry's extra room lives inside the panel, so it eases with the
+     collapse; on the entry itself it snapped before the height began to move */
+  .tl .disclosure__inner {
+    padding-bottom: calc(var(--space-xl) - var(--space-l));
+  }
+  .tl:last-child .disclosure__inner {
     padding-bottom: var(--space-xl);
   }
   .tl__period {

@@ -157,6 +157,7 @@ export default function KineticGrid(props: KineticGridProps) {
                       const cr = entries[0]?.contentRect
                       build(cr?.width, cr?.height)
                       if (isStatic) drawStatic()
+                      else wake() // resizing a canvas clears it
                   })
                 : null
         ro?.observe(host)
@@ -178,6 +179,7 @@ export default function KineticGrid(props: KineticGridProps) {
             const trail = trailRef.current
             trail.push({ x: mx, y: my, t: now })
             if (trail.length > 80) trail.shift()
+            wake()
         }
 
         const onMove = (e: MouseEvent) => setMouse(e.clientX, e.clientY)
@@ -185,6 +187,7 @@ export default function KineticGrid(props: KineticGridProps) {
             mouseRef.current.active = false
             mouseRef.current.x = -9999
             mouseRef.current.y = -9999
+            wake()
         }
         const onTouch = (e: TouchEvent) => {
             const t = e.touches[0]
@@ -196,8 +199,16 @@ export default function KineticGrid(props: KineticGridProps) {
         host.addEventListener("touchmove", onTouch, { passive: true })
         host.addEventListener("touchend", onLeave)
 
+        // LOCAL MODIFICATION: upstream redrew forever. Without a pointer the grid is
+        // a still image, and redrawing it made the browser recomposite the page and
+        // re-blur the plate above it on every frame, on screen or not. The loop now
+        // stops once the dots settle, and the pointer or a resize starts it again.
         let raf = 0
+        const wake = () => {
+            if (!raf) raf = requestAnimationFrame(frame)
+        }
         const frame = () => {
+            raf = 0
             const m = mouseRef.current
             ctx.clearRect(0, 0, W, H)
 
@@ -295,9 +306,13 @@ export default function KineticGrid(props: KineticGridProps) {
             }
 
             ctx.globalAlpha = 1
-            raf = requestAnimationFrame(frame)
+            const lastTrail = trailRef.current[trailRef.current.length - 1]
+            const moving =
+                dots.some((d) => Math.abs(d.vx) + Math.abs(d.vy) > 0.01) ||
+                (lastTrail && performance.now() - lastTrail.t < 260)
+            if (moving) wake()
         }
-        raf = requestAnimationFrame(frame)
+        wake()
 
         return () => {
             cancelAnimationFrame(raf)

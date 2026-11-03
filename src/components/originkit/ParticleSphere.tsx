@@ -491,6 +491,7 @@ export default function ParticleSphereRefactor({
 
         // Delta time tracking for frame-rate independent animation
         let lastFrameTime = performance.now()
+        let onScreen = true
         const targetDeltaTime = 1000 / 60 // Reference delta time (60 FPS = 16.67ms)
 
         // Lerp factor: smoothing 0 = instant (factor=1), smoothing 1 = very smooth (factor=0.03)
@@ -501,6 +502,12 @@ export default function ParticleSphereRefactor({
 
         // Animation loop - uses cached isCanvas value for performance
         const animate = () => {
+            // LOCAL MODIFICATION: off screen the loop ends here; the observer below restarts it.
+            if (!onScreen) {
+                animationFrameId = null
+                animationFrameRef.current = null
+                return
+            }
             // Continue with animation (component should always render to show changes)
             animateCore()
         }
@@ -830,6 +837,17 @@ export default function ParticleSphereRefactor({
         // Always start animation to ensure component is visible and interactive
         // In canvas mode, rotation will be controlled by preview state
         startAnimation()
+
+        // LOCAL MODIFICATION: upstream kept rendering after the hero scrolled away.
+        // The margin has it turning again just before it comes back into view.
+        const visibility = new IntersectionObserver(
+            ([entry]) => {
+                onScreen = entry.isIntersecting
+                if (onScreen) startAnimation()
+            },
+            { rootMargin: "100px" }
+        )
+        visibility.observe(container)
 
         // Mouse interaction handlers (only if drag is enabled)
         const handleMouseDown = (event: MouseEvent) => {
@@ -1324,6 +1342,7 @@ export default function ParticleSphereRefactor({
 
             // Cleanup for canvas mode
             return () => {
+                visibility.disconnect()
                 cancelAnimationFrame(rafId)
                 if (animationFrameId !== null) {
                     cancelAnimationFrame(animationFrameId)
@@ -1386,6 +1405,7 @@ export default function ParticleSphereRefactor({
 
         // Cleanup for preview/live mode
         return () => {
+            visibility.disconnect()
             resizeObserver.disconnect()
             window.removeEventListener("resize", handleResize)
             if (animationFrameId !== null) {
