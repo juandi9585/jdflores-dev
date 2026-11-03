@@ -39,7 +39,7 @@
     "scrollCue": "Scroll"
   },
   "about": {
-    "title": "An engineer who ships AI agents into production.",
+    "title": "An engineer who builds AI agents.",
     "body": [
       "Systems Engineer from UNIMET with a final degree project awarded with honors, specializing in Artificial Intelligence. I have a proven track record building full-stack architectures and AI agents that have driven major operational cost reductions in the banking sector.",
       "I work as a freelance engineer using the latest AI development tooling (primarily Claude Code) to design, orchestrate and ship production software faster than traditional teams. My core is n8n workflow orchestration, the Google Cloud ecosystem, and scalable software."
@@ -149,7 +149,7 @@
   },
   "trajectory": {
     "title": "A track record across banking, AI and automation.",
-    "lead": "Over three years of building, from data integration to AI agents in production.",
+    "lead": "Over three years of building, from data integration to AI agents.",
     "nowLabel": "Now",
     "roles": [
       {

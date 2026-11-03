@@ -39,7 +39,7 @@
     "scrollCue": "Desliza"
   },
   "about": {
-    "title": "Un ingeniero que despliega agentes de IA en producción.",
+    "title": "Un ingeniero que construye agentes de IA.",
     "body": [
       "Ingeniero de Sistemas de la UNIMET con Trabajo Final de Grado con mención honorífica, especialista en Inteligencia Artificial. Tengo experiencia comprobada desarrollando arquitecturas full-stack y agentes de IA que han generado reducciones sustanciales de costos operativos en el sector bancario.",
       "Trabajo como ingeniero freelance usando las últimas herramientas de desarrollo con IA (principalmente Claude Code) para diseñar, orquestar y entregar software en producción más rápido que los equipos tradicionales. Mi base es la orquestación de flujos con n8n, el ecosistema de Google Cloud y el software escalable."
@@ -149,7 +149,7 @@
   },
   "trajectory": {
     "title": "Un recorrido entre banca, IA y automatización.",
-    "lead": "Más de tres años construyendo, de la integración de datos a agentes de IA en producción.",
+    "lead": "Más de tres años construyendo, de la integración de datos a agentes de IA.",
     "nowLabel": "Ahora",
     "roles": [
       {
