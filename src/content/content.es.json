@@ -153,6 +153,17 @@
     "nowLabel": "Ahora",
     "roles": [
       {
+        "period": "06/2026–Presente",
+        "company": "Empresa de consultoría de negocios",
+        "location": "Trabajo freelance",
+        "title": "Desarrollador Full Stack",
+        "points": [
+          "Diseño y desarrollo de aplicaciones web a la medida para la empresa (Next.js, React, TypeScript), adaptadas a móvil y con funcionamiento sin conexión.",
+          "Implementación de autenticación centralizada (OAuth 2.1, Supabase), roles y permisos, y consolas de administración.",
+          "Aseguramiento de la calidad y la seguridad: pruebas automatizadas (Playwright), despliegue continuo (Vercel) y documentación técnica."
+        ]
+      },
+      {
         "period": "09/2025–Presente",
         "company": "PadTech Solution, C.A.",
         "location": "Contratista en Banesco, Banco Universal · Venezuela",
@@ -231,7 +242,8 @@
         "label": "Cloud",
         "items": [
           "Google Cloud Platform",
-          "Vertex AI"
+          "Vertex AI",
+          "Vercel"
         ]
       },
       {
@@ -240,7 +252,9 @@
           "Node.js",
           "React.js",
           "Express.js",
-          "Flutter"
+          "Flutter",
+          "Next.js",
+          "TypeScript"
         ]
       },
       {
@@ -257,7 +271,8 @@
         "items": [
           "PostgreSQL",
           "Power BI",
-          "Report Builder"
+          "Report Builder",
+          "Supabase"
         ]
       },
       {
@@ -266,6 +281,7 @@
           "Apps Script",
           "AppSheet",
           "Power Automate",
+          "Playwright",
           "Git · Scrum"
         ]
       }
