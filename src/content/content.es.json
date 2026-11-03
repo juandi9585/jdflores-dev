@@ -165,17 +165,6 @@
         ]
       },
       {
-        "period": "06/2026–Presente",
-        "company": "Empresa de consultoría de negocios",
-        "location": "Trabajo freelance · En paralelo a mi cargo actual",
-        "title": "Desarrollador Full Stack",
-        "points": [
-          "Diseño y desarrollo de aplicaciones web a la medida para la empresa (Next.js, React, TypeScript), adaptadas a móvil y con funcionamiento sin conexión.",
-          "Implementación de autenticación centralizada (OAuth 2.1, Supabase), roles y permisos, y consolas de administración.",
-          "Aseguramiento de la calidad y la seguridad: pruebas automatizadas (Playwright), despliegue continuo (Vercel) y documentación técnica."
-        ]
-      },
-      {
         "period": "03/2025–05/2025",
         "company": "Secretaría de Recursos Naturales y Ambiente",
         "location": "Honduras · Remoto",
