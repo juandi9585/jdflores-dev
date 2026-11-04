@@ -1,0 +1,12 @@
+Neuropol (1996) by Ray Larabie / Typodermic Fonts
+
+Source: https://typodermicfonts.com/public-domain/#neuropol
+File: "Web Fonts/Neuropol.woff2" from Typodermic's official public-domain
+webfont bundle, served here unmodified as neuropol.woff2.
+
+This font has been released under CC0 1.0 Universal, a public-domain
+dedication: https://creativecommons.org/publicdomain/zero/1.0/
+
+No licence is required to use, embed or redistribute it. The official
+CC0 terms control. (Neuropol X, Typodermic's later commercial redesign,
+is a different font and is not used on this site.)
